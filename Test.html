@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFYK22003U Computational Atmosphere and Ocean Dynamics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #001a33;
+      color: #7DCDF4;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #002244;
+      border-right: 1px solid #002244;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar img {
+      width: 100%;
+      height: auto;
+    }
+
+    .sidebar nav {
+      padding: 1em;
+    }
+
+    .sidebar nav a {
+      display: block;
+      margin: 0.5em 0;
+      color: #66aaff;
+      text-decoration: none;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 2em;
+      background-color: #001a33;
+      color: #d6ebff;
+    }
+
+    .main-content h1 {
+      font-size: 1.8em;
+      color: #66aaff;
+    }
+
+    .main-content a {
+      color: #66aaff;
+    }
+
+    .footer {
+      padding: 1em 2em;
+      font-size: 0.6em;
+      color: #aaccee;
+      background-color: #001a33;
+    }
+
+    .code-block {
+      position: relative;
+      background: #003366;
+      border: 1px solid #004080;
+      padding: 0em;
+      margin: 2em 0;
+      border-radius: 5px;
+      color: #e0e6f0;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .code-block pre {
+      margin: 0;
+      padding: 0;
+    }
+
+    .code-block code {
+      display: block;
+      margin: 0;
+      padding: 0;
+      white-space: pre;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+      background: transparent;
+      color: #aaccee;
+      border: 1px solid #aaccee;
+      padding: 0.2em 0.6em;
+      font-size: 0.6em;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #aaccee;
+      color: #001a33;
+    }
+
+    .copy-btn.copied::after {
+      content: "Copied!";
+      font-family: 'Courier New', Courier, monospace;
+      margin-left: 0.5em;
+      color: #bdfffd;
+    }
+
+    .hljs {
+      background: #003366;
+      color: #ffffff;
+    }
+
+    .hljs-keyword {
+      color: #ffcdd8;
+      font-weight: bold;
+    }
+
+    .hljs-string {
+      color: #50fa7b;
+    }
+
+    .hljs-number,
+    .hljs-literal {
+      color: #bd93f9;
+    }
+
+    .hljs-comment {
+      color: #6272a4;
+      font-style: italic;
+    }
+
+    .hljs-built_in,
+    .hljs-title.class_ {
+      color: #8be9fd;
+    }
+
+    .hljs-function .hljs-title {
+      color: #f1fa8c;
+    }
+
+    .hljs-params {
+      color: #ffffff;
+    }
+
+    .hljs-attr {
+      color: #fab387;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 1.2em;
+    }
+
+    ul li::before {
+      content: "■";
+      color: #7DCDF4;
+      display: inline-block;
+      width: 0.9em;
+      margin-left: -1em;
+      margin-right: 0.5em;
+    }
+
+    a {
+      position: relative;
+      text-decoration: none;
+      color: #66aaff;
+      display: inline-block;
+      padding-bottom: 2px;
+      z-index: 1;
+    }
+
+    a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 3px;
+      background-color: #7DCDF4;
+      opacity: 0.5;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      transition: width 0.3s ease-in-out;
+      z-index: 0;
+    }
+
+    a:hover::after {
+      width: 100%;
+    }
+
+    .sidebar nav ul,
+    .sidebar nav li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar nav ul.nav-menu > li {
+      margin: 0.5em 0;
+    }
+
+    .sidebar nav ul.nav-menu a {
+      color: #66aaff;
+      text-decoration: none;
+      display: block;
+      padding-left: 1em;
+    }
+
+    .sidebar nav ul.sub-menu {
+      margin-left: 1em;
+      padding-left: 0.5em;
+      border-left: 1px solid #003366;
+    }
+
+    .sidebar nav ul.sub-menu a {
+      font-size: 0.9em;
+      color: #99ccff;
+      padding-left: 1em;
+    }
+
+    html {
+      transform: scale(0.9);
+      transform-origin: top left;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <img src="Logo_NS-blackboard-Expand.png" alt="Sidebar Image">
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#">Welcome to NFYK22003U</a></li>
+          <li><a href="#">Course Information</a></li>
+          <li>
+            <a href="#">Chapter 1</a>
+            <ul class="sub-menu">
+              <li><a href="#">Project 1 – Oxygen Budget</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="main-content">
+      <h1>NFYK22003U Computational Atmosphere and Ocean Dynamics</h1>
+
+      <ul>
+        <li><a href="#">Course Information</a></li>
+        <li><a href="#">Schedule 2025</a></li>
+        <p><strong>Next</strong>: <a href="#">Markdown Files</a></p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python"># Your code block content here...</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>
+    It is very much a work in progress! Have you spotted a mistake or an error on this page?
+    Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
+    &copy; 2025 TeamOcean | NBI/KU
+  </div>
+
+  <script>
+    function copyToClipboard(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      });
+    }
+  </script>
+</body>
+</html>
+
+

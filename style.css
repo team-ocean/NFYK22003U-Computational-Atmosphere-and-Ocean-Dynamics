@@ -1,0 +1,232 @@
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    display: block; /* change from flex */
+    flex-direction: column;
+    background-color: #001a33;
+    color: #7DCDF4;
+  }
+  
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    background-color: transparent; /* remove background */
+    border-right: 4px solid #3c5c78; /* vertical line on the right */
+    padding-right: 1em; /* spacing from the vertical line */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+  }
+  
+  .sidebar img {
+    width: 100%;
+    height: auto;
+  }
+  .sidebar nav {
+    padding: 1em;
+  }
+  .sidebar nav a {
+    display: block;
+    margin: 0.5em 0;
+    color: #66aaff;
+    text-decoration: none;
+  }
+  .main-content {
+    margin-left: 250px;
+    padding: 2em;
+    background-color: #001a33;
+    color: #d6ebff;
+    flex-grow: 1;
+  }
+  .main-content h1 {
+    font-size: 1.8em;
+    color: #66aaff;
+  }
+  .main-content a {
+    color: #66aaff;
+  }
+  .footer {
+    margin-left: 250px;
+    padding: 1em 2em;
+    font-size: 0.6em;
+    color: #aaccee;
+    background-color: #001a33;
+  }
+  .code-block {
+    position: relative;
+    background: #003366;
+    border: 1px solid #004080;
+    padding: 0em;
+    margin: 2em 0;
+    border-radius: 5px;
+    color: #e0e6f0;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .code-block pre {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .code-block code {
+    display: block;
+    margin: 0;
+    padding: 0;
+    white-space: pre; /* Ensure formatting stays correct */
+  }
+  
+  .copy-btn {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    background: transparent;           /* No fill */
+    color: #aaccee;                    /* Text color */
+    border: 1px solid #aaccee;         /* Border only */
+    padding: 0.2em 0.6em;
+    font-size: 0.6em;
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace; /* Code-style font */
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .copy-btn:hover {
+    background: #aaccee;               /* Light fill on hover */
+    color: #001a33;                    /* Invert text color on hover */
+  }
+  
+  .copy-btn.copied::after {
+    content: "Copied!";
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 0.5em;
+    color: #bdfffd;
+  }
+  
+  
+  /* Highlight.js Custom Theme Overrides for Python */
+  .hljs {
+    background: #003366;
+    color: #ffffff;
+  }
+  
+  .hljs-keyword {
+    color: #ffcdd8; /* sakura */
+    font-weight: bold;
+  }
+  
+  .hljs-string {
+    color: #50fa7b; /* green */
+  }
+  
+  .hljs-number,
+  .hljs-literal {
+    color: #bd93f9; /* purple */
+  }
+  
+  .hljs-comment {
+    color: #6272a4; /* faded blue */
+    font-style: italic;
+  }
+  
+  .hljs-built_in,
+  .hljs-title.class_ {
+    color: #8be9fd; /* cyan */
+  }
+  
+  .hljs-function .hljs-title {
+    color: #f1fa8c; /* yellow */
+  }
+  
+  .hljs-params {
+    color: #ffffff;
+  }
+  
+  .hljs-attr {
+    color: #fab387; /* peach */
+  }
+  
+  ul {
+    list-style: none; /* Remove default bullets */
+    padding-left: 1.2em; /* Maintain indentation */
+  }
+  
+  ul li::before {
+    content: "■"; /* Small square bullet */
+    color: #7DCDF4; /* Custom blue */
+    display: inline-block;
+    width: 0.9em;
+    margin-left: -1em;
+    margin-right: 0.5em;
+  }
+  
+  a {
+    position: relative;
+    text-decoration: none;
+    color: #66aaff;
+    display: inline-block;
+    padding-bottom: 2px;
+    z-index: 1;
+  }
+  
+  a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 3px;
+    background-color: #7DCDF4;
+    opacity: 0.5; /* Half transparent */
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+    z-index: 0;
+    /* border-radius removed for sharp corners */
+  }
+  
+  a:hover::after {
+    width: 100%;
+  }
+  
+  .sidebar nav ul,
+  .sidebar nav li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar nav ul.nav-menu > li {
+    margin: 0.5em 0;
+  }
+  
+  .sidebar nav ul.nav-menu a {
+    color: #66aaff;
+    text-decoration: none;
+    display: block;
+    padding-left: 1em;
+  }
+  
+  .sidebar nav ul.sub-menu {
+    margin-left: 1em;
+    padding-left: 0.5em;
+    border-left: 1px solid #003366;
+  }
+  
+  .sidebar nav ul.sub-menu a {
+    font-size: 0.9em;
+    color: #99ccff;
+    padding-left: 1em;
+  }
+  
+  html {
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+  
