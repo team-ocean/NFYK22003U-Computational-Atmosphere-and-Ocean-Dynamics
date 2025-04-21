@@ -170,6 +170,62 @@ plt.show()
 
   <img src="Figures/Project1_sea_surface_DIC.png" alt="Project1_sea_surface_DIC.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
+  <p>Here's a quick cell you can run to inspect the coordinate system (dimensions, variable names, and their attributes) of your NetCDF file (<code>theocean.nc</code>)</p>
+  <div class="code-block">
+    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+    <pre><code class="language-python">import numpy as np
+
+ds = xr.open_dataset('/home/jovyan/erda_mount/theocean.nc')
+
+# Print coordinates specifically
+print("\n--- Coordinate Variables ---")
+for coord in ds.coords:
+    print(f"{coord}: {ds.coords[coord].dims} {ds.coords[coord].shape}")
+
+# Print variable names and their dimensions
+print("\n--- Data Variables ---")
+for var in ds.data_vars:
+    print(f"{var}: {ds[var].dims} {ds[var].shape}")
+
+# Print attributes of TLAT and TLONG if they exist
+if 'TLAT' in ds:
+    print("\nTLAT attributes:", ds['TLAT'].attrs)
+if 'TLONG' in ds:
+    print("\nTLONG attributes:", ds['TLONG'].attrs)
+
+# Print random sample lat/lon points to verify
+print("\n--- Sample Latitude and Longitude Points ---")
+TLAT = ds['TLAT'].values
+TLONG = ds['TLONG'].values
+
+nlat, nlon = TLAT.shape
+for _ in range(5):
+    i = np.random.randint(0, nlat)
+    j = np.random.randint(0, nlon)
+    print(f"Index (i={i}, j={j}) -> Lat: {TLAT[i, j]:.2f}°, Lon: {TLONG[i, j]:.2f}°")
+    </code></pre>
+  </div>
+
+  <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+--- Sample Latitude and Longitude Points ---
+Index (i=98, j=26) -> Lat: 74.99°, Lon: 16.65°
+Index (i=69, j=12) -> Lat: 21.58°, Lon: 6.38°
+Index (i=54, j=6) -> Lat: 3.38°, Lon: 344.90°
+Index (i=47, j=35) -> Lat: -0.90°, Lon: 89.30°
+Index (i=50, j=94) -> Lat: 0.90°, Lon: 301.70°
+    </pre>
+
+<p>Convert the domain from <code>[0, 360]</code> to <code>[-180, 180]</code>, which is easier to interpret for many ocean regions.</p>
+<div class="code-block">
+    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+    <pre><code class="language-python"># Surface map (latitude-longitude at surface level z_t=0)
+dic_surface = ds['DIC'].isel(time=time_index, z_t=0)
+lat_2d = ds['TLAT'].values
+lon_2d = ds['TLONG'].values
+lon_2d = np.where(lon_2d > 180, lon_2d - 360, lon_2d)  # Convert to [-180, 180]
+    </code></pre>
+  </div>
+
 
 
 
