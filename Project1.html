@@ -110,6 +110,26 @@ else:
     print("'DIC' variable not found in the dataset.") 
         </code></pre>
       </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+'DIC' variable found!
+
+<xarray.DataArray 'DIC' (time: 1, z_t: 60, nlat: 116, nlon: 100)> Size: 3MB
+[696000 values with dtype=float32]
+Coordinates:
+  * time     (time) object 8B 1950-07-16 21:59:59.999997
+  * z_t      (z_t) float32 240B 500.0 1.5e+03 2.5e+03 ... 5.125e+05 5.375e+05
+    ULONG    (nlat, nlon) float64 93kB ...
+    ULAT     (nlat, nlon) float64 93kB ...
+    TLONG    (nlat, nlon) float64 93kB ...
+    TLAT     (nlat, nlon) float64 93kB ...
+Dimensions without coordinates: nlat, nlon
+Attributes:
+    long_name:     Dissolved Inorganic Carbon
+    units:         mmol/m^3
+    grid_loc:      3111
+    cell_methods:  time: mean
+</pre>
+
 
 
 
