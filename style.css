@@ -229,4 +229,16 @@
     transform: scale(0.9);
     transform-origin: top left;
   }
+
+  code {
+    background-color: #002b4d;
+    color: #aaccee;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95em;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    border: 1px solid #004466;
+    white-space: nowrap;
+  }
+  
   
