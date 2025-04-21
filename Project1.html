@@ -44,37 +44,32 @@
     <p>Check the current directory:</p>
     <div class="code-block">
       <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-      <pre><code class="language-python">!pwd
-      </code></pre>
+      <pre><code class="language-python">!pwd</code></pre>
     </div>
 
     <p>List files in the current directory:</p>
     <div class="code-block">
       <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-      <pre><code class="language-python">!ls
-      </code></pre>
+      <pre><code class="language-python">!ls</code></pre>
     </div>
 
     <p>For example, if you want to check inside the erda_mount directory:</p>
 
     <div class="code-block">
       <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-      <pre><code class="language-python">!ls erda_mount/
-      </code></pre>
+      <pre><code class="language-python">!ls erda_mount/</code></pre>
     </div>
 
     <p>To inspect the NetCDF file <code>theocean.nc</code> located in the same folder as your notebook (<code>/home/jovyan/erda_mount</code>), you can do the following directly within a notebook cell:</p>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-        <pre><code class="language-python">!ls /home/jovyan/erda_mount/theocean.nc # Verify the file exists first
-        </code></pre>
+        <pre><code class="language-python">!ls /home/jovyan/erda_mount/theocean.nc # Verify the file exists first</code></pre>
       </div>
 
     <p>Quickly inspect the contents using Python and the <code>xarray</code> package</p>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-        <pre><code class="language-python">!pip install xarray
-        </code></pre>
+        <pre><code class="language-python">!pip install xarray</code></pre>
       </div>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
@@ -88,8 +83,7 @@ print(ds)
 
 # Display variables specifically
 print("\nData Variables:")
-print(ds.data_vars)  
-        </code></pre>
+print(ds.data_vars)</code></pre>
       </div>
 
       <p>To check whether a specific variable (e.g., <code>DIC</code>) exists in an opened xarray dataset and retrieve detailed information about it, you can do the following:</p>
@@ -107,8 +101,7 @@ if 'DIC' in ds.variables:
     # Print detailed info about the 'DIC' variable
     print(ds['DIC'])
 else:
-    print("'DIC' variable not found in the dataset.") 
-        </code></pre>
+    print("'DIC' variable not found in the dataset.") </code></pre>
       </div>
       <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
 'DIC' variable found!
@@ -130,9 +123,163 @@ Attributes:
     cell_methods:  time: mean
 </pre>
 
-<p>But if you plot it directly, the projection might seem incorrect due to the lack of proper 
-    geographic coordinates, suggest a need for proper coordinate projection handling. Based on the output, some effort regarding color bar handling is also needed for this assignment.</p>
+<p>For printing all variables and their <code>long_name</code></p>
+<div class="code-block">
+    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+    <pre><code class="language-python">import xarray as xr
 
+# Open the NetCDF file
+ds = xr.open_dataset('/home/jovyan/erda_mount/theocean.nc')
+
+# Print all variables and their long_name 
+print("=== Variables and Their Descriptions ===\n")
+for var in ds.variables:
+    long_name = ds[var].attrs.get('long_name', 'No long_name')
+    print(f"{var:20}: {long_name}")</code></pre>
+  </div>
+  <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+    === Variables and Their Descriptions ===
+
+time_bound          : boundaries for time-averaging interval
+moc_components      : MOC component names
+transport_components: T,S transport components
+transport_regions   : regions for all transport diagnostics
+time                : time
+z_t                 : depth from surface to midpoint of layer
+z_t_150m            : depth from surface to midpoint of layer
+z_w                 : depth from surface to top of layer
+z_w_top             : depth from surface to top of layer
+z_w_bot             : depth from surface to bottom of layer
+lat_aux_grid        : latitude grid for transport diagnostics
+moc_z               : depth from surface to top of layer
+dz                  : thickness of layer k
+dzw                 : midpoint of k to midpoint of k+1
+ULONG               : array of u-grid longitudes
+ULAT                : array of u-grid latitudes
+TLONG               : array of t-grid longitudes
+TLAT                : array of t-grid latitudes
+    </pre>
+
+<p>To print detailed metadata of each variable in a NetCDF file, 
+    such as its data type, dimensions, and attributes (like long_name, units, _FillValue, missing_value, _ChunkSizes), 
+    you can use the following code</p>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import xarray as xr
+
+# Open dataset
+ds = xr.open_dataset('/home/jovyan/erda_mount/theocean.nc')
+
+# Loop through all variables
+for var in ds.variables:
+    da = ds[var]
+    
+    print(f"{da.dtype} {var}({', '.join(f'{dim}={ds.dims[dim]}' for dim in da.dims)});")
+    
+    for attr, val in da.attrs.items():
+        print(f"  :{attr} = {val!r};")
+    
+    print()  # Blank line between variables</code></pre>
+      </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+object time_bound(time=1, d2=2);
+:long_name = 'boundaries for time-averaging interval';
+:cell_methods = 'time: mean';
+
+|S256 moc_components(moc_comp=3);
+  :long_name = 'MOC component names';
+  :units = '';
+
+|S256 transport_components(transport_comp=5);
+  :long_name = 'T,S transport components';
+  :units = '';
+
+|S256 transport_regions(transport_reg=2);
+  :long_name = 'regions for all transport diagnostics';
+  :units = '';
+
+object time(time=1);
+  :long_name = 'time';
+  :bounds = 'time_bound';
+  :cell_methods = 'time: mean';
+
+float32 z_t(z_t=60);
+  :long_name = 'depth from surface to midpoint of layer';
+  :units = 'centimeters';
+  :positive = 'down';
+  :valid_min = np.float32(500.0);
+  :valid_max = np.float32(537500.0);
+
+float32 z_t_150m(z_t_150m=15);
+  :long_name = 'depth from surface to midpoint of layer';
+  :units = 'centimeters';
+  :positive = 'down';
+  :valid_min = np.float32(500.0);
+  :valid_max = np.float32(14500.0);
+
+float32 z_w(z_w=60);
+  :long_name = 'depth from surface to top of layer';
+  :units = 'centimeters';
+  :positive = 'down';
+  :valid_min = np.float32(0.0);
+  :valid_max = np.float32(525000.94);
+
+float32 z_w_top(z_w_top=60);
+  :long_name = 'depth from surface to top of layer';
+  :units = 'centimeters';
+  :positive = 'down';
+  :valid_min = np.float32(0.0);
+  :valid_max = np.float32(525000.94);
+
+float32 z_w_bot(z_w_bot=60);
+  :long_name = 'depth from surface to bottom of layer';
+  :units = 'centimeters';
+  :positive = 'down';
+  :valid_min = np.float32(1000.0);
+  :valid_max = np.float32(549999.06);
+
+float32 lat_aux_grid(lat_aux_grid=105);
+  :long_name = 'latitude grid for transport diagnostics';
+  :units = 'degrees_north';
+  :valid_min = np.float32(-80.26017);
+  :valid_max = np.float32(90.0);
+
+float32 moc_z(moc_z=61);
+  :long_name = 'depth from surface to top of layer';
+  :units = 'centimeters';
+  :positive = 'down';
+  :valid_min = np.float32(0.0);
+  :valid_max = np.float32(549999.06);
+
+float32 dz(z_t=60);
+  :long_name = 'thickness of layer k';
+  :units = 'centimeters';
+
+float32 dzw(z_w=60);
+  :long_name = 'midpoint of k to midpoint of k+1';
+  :units = 'centimeters';
+
+float64 ULONG(nlat=116, nlon=100);
+  :long_name = 'array of u-grid longitudes';
+  :units = 'degrees_east';
+
+float64 ULAT(nlat=116, nlon=100);
+  :long_name = 'array of u-grid latitudes';
+  :units = 'degrees_north';
+
+float64 TLONG(nlat=116, nlon=100);
+  :long_name = 'array of t-grid longitudes';
+  :units = 'degrees_east';
+
+float64 TLAT(nlat=116, nlon=100);
+  :long_name = 'array of t-grid latitudes';
+  :units = 'degrees_north';
+        </pre>
+
+
+<p>But if you plot it directly, the projection might seem incorrect due to the lack of proper 
+    geographic coordinates, suggest a need for proper coordinate projection handling (but this can be unnecessary depending on the goal and model).
+     Based on the output, some effort regarding color bar handling is also needed for this assignment.</p>
 
 
 <div class="code-block">
@@ -164,8 +311,7 @@ plt.tight_layout()
 # Save the figure at the save folder
 plt.savefig('./sea_surface_DIC.png', transparent=True)
 
-plt.show()
-    </code></pre>
+plt.show()</code></pre>
   </div>
 
   <img src="Figures/Project1_sea_surface_DIC.png" alt="Project1_sea_surface_DIC.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
@@ -202,8 +348,7 @@ nlat, nlon = TLAT.shape
 for _ in range(5):
     i = np.random.randint(0, nlat)
     j = np.random.randint(0, nlon)
-    print(f"Index (i={i}, j={j}) -> Lat: {TLAT[i, j]:.2f}°, Lon: {TLONG[i, j]:.2f}°")
-    </code></pre>
+    print(f"Index (i={i}, j={j}) -> Lat: {TLAT[i, j]:.2f}°, Lon: {TLONG[i, j]:.2f}°")</code></pre>
   </div>
 
   <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
@@ -222,8 +367,7 @@ Index (i=50, j=94) -> Lat: 0.90°, Lon: 301.70°
 dic_surface = ds['DIC'].isel(time=time_index, z_t=0)
 lat_2d = ds['TLAT'].values
 lon_2d = ds['TLONG'].values
-lon_2d = np.where(lon_2d > 180, lon_2d - 360, lon_2d)  # Convert to [-180, 180]
-    </code></pre>
+lon_2d = np.where(lon_2d > 180, lon_2d - 360, lon_2d)  # Convert to [-180, 180]</code></pre>
   </div>
 
 
