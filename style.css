@@ -240,5 +240,11 @@
     border: 1px solid #004466;
     white-space: nowrap;
   }
+
+  .hljs-title {
+    color: #aaccee !important;
+  }
+  
+  
   
   
