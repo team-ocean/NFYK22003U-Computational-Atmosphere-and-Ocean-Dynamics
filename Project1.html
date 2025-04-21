@@ -130,13 +130,45 @@ Attributes:
     cell_methods:  time: mean
 </pre>
 
-<p>But if you plot it directly, the projection might seem not correct</p>
+<p>But if you plot it directly, the projection might seem incorrect due to the lack of proper 
+    geographic coordinates, suggest a need for proper coordinate projection handling. Based on the output, some effort regarding color bar handling is also needed for this assignment.</p>
 
 
 
+<div class="code-block">
+    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+    <pre><code class="language-python">import xarray as xr
+import matplotlib.pyplot as plt
 
+# Load the dataset
+ds = xr.open_dataset('/home/jovyan/erda_mount/theocean.nc')
 
+# Select surface DIC (assuming variable DIC is 4D: time, z, y, x)
+surface_DIC = ds['DIC'].isel(time=-1, z_t=0)
 
+# Plotting the map of sea surface DIC
+fig, ax = plt.subplots(figsize=(6, 5), dpi = 300)
+surface_DIC.plot.pcolormesh(
+    ax=ax,
+    cmap='coolwarm',  # choose colormap here
+    shading='auto',
+    cbar_kwargs={'label': 'DIC (mol m$^{-3}$)'}
+)
+
+ax.set_title('Sea Surface DIC')
+ax.set_xlabel('Longitude')
+ax.set_ylabel('Latitude')
+
+plt.tight_layout()
+
+# Save the figure at the save folder
+plt.savefig('./sea_surface_DIC.png', transparent=True)
+
+plt.show()
+    </code></pre>
+  </div>
+
+  <img src="Figures/Project1_sea_surface_DIC.png" alt="Project1_sea_surface_DIC.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
 
