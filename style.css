@@ -145,6 +145,10 @@
     color: #f1fa8c; /* yellow */
   }
   
+  .hljs-title {
+    color: #aaccee !important;
+  }
+  
   .hljs-params {
     color: #ffffff;
   }
