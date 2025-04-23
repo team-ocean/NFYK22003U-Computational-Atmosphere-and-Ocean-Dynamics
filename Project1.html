@@ -370,7 +370,9 @@ lon_2d = ds['TLONG'].values
 lon_2d = np.where(lon_2d > 180, lon_2d - 360, lon_2d)  # Convert to [-180, 180]</code></pre>
   </div>
 
-<p>Choosing the appropriate colorbar normalization is important for accurately visualizing the range and structure of values in climate model output</p>
+<p>Choosing the appropriate colorbar normalization is important for accurately visualizing the range and structure of values in climate model output.
+Matplotlib provides a rich set of <a href="https://matplotlib.org/cmocean/#cmocean-available-elsewhere" target="_blank">beautiful colormaps for oceanography</a> with excellent examples.
+</p>
 <div class="code-block">
   <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
   <pre><code class="language-python">import matplotlib.pyplot as plt
@@ -425,9 +427,6 @@ plt.tight_layout(rect=[0, 0, 1, 0.97])
 plt.show()</code></pre>
     <img src="Figures/Project1_Colorbar_Normalization_Examples.png" alt="Colorbar_Normalization_Examples.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 </div>
-
-
-
 
 
 
