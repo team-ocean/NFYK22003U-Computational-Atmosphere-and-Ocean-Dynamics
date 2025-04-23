@@ -370,12 +370,61 @@ lon_2d = ds['TLONG'].values
 lon_2d = np.where(lon_2d > 180, lon_2d - 360, lon_2d)  # Convert to [-180, 180]</code></pre>
   </div>
 
-<p>Color bar normalization</p>
-<img src="Figures/Project1_Colorbar_Normalization_Examples.png" alt="Colorbar_Normalization_Examples.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
-
-
-
-
+<p>Choosing the appropriate colorbar normalization is important for accurately visualizing the range and structure of values in climate model output</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import matplotlib.pyplot as plt
+    import numpy as np
+    from matplotlib import colors
+    
+    # Create sample data
+    N = 100
+    X, Y = np.mgrid[-3:3:complex(0, N), -2:2:complex(0, N)]
+    Z1 = np.exp(-X**2 - Y**2)
+    Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
+    Z = (Z1 - Z2) * 2
+    
+    # Normalize options
+    vmin, vmax = -1.0, 1.0
+    
+    norms = {
+        'Linear': None,
+        'LogNorm': colors.LogNorm(vmin=Z[Z > 0].min(), vmax=Z.max()),
+        'PowerNorm (quartic γ=0.25)': colors.PowerNorm(gamma=0.25, vmin=vmin, vmax=vmax),
+        'PowerNorm (γ=0.5)': colors.PowerNorm(gamma=0.5, vmin=vmin, vmax=vmax),
+        'TwoSlopeNorm (center=0)': colors.TwoSlopeNorm(vmin=vmin, vcenter=0, vmax=vmax),
+        'Quantile Bins': colors.BoundaryNorm(boundaries=np.quantile(Z, np.linspace(0, 1, 10)), ncolors=256)
+    }
+    
+    # Plotting
+    plt.rcParams['text.color'] = '#d6ebff'
+    plt.rcParams['axes.labelcolor'] = '#d6ebff'
+    plt.rcParams['xtick.color'] = '#d6ebff'
+    plt.rcParams['ytick.color'] = '#d6ebff'
+    plt.rcParams['axes.edgecolor'] = '#d6ebff'
+    
+    fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(14, 12), dpi = 300)
+    axs = axs.ravel()
+    fig.patch.set_alpha(0)
+    for ax in axs:
+        ax.set_facecolor('none')
+    
+    for ax, (name, norm) in zip(axs, norms.items()):
+        # LogNorm only works on positive values
+        if name == 'LogNorm':
+            pcm = ax.pcolormesh(X, Y, np.abs(Z), norm=norm, cmap='coolwarm', shading='auto')
+        else:
+            pcm = ax.pcolormesh(X, Y, Z, norm=norm, cmap='coolwarm', shading='auto')
+    
+        fig.colorbar(pcm, ax=ax)
+        ax.set_title(name)
+        ax.set_aspect('equal')
+    
+    plt.suptitle("Colorbar Normalization Examples", fontsize=16)
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
+    plt.show()</code></pre>
+    <img src="Figures/Project1_Colorbar_Normalization_Examples.png" alt="Colorbar_Normalization_Examples.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+</div>
 
 
 
