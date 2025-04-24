@@ -17,11 +17,13 @@
       <ul class="nav-menu">
         <li><a href="Welcome.html">Welcome to NFYK22003U</a></li>
         <li><a href="CourseInformation.html">Course Information</a></li>
+        <li><a href="Schedule2025.html">Schedule 2025</a></li>
         <li>
           <a href="Lecture1.html">Lecture 1</a>
           <ul class="sub-menu">
             <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
           </ul>
+        <li><a href="#">References</a></li>
         </li>
       </ul>
     </nav>
@@ -29,6 +31,327 @@
 
   <div class="main-content">
     <h1>Lecture 1 – Introduction and Transport Processes</h1>
+    <p class="subtitle">Autocorrelation</p>
+    ENSO is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
+    Using the <a href="https://www.kaggle.com/datasets/shabanamir/enso-data">ENSO-related standardized monthly climate data (1950–2024)</a> available on Kaggle, 
+    some examples of autocorrelation can be illustrated.
+
+    <p>Take a quick look at the actual structure of <code>ENSO.csv</code> first</p>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import pandas as pd
+
+df = pd.read_csv('ENSO.csv', header=None)
+
+# Show shape and first few rows
+print("Shape of the file:", df.shape)
+print(df.head())</code></pre>
+</div>
+<pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+Shape of the file: (883, 22)
+0     1      2                             3             4   \
+0      Date  Year  Month  Global Temperature Anomalies  Nino 1+2 SST   
+1  1/1/1950  1950    JAN                          -0.2           NaN   
+2  2/1/1950  1950    FEB                         -0.26           NaN   
+3  3/1/1950  1950    MAR                         -0.08           NaN   
+4  4/1/1950  1950    APR                         -0.16           NaN   
+
+              5           6                     7             8   \
+0  Nino 1+2 SST Anomalies  Nino 3 SST  Nino 3 SST Anomalies  Nino 3.4 SST   
+1                     NaN         NaN                   NaN           NaN   
+2                     NaN         NaN                   NaN           NaN   
+3                     NaN         NaN                   NaN           NaN   
+4                     NaN         NaN                   NaN           NaN   
+
+              9   ...     12     13   14   15                16  \
+0  Nino 3.4 SST Anomalies  ...    TNI    PNA  OLR  SOI  Season (2-Month)   
+1                     NaN  ...  0.624  -3.65  NaN  NaN                DJ   
+2                     NaN  ...  0.445  -1.69  NaN  NaN                JF   
+3                     NaN  ...  0.382  -0.06  NaN  NaN                FM   
+4                     NaN  ...  0.311  -0.23  NaN  NaN                MA   
+
+17                18    19                 20                    21  
+0  MEI.v2  Season (3-Month)   ONI  Season (12-Month)  ENSO Phase-Intensity  
+1     NaN               DJF  -1.5          1950-1951                    ML  
+2     NaN               JFM  -1.3          1950-1951                    ML  
+3     NaN               FMA  -1.2          1950-1951                    ML  
+4     NaN               MAM  -1.2          1950-1951                    ML  
+
+[5 rows x 22 columns]</pre>
+
+
+<p>
+    The primary indicators for ENSO are ONI and MEI.v2.
+    ONI is the 3-month average SST anomaly in the Nino 3.4 region, it is the preferred indicator by NOAA.
+    To be considered an El Niño/La Niña event, the SST anomalies in the Nino 3.4 region must meet the following criteria and remain at or above/below these levels for a minimum of five consecutive months
+  
+  <ul>
+    <li><strong>El Niño</strong> → anomalies at or above +0.5°C</li>
+    <li><strong>La Niña</strong> → anomalies at or below -0.5°C</li>
+    <li><strong>Neutral</strong> → anomalies between -0.5°C and +0.5°C</li>
+  </ul>
+  
+  <p>The threshold is further divided into:
+  
+  <ul>
+    <li><strong>Weak</strong> → 0.5°C to 0.9°C SST anomaly</li>
+    <li><strong>Moderate</strong> → 1.0°C to 1.4°C</li>
+    <li><strong>Strong</strong> → 1.5°C to 1.9°C</li>
+    <li><strong>Very Strong</strong> → ≥ 2.0°C</li>
+  </ul>
+  
+<div class="code-block">
+    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+    <pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.dates as mdates
+import numpy as np
+from matplotlib.colors import Normalize
+from matplotlib.cm import get_cmap, ScalarMappable
+
+# Load CSV with no header, and use row 0 as column names
+df = pd.read_csv('ENSO.csv', header=0)
+
+# Convert 'Date' column (column 0) to datetime
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+df = df.dropna(subset=['Date'])  # Drop rows where date couldn't be parsed
+df.set_index('Date', inplace=True)
+
+# Convert ONI column to numeric
+df['ONI'] = pd.to_numeric(df['ONI'], errors='coerce')
+df = df.dropna(subset=['ONI'])
+
+# Extract time and ONI
+dates = df.index
+oni = df['ONI'].values
+
+# Create colormap and normalization
+cmap = get_cmap('coolwarm')
+norm = Normalize(vmin=oni.min(), vmax=oni.max())  # Based on ONI value range, or other ways
+
+# Plot setup
+fig, ax = plt.subplots(figsize=(15, 5), dpi=300)
+fig.patch.set_alpha(0.0)
+ax.set_facecolor('none')
+
+# Plot ONI with gradient line
+for i in range(len(oni) - 1):
+    ax.plot(dates[i:i+2], oni[i:i+2],
+            color=cmap(norm(oni[i])), linewidth=2)
+
+# Add color bar
+sm = ScalarMappable(norm=norm, cmap=cmap)
+sm.set_array([])
+cbar = fig.colorbar(sm, ax=ax, pad=0.02)
+cbar.set_label('ONI Value', color='#d6ebff')
+cbar.ax.yaxis.set_tick_params(color='#d6ebff')
+plt.setp(plt.getp(cbar.ax.axes, 'yticklabels'), color='#d6ebff')
+
+# Horizontal ENSO thresholds
+x = matplotlib.dates.date2num(dates)
+levels = [
+    (2.0, 'very strong', 'red'),
+    (1.5, 'strong', 'red'),
+    (1.0, 'moderate', 'red'),
+    (0.5, 'weak', 'red'),
+    (-0.5, 'weak', 'blue'),
+    (-1.0, 'moderate', 'blue'),
+    (-1.5, 'strong', 'blue'),
+]
+
+for level, label, color in levels:
+    ax.axhline(y=level, color=color, linestyle=':', linewidth=1)
+    ax.text(x[-1], level, f'    {label}', color=color, va='center')
+
+# Custom legend
+line_red = matplotlib.lines.Line2D([0], [0], label='El Niño (ONI > 0.5)', color='red')
+line_blue = matplotlib.lines.Line2D([0], [0], label='La Niña (ONI < -0.5)', color='blue')
+legend = ax.legend(handles=[line_red, line_blue])
+
+# Style legend text
+for text in legend.get_texts():
+    text.set_color('#d6ebff')
+
+# Axes labels and title
+ax.set_xlabel("Years", color="#d6ebff")
+ax.set_ylabel("ONI", color="#d6ebff")
+ax.set_title("ENSO and ONI Relation", fontsize=14, color="#d6ebff")
+
+# Axis ticks and spines
+ax.tick_params(colors="#d6ebff")
+for label in ax.get_xticklabels():
+    label.set_color('#d6ebff')
+for label in ax.get_yticklabels():
+    label.set_color('#d6ebff')
+for spine in ax.spines.values():
+    spine.set_color("#d6ebff")
+
+# Grid 
+ax.grid(True, linestyle='--', linewidth=0.5, color='#3c5c78', alpha=0.5)
+
+plt.tight_layout()
+plt.show()</code></pre>
+    </div>
+    <img src="Figures/Lecture1_ENSOandONIRelation.png" alt="ENSOandONIRelation.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+
+    <p>Loop through all numeric variables in <code>ENSO.csv</code>, apply seasonal averaging and detrend each with a linear fit, compute the residual autocorrelation, and rank the variables by their Durbin-Watson statistic.</p>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import pandas as pd
+from statsmodels.stats.stattools import durbin_watson
+from scipy import stats
+
+# Load dataset
+df = pd.read_csv('ENSO.csv')
+
+# Filter numeric variables only
+numeric_cols = df.select_dtypes(include='number').columns
+
+results = []
+
+for var in numeric_cols:
+    series = df[var].dropna().values
+    if len(series) < 120:  # skip very short or incomplete variables
+        continue
+    series = series[:(len(series) // 3) * 3]  # trim to full seasons
+    seasonal = np.mean(series.reshape(-1, 3), axis=1)
+    time = np.arange(len(seasonal))
+    
+    # Trend and residuals
+    trend = np.polyval(np.polyfit(time, seasonal, 1), time)
+    residuals = seasonal - trend
+
+    # Durbin-Watson test on residuals
+    dw = durbin_watson(residuals)
+    results.append((var, dw))
+
+# Sort by closeness to DW = 2 (least autocorrelated)
+results_sorted_by_distance = sorted(results, key=lambda x: abs(x[1] - 2))
+
+# Sort by actual DW value (to show most autocorrelated: smallest DWs)
+results_sorted_by_value = sorted(results, key=lambda x: x[1])
+
+# Show least autocorrelated
+print("\nTop 5 least autocorrelated (residuals):")
+for name, dw in results_sorted_by_distance[:5]:
+    print(f"{name:30s}  DW: {dw:.3f}")
+
+# Show most autocorrelated
+print("\nTop 5 most autocorrelated (residuals):")
+for name, dw in results_sorted_by_distance[-5:][::-1]:
+    print(f"{name:30s}  DW: {dw:.3f}")</code></pre>
+      </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+        Top 5 least autocorrelated (residuals):
+        PNA                             DW: 1.678
+        Nino 1+2 SST                    DW: 1.668
+        Year                            DW: 2.386
+        Nino 3 SST                      DW: 1.209
+        Nino 3.4 SST                    DW: 0.813
+        
+        Top 5 most autocorrelated (residuals):
+        Nino 4 SST Anomalies            DW: 0.349
+        TNI                             DW: 0.354
+        ONI                             DW: 0.369
+        MEI.v2                          DW: 0.405
+        Nino 3.4 SST Anomalies          DW: 0.425</pre>      
+
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+from statsmodels.stats.stattools import durbin_watson
+
+# --- Load dataset and scan numeric variables ---
+df = pd.read_csv('ENSO.csv')
+numeric_cols = df.select_dtypes(include='number').columns
+dw_results = []
+
+# --- Compute DW statistics for all variables ---
+for var in numeric_cols:
+    series = df[var].dropna().values
+    if len(series) < 120:
+        continue
+    series = series[:(len(series) // 3) * 3]
+    seasonal = np.mean(series.reshape(-1, 3), axis=1)
+    time = np.arange(len(seasonal))
+    trend = np.polyval(np.polyfit(time, seasonal, 1), time)
+    residuals = seasonal - trend
+    dw = durbin_watson(residuals)
+    dw_results.append((var, seasonal, time, trend, residuals, dw))
+
+# --- Sort by DW distance from 2 ---
+sorted_by_dw = sorted(dw_results, key=lambda x: abs(x[5] - 2))
+least_autocorr = sorted_by_dw[:3]
+most_autocorr = sorted_by_dw[-3:]
+
+# --- Plotting grid for each group ---
+def plot_var(axs, row, label, seasonal, time, trend, residuals):
+    lags = np.arange(len(seasonal)) - len(seasonal) // 2
+
+    # 1. Time Series
+    axs[row, 0].plot(time, seasonal, '#6d9a26', linewidth=2, label=label)
+    axs[row, 0].plot(time, trend, '#ffe1ec', linewidth=1.5)
+    axs[row, 0].set_title(f"{label} Time Series")
+    axs[row, 0].set_ylabel("Value")
+    axs[row, 0].grid(True)
+
+    # 2. Full Autocorrelation
+    corr = np.correlate(
+        seasonal - seasonal.mean(),
+        (seasonal - seasonal.mean()) / (len(seasonal) * np.var(seasonal)),
+        mode='same'
+    )
+    axs[row, 1].plot(lags, corr, '#6d9a26', linewidth=2)
+    axs[row, 1].set_title("Full Autocorr")
+    axs[row, 1].set_xlim(-80, 80)
+    axs[row, 1].set_ylim(-0.4, 1)
+    axs[row, 1].grid(True)
+
+    # 3. Residual Autocorrelation (Zoomed Positive)
+    resid_corr = np.correlate(
+        residuals / np.std(residuals),
+        residuals / (np.std(residuals) * len(residuals)),
+        mode='same'
+    )
+    half = len(seasonal) // 2
+    axs[row, 2].plot(lags[half:], corr[half:], '#6d9a26', linewidth=2, label='Original')
+    axs[row, 2].plot(lags[half:], resid_corr[half:], '#ffe1ec', linewidth=2, label='Residuals')
+    axs[row, 2].set_title("Residual Autocorr")
+    axs[row, 2].set_xlim(0, 80)
+    axs[row, 2].set_ylim(-0.4, 1)
+    axs[row, 2].grid(True)
+    axs[row, 2].legend()
+
+# --- Plot all in a 3x3 grid for least and most autocorrelated variables ---
+fig, axs = plt.subplots(6, 3, figsize=(18, 20))
+fig.suptitle("Comparison of Least and Most Autocorrelated Variables", fontsize=16)
+
+for i, (name, seasonal, time, trend, resids, dw) in enumerate(least_autocorr):
+    plot_var(axs, i, f"{name} (DW={dw:.2f})", seasonal, time, trend, resids)
+
+for i, (name, seasonal, time, trend, resids, dw) in enumerate(most_autocorr):
+    plot_var(axs, i + 3, f"{name} (DW={dw:.2f})", seasonal, time, trend, resids)
+
+# Axis labels
+for ax in axs[:, 0]:
+    ax.set_xlabel("Time (Season Index)")
+for ax in axs[:, 1]:
+    ax.set_xlabel("Lag")
+for ax in axs[:, 2]:
+    ax.set_xlabel("Lag")
+
+plt.tight_layout(rect=[0, 0, 1, 0.96])
+plt.show()</code></pre>
+      </div>
+      <img src="Figures/Lecture1_Autocorrelation.png" alt="Autocorrelation.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
 
@@ -47,7 +370,10 @@
 
 
 
-    <p><strong>Next</strong>: <a href="#">To be continued</a></p>
+
+
+
+    <p><strong>Next</strong>: <a href="Project1.html">Project 1 – Oxygen Budget</a></p>
   </div>
 
   <div class="footer">
