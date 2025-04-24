@@ -9,6 +9,25 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      },
+      svg: {
+        fontCache: 'global',
+        scale: 1.0
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  
 </head>
 <body>
   <div class="sidebar">
@@ -359,6 +378,15 @@ plt.show()</code></pre>
 
       <p class="subtitle">Noise</p>
 
+      <strong>Red Noise Equation</strong>
+    <p>Red noise is modeled as a first-order autoregressive process:</p>
+    <p>\[x_t = \rho \cdot x_{t-1} + \epsilon_t\]</p>
+
+    <strong>e-Folding Time</strong>
+    <p>The e-folding time is computed as:</p>
+    <p>\[T_e = -\frac{1}{\ln(r_1)}\]</p>
+
+
 
 
 
@@ -468,6 +496,126 @@ plt.show()</code></pre>
       </div>
       <img src="Figures/Lecture1_RedNoiseWhiteNoise.png" alt="RedNoiseWhiteNoise.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
       <img src="Figures/Lecture1_AutoRedNoiseWhiteNoise.png" alt="AutoRedNoiseWhiteNoise.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import linregress
+
+# Load data
+df = pd.read_csv('ENSO.csv')
+numeric_cols = df.select_dtypes(include='number').columns
+
+# Container for results
+noise_results = []
+
+# Loop over variables
+for var in numeric_cols:
+    series = df[var].dropna().values
+    if len(series) < 120:
+        continue
+
+    # Seasonal average (3-month)
+    series = series[:(len(series) // 3) * 3]
+    seasonal = np.mean(series.reshape(-1, 3), axis=1)
+
+    # Anomaly
+    x = seasonal - np.mean(seasonal)
+
+    # Lag-1 autocorrelation
+    r1 = np.corrcoef(x[:-1], x[1:])[0, 1]
+
+    # e-folding time (in units of seasons)
+    if r1 > 0:
+        Te = -1 / np.log(r1)
+    else:
+        Te = np.nan
+
+    # Store
+    noise_results.append((var, r1, Te, seasonal))
+
+# Sort by r1 (highest to lowest memory)
+sorted_noise = sorted(noise_results, key=lambda x: x[1], reverse=True)
+
+print("\nTop 5 Red-Noise-like Variables (highest lag-1 autocorr):")
+for var, r1, Te, _ in sorted_noise[:5]:
+    print(f"{var:25s}  r1 = {r1:.3f}  Te = {Te:.2f} seasons")
+
+print("\nTop 5 White-Noise-like Variables (lowest lag-1 autocorr):")
+for var, r1, Te, _ in sorted_noise[-5:]:
+    print(f"{var:25s}  r1 = {r1:.3f}  Te = {Te:.2f} seasons")
+
+# Define ACF function
+def acf(x, max_lag=40):
+    x = x - np.mean(x)
+    n = len(x)
+    result = np.correlate(x, x, mode='full') / (n * np.var(x))
+    return result[n-1:n+max_lag]
+
+# Plot settings
+max_lag = 40
+if sorted_noise[0][0].lower() == 'year':
+    red_var, _, _, red_data = sorted_noise[1]
+else:
+    red_var, _, _, red_data = sorted_noise[0]
+white_var, _, _, white_data = sorted_noise[-1]
+
+lags = np.arange(max_lag + 1)
+acf_red = acf(red_data, max_lag)
+acf_white = acf(white_data, max_lag)
+
+fig, ax = plt.subplots(figsize=(12, 5), dpi=300)
+fig.patch.set_alpha(0.0)
+ax.set_facecolor('none')
+
+# Lines
+ax.plot(lags, acf_red, label=f'Red Noise-Like: {red_var}', color='#EC2D01', lw=2)
+ax.plot(lags, acf_white, label=f'White Noise-Like: {white_var}', color='#ffffff', lw=2)
+ax.plot(lags, [acf_red[1]**l for l in lags], '#FF7518', label=r'Exp. Decay ($r_1^\lambda$)', lw=1.5, linestyle='--')
+ax.axhline(0, color='#d6ebff', lw=1)
+
+# Grid and ticks
+ax.grid(True, linestyle='--', linewidth=0.5, color='#3c5c78', alpha=0.6)
+ax.tick_params(colors="#d6ebff")
+for label in ax.get_xticklabels() + ax.get_yticklabels():
+    label.set_color("#d6ebff")
+
+# Labels and title
+ax.set_xlabel('Lag (seasons)', color='#d6ebff')
+ax.set_ylabel('Autocorrelation', color='#d6ebff')
+ax.set_title('Autocorrelation Functions: Red vs White Noise Detection', color='#d6ebff')
+
+# Spines and legend
+for spine in ax.spines.values():
+    spine.set_color("#d6ebff")
+
+legend = ax.legend()
+legend.get_frame().set_alpha(0.3)
+for text in legend.get_texts():
+    text.set_color("#d6ebff")
+
+plt.tight_layout()
+plt.show()</code></pre>
+      </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+Top 5 Red-Noise-like Variables (highest lag-1 autocorr):
+Year                       r1 = 1.000  Te = 4780.78 seasons
+Global Temperature Anomalies  r1 = 0.958  Te = 23.06 seasons
+TNI                        r1 = 0.837  Te = 5.61 seasons
+Nino 4 SST Anomalies       r1 = 0.830  Te = 5.36 seasons
+MEI.v2                     r1 = 0.818  Te = 4.99 seasons
+
+Top 5 White-Noise-like Variables (lowest lag-1 autocorr):
+SOI                        r1 = 0.671  Te = 2.51 seasons
+Nino 3.4 SST               r1 = 0.591  Te = 1.90 seasons
+Nino 3 SST                 r1 = 0.390  Te = 1.06 seasons
+PNA                        r1 = 0.170  Te = 0.56 seasons
+Nino 1+2 SST               r1 = 0.157  Te = 0.54 seasons</pre>      
+      <img src="Figures/Lecture1_ENSORedNoiseWhiteNoise.png" alt="ENSORedNoiseWhiteNoise.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
 
