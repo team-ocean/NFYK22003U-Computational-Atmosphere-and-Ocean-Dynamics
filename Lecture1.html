@@ -51,10 +51,63 @@
   <div class="main-content">
     <h1>Lecture 1 – Introduction and Transport Processes</h1>
     <p class="subtitle">Autocorrelation</p>
-    
-    ENSO (El Niño-Southern Oscillation) is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
+    <p>Many climate data contain autocorrelation, we often can’t avoid it.</p>
+
+    <strong>Autocovariance Function (ACF)</strong>
+    <p>The autocovariance function \(\gamma(\tau)\) is the <a href="https://link.springer.com/referenceworkentry/10.1007/978-0-387-32833-1_85">covariance</a> of a time series with itself 
+        at another time by a time lag (or lead) \(\tau\). For a time series \(x(t)\)
+        with \(t_1\) and \(t_N\) as the starting and end points of the time series, it is:
+    \[
+    \gamma(\tau) = \frac{1}{(t_N - \tau) - t_1} \sum_{t = t_1}^{t_N - \tau} x'(t) \cdot x'(t + \tau)
+    \]
+
+    At lag \(\tau = 1\), assuming \(t_1 = 0\), \(t_N = N\):
+    \[
+    \gamma(1) = \frac{1}{N - 1} \left( x'(0) \cdot x'(1) + x'(1) \cdot x'(2) + x'(2) \cdot x'(3) + \dots + x'(N - 1) \cdot x'(N) \right)
+    \]
+
+    At lag \(\tau = 2\):
+    \[
+    \gamma(2) = \frac{1}{N - 2} \left( x'(0) \cdot x'(2) + x'(1) \cdot x'(3) + x'(2) \cdot x'(4) + \dots + x'(N - 2) \cdot x'(N) \right)
+    \]
+
+    At lag \(\tau = N - 1\):
+    \[
+    \gamma(N - 1) = x'(0) \cdot x'(N - 1) + x'(1) \cdot x'(N)
+    \]
+
+    At lag \(\tau = 0\):
+    \[
+    \gamma(0) = \overline{x'^2} = \text{variance}
+    \]
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">def autocovariance(x, lag):
+    x = np.asarray(x)
+    x_mean = np.mean(x)
+    N = len(x)
+    return np.sum((x[:N-lag] - x_mean) * (x[lag:] - x_mean)) / (N - lag)</code></pre>
+
+
+    </p>
+
+    <strong>Autocorrelation</strong>
+    <p>The autocorrelation \(\rho(\tau)\) is defined as the normalized autocovariance:\[ \rho(\tau) = \frac{\gamma(\tau)}{\gamma(0)} \]This gives the autocovariance at lag \(\tau\) divided by the variance of the time series, yielding a value between \(-1\) and \(1\).</p>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">def autocorrelation(x, lag):
+    x = np.asarray(x)
+    x_mean = np.mean(x)
+    x_var = np.var(x)
+    N = len(x)
+    return np.sum((x[:N-lag] - x_mean) * (x[lag:] - x_mean)) / ((N - lag) * x_var)</code></pre>
+</div>
+
+    <strong>Example: Autocorrelation in El Niño-Southern Oscillation (ENSO) Data</strong>
+    <p>ENSO (El Niño-Southern Oscillation) is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
     Using the <a href="https://www.kaggle.com/datasets/shabanamir/enso-data">ENSO-related standardized monthly climate data (1950–2024)</a> available on Kaggle, 
-    some examples of autocorrelation can be illustrated.
+    some examples of autocorrelation can be illustrated.</p>
 
     <p>Take a quick look at the actual structure of <code>ENSO.csv</code> first</p>
     <div class="code-block">
@@ -429,7 +482,7 @@ plt.show()</code></pre>
     <strong>White Noise</strong>
     <p>A white noise process is a special case of red noise process \(x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\) with the autocorrelation disappears:</p> <p>\[\rho(\Delta t > 0) = 0 \text{ or simply } a = 0\]</p> <p>This means that white noise has <em>zero autocorrelation</em>, implying no memory of previous values. In geophysical contexts, white noise is commonly assumed to follow a normal distribution.</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = b * epsilon[t] # when a = 0</code></pre> </div>
 
-
+    <strong>Example: Noise in El Niño-Southern Oscillation (ENSO) Data</strong>
 
       <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
