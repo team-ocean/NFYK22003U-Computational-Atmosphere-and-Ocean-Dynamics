@@ -51,6 +51,7 @@
   <div class="main-content">
     <h1>Lecture 1 – Introduction and Transport Processes</h1>
     <p class="subtitle">Autocorrelation</p>
+    
     ENSO (El Niño-Southern Oscillation) is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
     Using the <a href="https://www.kaggle.com/datasets/shabanamir/enso-data">ENSO-related standardized monthly climate data (1950–2024)</a> available on Kaggle, 
     some examples of autocorrelation can be illustrated.
@@ -384,6 +385,7 @@ plt.show()</code></pre>
     <strong>Lag-1 Autocorrelation</strong>
     <p>Measure the linear correlation between adjacent time steps, indicating memory in the signal.
     Multiply both sides of the red noise equation by \(x(t - \Delta t)\) and take the time average to get:</p> <p>\[\rho(\Delta t) = a\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">rho_lag1 = a</code></pre> </div>
+    It is also possible to use the <code>np.corrcoef</code> that computes the Pearson correlation coefficient matrix between one or more datasets:
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
         <pre><code class="language-python">rho_lag1 = np.corrcoef(x[:-1], x[1:])[0, 1]</code></pre>
@@ -408,6 +410,15 @@ plt.show()</code></pre>
 
     <strong>ACF For Red Noise Time Series</strong>
     <p>For any integer lag \(n\), the red noise autocorrelation follows:</p> <p>\[\rho(n\Delta t) = \rho(\Delta t)^n\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">rho_n = rho_1 ** n</code></pre> </div>
+    <p>[Pf] Using Mathematical Induction, <br>
+    Base Case (n = 1): \(\rho(\Delta t) = \rho(\Delta t)^1\)<br>
+    Assume for some integer \(k \geq 1\), the autocorrelation at lag \(k\Delta t\) satisfies\(\rho(k\Delta t) = \rho(\Delta t)^k\)<br>
+    For \(k+1\): \(\rho((k+1)\Delta t) = a \cdot \rho(k\Delta t)\)<br>
+    \(\Rightarrow \rho((k+1)\Delta t) = \rho(\Delta t) \cdot \rho(\Delta t)^k = \rho(\Delta t)^{k+1}\)<br>
+    \(\therefore\) For all integers \(n \geq 1\),
+    \(
+    \boxed{\rho(n\Delta t) = \rho(\Delta t)^n}
+    \)</p>
 
     <strong>e-Folding Time</strong>
     <p>The e-folding time scale \(T_e\) shows how long it takes for autocorrelation to decay to \(1/e \approx 0.368\) of the original value \(\rho(0) = 1\):</p> <p>\[T_e = -\frac{\Delta t}{\ln(a)}\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">Te = -dt / np.log(a)</code></pre> </div>
