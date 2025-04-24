@@ -88,6 +88,8 @@
     x_mean = np.mean(x)
     N = len(x)
     return np.sum((x[:N-lag] - x_mean) * (x[lag:] - x_mean)) / (N - lag)</code></pre>
+</div>
+
 
 
     </p>
