@@ -56,7 +56,7 @@
     <strong>Autocovariance Function (ACF)</strong>
     <p>The autocovariance function \(\gamma(\tau)\) is the <a href="https://link.springer.com/referenceworkentry/10.1007/978-0-387-32833-1_85">covariance</a> of a time series with itself 
         at another time by a time lag (or lead) \(\tau\). For a time series \(x(t)\)
-        with \(t_1\) and \(t_N\) as the starting and end points of the time series, it is:
+        with \(t_1\) and \(t_N\) as the starting and end points of the time series, \(x'(t)\) means remove the mean → it's the anomaly at time \(t\), the ACF is defined as:
     \[
     \gamma(\tau) = \frac{1}{(t_N - \tau) - t_1} \sum_{t = t_1}^{t_N - \tau} x'(t) \cdot x'(t + \tau)
     \]
@@ -80,7 +80,22 @@
     \[
     \gamma(0) = \overline{x'^2} = \text{variance}
     \]
+    [Pf] Using Mathematical Induction, <br>
+        Base Case \(\tau = 0\): \(\gamma(0) = \frac{1}{N} \sum_{t=0}^{N - 1} x'(t) \cdot x'(t) = \frac{1}{N} \sum_{t=0}^{N - 1} (x'(t))^2\)<br>
+        Assume the formula holds for arbitrary \(k\), where \(0 \leq k < N - 1\):
+        \(
+        \gamma(k) = \frac{1}{N - k} \sum_{t=0}^{N - k - 1} x'(t) \cdot x'(t + k)
+        \)<br>
+        \(\Rightarrow \gamma(k + 1) = \frac{1}{N - (k + 1)} \sum_{t = 0}^{N - (k + 1) - 1} x'(t) \cdot x'(t + k + 1)
+        = \frac{1}{N - k - 1} \sum_{t = 0}^{N - k - 2} x'(t) \cdot x'(t + k + 1)\)<br>
+        \(\Rightarrow \gamma(\tau) = \frac{1}{N - \tau} \sum_{t=0}^{N - \tau - 1} x'(t) \cdot x'(t + \tau)
+        \quad \forall\ \tau \in [0, N - 1]\)<br>
+        \(\because\) The total length is \(t_N - t_1 + 1\), \( t + \tau \leq t_N \Rightarrow t \leq t_N - \tau\)<br>
+        \(\therefore \boxed{\gamma(\tau) = \frac{1}{(t_N - \tau) - t_1} \sum_{t = t_1}^{t_N - \tau} x'(t) \cdot x'(t + \tau)}\) 
 
+    
+    
+    </p>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
         <pre><code class="language-python">def autocovariance(x, lag):
