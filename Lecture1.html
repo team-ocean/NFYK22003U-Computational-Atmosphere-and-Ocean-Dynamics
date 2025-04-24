@@ -376,20 +376,47 @@ plt.show()</code></pre>
 
 
 
-      <p class="subtitle">Noise</p>
+    <p class="subtitle">Noise</p>
 
-      <strong>Red Noise Equation</strong>
-    <p>Red noise is modeled as a first-order autoregressive process:</p>
-    <p>\[x_t = \rho \cdot x_{t-1} + \epsilon_t\]</p>
+    <strong>Red Noise Model</strong>
+    <p>A red noise time series is defined as an autoregressive process where each value depends on the previous value and a white noise term:</p> <p>\[x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = a * x[t - dt] + b * epsilon[t]</code></pre> </div>
+
+    <strong>Lag-1 Autocorrelation</strong>
+    <p>Measure the linear correlation between adjacent time steps, indicating memory in the signal.
+    Multiply both sides of the red noise equation by \(x(t - \Delta t)\) and take the time average to get:</p> <p>\[\rho(\Delta t) = a\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">rho_lag1 = a</code></pre> </div>
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">rho_lag1 = np.corrcoef(x[:-1], x[1:])[0, 1]</code></pre>
+    </div>
+    <p>\(
+        x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)
+        \)<br>
+        \(\Rightarrow
+        x(t + \Delta t) = a \cdot x(t) + b \cdot \epsilon(t + \Delta t)
+        \) , 
+        \(
+        x(t + 2\Delta t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t + 2\Delta t)
+        \)<br>
+    \(\Rightarrow
+        \overline{x(t) \cdot x(t + 2\Delta t)} = \overline{a \cdot x(t) \cdot x(t - \Delta t)} + \overline{b \cdot x(t) \cdot \epsilon(t + 2\Delta t)}    
+    \)<br>
+    Drop the last term uncorrelated noise \(\Rightarrow\) \(\rho(2\Delta t) = a \cdot \rho(\Delta t)\)<br>
+    Substitute \(a = \rho(\Delta t)\) \(\Rightarrow\) \(\boxed{\rho(2\Delta t) = \rho(\Delta t)^2}\)<br>
+    The lag-2 autocorrelation of a red-noise time series is equal to the lag-1 autocorrelation squared.
+
+    </p>
+
+    <strong>ACF For Red Noise Time Series</strong>
+    <p>For any integer lag \(n\), the red noise autocorrelation follows:</p> <p>\[\rho(n\Delta t) = \rho(\Delta t)^n\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">rho_n = rho_1 ** n</code></pre> </div>
 
     <strong>e-Folding Time</strong>
-    <p>The e-folding time is computed as:</p>
-    <p>\[T_e = -\frac{1}{\ln(r_1)}\]</p>
+    <p>The e-folding time scale \(T_e\) shows how long it takes for autocorrelation to decay to \(1/e \approx 0.368\) of the original value \(\rho(0) = 1\):</p> <p>\[T_e = -\frac{\Delta t}{\ln(a)}\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">Te = -dt / np.log(a)</code></pre> </div>
 
+    <strong>Exponential Decay of Autocorrelation</strong>
+    <p>Red noise autocorrelation also decays exponentially with lag time:</p> <p>\[\rho(n\Delta t) = e^{-n\Delta t / T_e}\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">rho_n = np.exp(-n * dt / Te)</code></pre> </div>
 
-
-
-
+    <strong>White Noise</strong>
+    <p>A white noise process is a special case of red noise process \(x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\) with the autocorrelation disappears:</p> <p>\[\rho(\Delta t > 0) = 0 \text{ or simply } a = 0\]</p> <p>This means that white noise has <em>zero autocorrelation</em>, implying no memory of previous values. In geophysical contexts, white noise is commonly assumed to follow a normal distribution.</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = b * epsilon[t] # when a = 0</code></pre> </div>
 
 
 
@@ -423,7 +450,7 @@ for var in numeric_cols:
     # Lag-1 autocorrelation
     r1 = np.corrcoef(x[:-1], x[1:])[0, 1]
 
-    # e-folding time (in units of seasons)
+    # e-folding time
     if r1 > 0:
         Te = -1 / np.log(r1)
     else:
