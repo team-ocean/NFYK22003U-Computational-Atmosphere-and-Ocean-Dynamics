@@ -50,7 +50,7 @@
 
   <div class="main-content">
     <h1>Lecture 1 – Introduction and Transport Processes</h1>
-    <p class="subtitle">Autocorrelation</p>
+    <h2>Autocorrelation</h2>
     <p>Many climate data contain autocorrelation, we often can’t avoid it.</p>
 
     <strong>Autocovariance Function (ACF)</strong>
@@ -89,8 +89,13 @@
     N = len(x)
     return np.sum((x[:N-lag] - x_mean) * (x[lag:] - x_mean)) / (N - lag)</code></pre>
 </div>
-
-
+    There is also the <code>np.correlate()</code> function that computes the cross-correlation of two 1-dimensional sequences.
+    It should be noticed that the definition of correlation above is not unique and sometimes correlation may be defined differently, 
+    the <code>np.correlate()</code> function uses \(c(\tau) = \sum_{t = t_1}^{t_N - \tau} x(t + \tau) \cdot \bar{y}(t)
+    \) to compute the autocovariance and does not include the  
+    \(
+    \frac{1}{(t_N - \tau) - t_1}
+    \) factor, so we have to make some adjustments to convert to autocorrelation.
 
     </p>
 
@@ -106,7 +111,7 @@
     return np.sum((x[:N-lag] - x_mean) * (x[lag:] - x_mean)) / ((N - lag) * x_var)</code></pre>
 </div>
 
-    <strong>Example: Autocorrelation in El Niño-Southern Oscillation (ENSO) Data</strong>
+    <h3>Example: Autocorrelation in El Niño-Southern Oscillation (ENSO) Data</h3>
     <p>ENSO (El Niño-Southern Oscillation) is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
     Using the <a href="https://www.kaggle.com/datasets/shabanamir/enso-data">ENSO-related standardized monthly climate data (1950–2024)</a> available on Kaggle, 
     some examples of autocorrelation can be illustrated.</p>
@@ -432,7 +437,7 @@ plt.show()</code></pre>
 
 
 
-    <p class="subtitle">Noise</p>
+    <h2>Noise</h2>
 
     <strong>Red Noise Model</strong>
     <p>A red noise time series is defined as an autoregressive process where each value depends on the previous value and a white noise term:</p> <p>\[x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = a * x[t - dt] + b * epsilon[t]</code></pre> </div>
@@ -484,7 +489,7 @@ plt.show()</code></pre>
     <strong>White Noise</strong>
     <p>A white noise process is a special case of red noise process \(x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\) with the autocorrelation disappears:</p> <p>\[\rho(\Delta t > 0) = 0 \text{ or simply } a = 0\]</p> <p>This means that white noise has <em>zero autocorrelation</em>, implying no memory of previous values. In geophysical contexts, white noise is commonly assumed to follow a normal distribution.</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = b * epsilon[t] # when a = 0</code></pre> </div>
 
-    <strong>Example: Noise in El Niño-Southern Oscillation (ENSO) Data</strong>
+    <h3>Example: Noise in El Niño-Southern Oscillation (ENSO) Data</h3>
 
       <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
