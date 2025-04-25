@@ -126,6 +126,25 @@
     return np.sum((x[:N-lag] - x_mean) * (x[lag:] - x_mean)) / ((N - lag) * x_var)</code></pre>
 </div>
 
+<strong>Durbin-Watson Test</strong>
+<p>The Durbin-Watson test statistic assesses the autocorrelation of residuals in a regression, it is defined as:
+    \[
+    DW = \frac{\sum_{t=2}^{T} (e_t - e_{t-1})^2}{\sum_{t=1}^{T} e_t^2}
+    \]The null hypothesis of the test is that there is no serial correlation in the residuals.The test statistic is approximately equal to \( 2 \cdot (1 - r) \), where \( r \) is the sample autocorrelation of the residuals.  
+    For \( r = 0 \), there is no serial correlation, the test statistic equals 2.
+    
+    This statistic will always be between 0 and 4
+    <ul>
+    <li>The closer to 0, the more evidence for positive serial correlation (residuals persist)</li>
+    <li>The closer to 4, the more evidence for negative serial correlation (residuals alternate)</li>
+    </ul>
+    The ideal value is exactly 2, which indicates independence of residuals. Durbin and Watson have established upper limit \(d_U\) and lower limit \(d_L\) for the significance level of which are appropriate to the hypothesis of zero first-order autocorrelation against the alternative hypothesis of positive first-order autocorrelation.
+
+    </p>
+<img src="Figures/Lecture1_DWTest.png" alt="DWTest.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+
     <h3>Example: Autocorrelation in El Niño-Southern Oscillation (ENSO) Data</h3>
     <p>ENSO (El Niño-Southern Oscillation) is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
     Using the <a href="https://www.kaggle.com/datasets/shabanamir/enso-data">ENSO-related standardized monthly climate data (1950–2024)</a> available on Kaggle, 
