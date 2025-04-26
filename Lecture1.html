@@ -144,6 +144,20 @@
 <img src="Figures/Lecture1_DWTest.png" alt="DWTest.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
+<strong>Anomaly Calculation</strong>
+<p>An anomaly is the difference between an actual value and some long-term average value.
+    Anomalies can be computed by removing the mean
+    \[
+    x' = x - \bar{x}
+    \]
+    This isolates deviations from the mean and highlights variability around a baseline.  
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">x = series - np.mean(series)</code></pre>
+</div>
+</p>
+
+
 
     <h3>Example: Autocorrelation in El Niño-Southern Oscillation (ENSO) Data</h3>
     <p>ENSO (El Niño-Southern Oscillation) is a periodic fluctuation (every 2–7 years) in wind and sea surface temperature over the tropical eastern Pacific Ocean. It affects the global climate and is a major driver of Earth's interannual climate variability, causing various climate anomalies. 
@@ -756,6 +770,7 @@ Nino 1+2 SST               r1 = 0.157  Te = 0.54 seasons</pre>
 
 
 
+    <h3>The Climate Casino</h3>
 
 
 

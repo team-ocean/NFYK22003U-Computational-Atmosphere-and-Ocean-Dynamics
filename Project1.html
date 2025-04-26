@@ -9,7 +9,26 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      },
+      svg: {
+        fontCache: 'global',
+        scale: 1.0
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
+
 <body>
   <div class="sidebar">
     <img src="Logo_NS-blackboard-Expand.png" alt="Sidebar Image">
@@ -429,6 +448,241 @@ plt.tight_layout(rect=[0, 0, 1, 0.97])
 plt.show()</code></pre>
 </div>
 <img src="Figures/Project1_Colorbar_Normalization_Examples.png" alt="Colorbar_Normalization_Examples.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+<br>
+
+
+<strong>Boxcar Smoothing</strong>
+<p>Boxcar smoothing is a simple and effective smoothing technique that acts like a low-pass filter by removing high-frequency noise from data. It
+sums several neighboring points within a "box" window, averages them, and plots the averaged value at the center position.</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+
+# --- Generate clean sine signal ---
+N = 20
+dt = 1.0
+A = 1.0
+f = 0.1
+omega = 2 * np.pi * f
+timesteps = np.linspace(1, N, N)
+signal = A * np.sin(omega * timesteps)
+
+# --- Add noise ---
+np.random.seed(1)
+noise = 0.3 * (np.random.rand(N) - 0.5)
+noisy_signal = signal + noise
+
+# --- Boxcar smoothing ---
+def boxcar_smooth(x, w):
+    smoothed = np.zeros_like(x)
+    half_w = w // 2
+    for i in range(len(x)):
+        left = max(0, i - half_w)
+        right = min(len(x), i + half_w + 1)
+        smoothed[i] = np.mean(x[left:right])
+    return smoothed
+
+w = 5
+smoothed_signal = boxcar_smooth(noisy_signal, w=w)
+
+# --- Plot with styled settings ---
+axis_color = '#d6ebff'
+noise_color = 'red'
+smooth_color = '#66c2ff'
+box_color = '#00ffff'
+
+fig, ax = plt.subplots(figsize=(10, 5), dpi=300)
+fig.patch.set_alpha(0.0)
+ax.set_facecolor('none')
+
+# Scatter noisy and smoothed data
+ax.scatter(timesteps, noisy_signal, color=noise_color, s=30, label='Noisy Data', marker='X')
+ax.scatter(timesteps, smoothed_signal, color=smooth_color, s=50, label='Smoothed')
+
+# Draw example boxcar windows
+for center in [3, 10, 17]:
+    left = max(0, center - w // 2)
+    right = min(N, center + w // 2 + 1)
+    x_min = timesteps[left]
+    x_max = timesteps[right - 1]
+    y_min = min(noisy_signal[left:right]) - 0.1
+    y_max = max(noisy_signal[left:right]) + 0.1
+    rect = Rectangle((x_min, y_min), x_max - x_min, y_max - y_min,
+                     edgecolor=box_color, facecolor='none', lw=2)
+    ax.add_patch(rect)
+
+ax.set_title("Boxcar Smoothing", color=axis_color)
+ax.set_xlabel("Time", color=axis_color)
+ax.set_ylabel("Signal", color=axis_color)
+ax.set_ylim(-1.5, 1.5)
+ax.grid(True, linestyle='--', color='#3c5c78', alpha=0.6)
+
+# Legend
+legend = ax.legend()
+legend.get_frame().set_alpha(0.3)
+for text in legend.get_texts():
+    text.set_color(axis_color)
+
+
+# Axis ticks and spines
+ax.tick_params(colors=axis_color)
+for spine in ax.spines.values():
+    spine.set_color(axis_color)
+
+plt.tight_layout()
+plt.show()</code></pre>
+</div>
+<img src="Figures/Lecture1_BoxcarSmoothing.png" alt="BoxcarSmoothing.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+<p>The improvement in signal-to-noise ratio is proportional to the square root of the number of points inside the boxcar, but it comes with a trade-off: \( N-1 \) edge points are lost, and the data density decreases by a fraction of \(\frac{N-1}{N}\). 
+  If the boxcar size is too large relative to the data sampling rate, significant features can be smoothed out and lost. Therefore boxcar smoothing is best applied when the data are sampled at a sufficiently high rate compared to the underlying signal variation.</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# --- Generate clean sine signal ---
+N = 1000           # Number of samples
+dt = 1.0 / 100.0    # 100 samples/sec
+A = 5.0             # Amplitude
+f = 0.5             # Frequency in Hz
+omega = 2 * np.pi * f
+timesteps = np.linspace(0.0, N*dt, N)
+signal = A * np.sin(omega * timesteps)
+
+# --- Add noise ---
+np.random.seed(0)  # For reproducibility
+noise = 3 * (np.random.rand(N) - 0.5)  # Random noise centered around 0
+noisy_signal = signal + noise
+
+# --- Boxcar smoothing ---
+def boxcar_smooth(x, w):
+    """Smooth 1D array x using a boxcar (moving average) of width w."""
+    smoothed = np.zeros_like(x)
+    half_w = w // 2
+    for i in range(len(x)):
+        left = max(0, i - half_w)
+        right = min(len(x), i + half_w + 1)
+        smoothed[i] = np.mean(x[left:right])
+    return smoothed
+
+smoothed_signal = boxcar_smooth(noisy_signal, w=13)
+
+# --- Plot noisy vs smoothed with transparent background and styled text ---
+axis_color = '#d6ebff'  # light blue for axis
+noise_color = '#aeeafc' # lighter color for noisy points
+
+fig, axs = plt.subplots(1, 2, figsize=(14, 5), dpi=300)
+fig.patch.set_alpha(0.0)
+
+# Plot 1: Noisy Signal
+axs[0].set_facecolor('none')
+axs[0].plot(timesteps, noisy_signal, '.', color=noise_color, alpha=0.7)  # Change color here
+axs[0].set_xlim(0, 4)
+axs[0].set_ylim(-8, 8)
+axs[0].set_title("Noisy Signal", color=axis_color)
+axs[0].tick_params(colors=axis_color)
+axs[0].set_xlabel("Time", color=axis_color)
+axs[0].set_ylabel("Amplitude", color=axis_color)
+for spine in axs[0].spines.values():
+    spine.set_color(axis_color)
+
+# Plot 2: Smoothed Signal
+axs[1].set_facecolor('none')
+axs[1].plot(timesteps, smoothed_signal, 'r')
+axs[1].set_xlim(0, 4)
+axs[1].set_ylim(-8, 8)
+axs[1].set_title("Smoothed Signal (Boxcar w=13)", color=axis_color)
+axs[1].tick_params(colors=axis_color)
+axs[1].set_xlabel("Time", color=axis_color)
+axs[1].set_ylabel("Amplitude", color=axis_color)
+for spine in axs[1].spines.values():
+    spine.set_color(axis_color)
+
+plt.tight_layout()
+plt.show()</code></pre>
+</div>
+<img src="Figures/Lecture1_BoxcarSmoothingNoiseSignal.png" alt="BoxcarSmoothingNoiseSignal" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+
+
+
+
+
+
+<p>The code below shows how to apply the boxcar smoothing to 2D heatmap data before plotting, exactly like what we did for 1D signals</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import colors
+
+# --- Generate Sample 2D Data ---
+N = 100
+X, Y = np.mgrid[-3:3:complex(0, N), -2:2:complex(0, N)]
+Z1 = np.exp(-X**2 - Y**2)
+Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
+Z = (Z1 - Z2) * 2
+
+# --- Boxcar Smoothing 2D ---
+def boxcar_smooth_2d(data, w):
+    smoothed = np.zeros_like(data)
+    half_w = w // 2
+    for i in range(data.shape[0]):
+        for j in range(data.shape[1]):
+            left_i = max(0, i - half_w)
+            right_i = min(data.shape[0], i + half_w + 1)
+            left_j = max(0, j - half_w)
+            right_j = min(data.shape[1], j + half_w + 1)
+            smoothed[i, j] = np.mean(data[left_i:right_i, left_j:right_j])
+    return smoothed
+
+Z_smoothed = boxcar_smooth_2d(Z, w=50)
+
+# --- Quantile Bin Normalization ---
+boundaries = np.quantile(Z, np.linspace(0, 1, 10))
+quantile_norm = colors.BoundaryNorm(boundaries=boundaries, ncolors=256)
+
+# --- Plotting Style Settings ---
+plt.rcParams['text.color'] = '#d6ebff'
+plt.rcParams['axes.labelcolor'] = '#d6ebff'
+plt.rcParams['xtick.color'] = '#d6ebff'
+plt.rcParams['ytick.color'] = '#d6ebff'
+plt.rcParams['axes.edgecolor'] = '#d6ebff'
+
+fig, axs = plt.subplots(1, 2, figsize=(14, 6), dpi=300)
+fig.patch.set_alpha(0)
+for ax in axs:
+    ax.set_facecolor('none')
+
+# --- Plot Original ---
+pcm1 = axs[0].pcolormesh(X, Y, Z, norm=quantile_norm, cmap='coolwarm', shading='auto')
+fig.colorbar(pcm1, ax=axs[0])
+axs[0].set_title('Original Data', fontsize=14)
+axs[0].set_aspect('equal')
+
+# --- Plot Smoothed ---
+pcm2 = axs[1].pcolormesh(X, Y, Z_smoothed, norm=quantile_norm, cmap='coolwarm', shading='auto')
+fig.colorbar(pcm2, ax=axs[1])
+axs[1].set_title('Smoothed Data (Boxcar w=50)', fontsize=14)
+axs[1].set_aspect('equal')
+
+plt.suptitle('Boxcar Smoothing on 2D Heatmap (Quantile Normalization)', fontsize=16)
+plt.tight_layout(rect=[0, 0, 1, 0.96])
+plt.show()</code></pre>
+</div>
+<img src="Figures/Lecture1_BoxcarHeatmap.png" alt="BoxcarHeatmap" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+
+
+
+
+
 
     <p><strong>Next</strong>: <a href="#">To be continued</a></p>
   </div>
