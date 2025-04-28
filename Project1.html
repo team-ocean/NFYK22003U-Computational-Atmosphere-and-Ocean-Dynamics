@@ -75,6 +75,44 @@
       <li>Fluid variables live on “Arakawa Grids”</li><a href="https://2024.sci-hub.st/4320/05b2696e6581c30889a3033acb0fa7c9/arakawa1977.pdf">(Arakawa and Lamb 1977)</a>
       <li>Variables’ positions are offset</li>
       <li>Finite-volume calculations must account for this to get correct results</li>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">class ArakawaCGrid(object):
+    def __init__(self, nx, ny, Lx, Ly):
+        super(ArakawaCGrid, self).__init__()
+        self.nx = nx
+        self.ny = ny
+        self.Lx = Lx
+        self.Ly = Ly
+        self.true_slice = [slice(1,-1)]*2  # slice of state arrays w/out BCs
+
+        # Arakawa-C grid
+        # +-- v --+
+        # |       |    * (nx, ny)   phi points at grid centres
+        # u  phi  u    * (nx+1, ny) u points on vertical edges  (u[0] and u[nx] are boundary values)
+        # |       |    * (nx, ny+1) v points on horizontal edges
+        # +-- v --+
+        self._u = np.zeros((nx+3, ny+2), dtype=np.float)
+        self._v = np.zeros((nx+2, ny+3), dtype=np.float)
+        self._phi = np.zeros((nx+2, ny+2), dtype=np.float)
+
+        self.dx = dx = float(Lx) / nx
+        self.dy = dy = float(Ly) / ny
+
+        # positions of the nodes
+        self.ux = (-Lx/2 + np.arange(nx+1)*dx)[:, np.newaxis]
+        self.vx = (-Lx/2 + dx/2.0 + np.arange(nx)*dx)[:, np.newaxis]
+
+        self.vy = (-Ly/2 + np.arange(ny+1)*dy)[np.newaxis, :]
+        self.uy = (-Ly/2 + dy/2.0 + np.arange(ny)*dy)[np.newaxis, :]
+
+        self.phix = self.vx
+        self.phiy = self.uy
+
+        self.shape = self.phi.shape
+        self._shape = self._phi.shape</code></pre>
+      </div>
     </ul>
 
 
