@@ -329,6 +329,14 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: rgba(102, 170, 255, 0.5); /* slightly brighter on hover */
 }
 
+.figure-caption {
+  font-style: italic;
+  font-size: 0.95em; /* slightly smaller than body text */
+  color: #d6ebff;
+  text-align: center;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
 
 
   

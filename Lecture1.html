@@ -42,6 +42,7 @@
           <ul class="sub-menu">
             <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
           </ul>
+          <li><a href="Lecture2.html">Lecture 2</a></li>
           <li><a href="References.html">References</a></li>
         </li>
       </ul>
@@ -50,6 +51,174 @@
 
   <div class="main-content">
     <h1>Lecture 1 – Introduction and Transport Processes</h1>
+    <h2>Biological Carbon Pump</h2>
+    <ul>
+        <li>Process where \( \mathrm{CO_2} \) from the atmosphere is absorbed by surface ocean phytoplankton through photosynthesis and transferred to deeper ocean layers via sinking organic particles</li>
+        <li>The Biological Carbon Pump leads to an increase of \( \mathrm{DIC} \) in the ocean’s interior over the concentration that would result from only the solubility pump</li>
+        <li>It regulates atmospheric \( \mathrm{CO_2} \) levels and influences Earth’s climate over geological timescales</li>
+    </ul>
+    <div style="text-align: center;">
+        <img src="Figures/Lecture1_BiologicalCarbonPump1.png" alt="BiologicalCarbonPump1" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+        <img src="Figures/Lecture1_BiologicalCarbonPump2.png" alt="BiologicalCarbonPump2" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+        <div class="figure-caption">(Illustration by Charin Park, © Woods Hole Oceanographic Institution)</div>
+      </div>
+      
+    
+    <h2>The Solubility Pump</h2>
+    <ul>
+        <li>Physical process of solving \(\mathrm{CO_2}\) in ocean water</li>
+        <li>\(\mathrm{CO_2}\) and water react to form \(\mathrm{H_2CO_3}\) (carbonic acid)</li>
+        <li>Since \(\mathrm{H_2CO_3}\) is a weak acid and has two \(\mathrm{H^+}\), it can act as a buffer</li>
+        <li>90% of dissolved inorganic carbon (DIC) is bicarbonate \(\mathrm{HCO_3^-}\)</li>
+    </ul>
+
+    \(\begin{align}
+    CO_2 + H_2O &\rightarrow 2H + CO_3^{2-} \\
+    H + CO_3^{2-} &\rightarrow HCO_3^{-} 
+    \end{align}\)
+
+
+    <h2>The Tracer Equation</h2>
+    <p>\(T_t = - \mathbf{u} \cdot \nabla T + k \cdot \nabla^2 T + S(\text{source})\)</p>
+    Tracer-Equation after Reynolds averaging: \(T_t = - \mathbf{u} \cdot \nabla T + k_{turb} \cdot \nabla^2 T + S(\text{source})\)<br>
+    \(k_{turb}\) = turbulent diffusivity (depends on size and strength of waves or eddies) 
+    <img src="Figures/Lecture1_NablaTerms.png" alt="NablaTerms" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+import imageio.v3 as iio
+import os
+
+# Parameters
+nx, ny = 50, 50
+dx, dy = 1.0, 1.0
+dt = 0.01
+k = 0.1
+nt = 500
+u = 1.0
+d = 0.5
+
+# Grid
+x = np.linspace(0, (nx-1)*dx, nx)
+y = np.linspace(0, (ny-1)*dy, ny)
+X, Y = np.meshgrid(x, y, indexing='ij')
+
+# Initial tracer field
+T_initial = np.exp(-((X-25)**2 + (Y-25)**2)/50)
+S = np.zeros((nx, ny))
+S[20:30, 20:30] = 0.1
+
+# Laplacian
+def laplacian(T, dx, dy):
+    return (
+        (np.roll(T, -1, axis=0) - 2*T + np.roll(T, 1, axis=0)) / dx**2 +
+        (np.roll(T, -1, axis=1) - 2*T + np.roll(T, 1, axis=1)) / dy**2
+    )
+
+# Boundary conditions
+def apply_boundary_conditions(T):
+    T[0, :] = T[1, :]
+    T[-1, :] = T[-2, :]
+    T[:, 0] = T[:, 1]
+    T[:, -1] = T[:, -2]
+    return T
+
+# Precompute frames
+T_advect_list, T_diffuse_list, T_source_list, T_full_list = [], [], [], []
+
+T_advect = T_initial.copy()
+T_diffuse = T_initial.copy()
+T_source = T_initial.copy()
+T_full = T_initial.copy()
+
+for n in tqdm(range(nt), desc="Precomputing frames"):
+    # Advection
+    dTdx = (np.roll(T_advect, -1, axis=0) - np.roll(T_advect, 1, axis=0)) / (2*dx)
+    dTdy = (np.roll(T_advect, -1, axis=1) - np.roll(T_advect, 1, axis=1)) / (2*dy)
+    advect = -(u * dTdx + d * dTdy)
+    T_advect += dt * advect
+    T_advect = apply_boundary_conditions(T_advect)
+    T_advect_list.append(T_advect.copy())
+
+    # Diffusion
+    diffuse = k * laplacian(T_diffuse, dx, dy)
+    T_diffuse += dt * diffuse
+    T_diffuse = apply_boundary_conditions(T_diffuse)
+    T_diffuse_list.append(T_diffuse.copy())
+
+    # Source
+    T_source += dt * S
+    T_source = apply_boundary_conditions(T_source)
+    T_source_list.append(T_source.copy())
+
+    # Full
+    dTdx_full = (np.roll(T_full, -1, axis=0) - np.roll(T_full, 1, axis=0)) / (2*dx)
+    dTdy_full = (np.roll(T_full, -1, axis=1) - np.roll(T_full, 1, axis=1)) / (2*dy)
+    advect_full = -(u * dTdx_full + d * dTdy_full)
+    diffuse_full = k * laplacian(T_full, dx, dy)
+    T_full += dt * (advect_full + diffuse_full + S)
+    T_full = apply_boundary_conditions(T_full)
+    T_full_list.append(T_full.copy())
+
+# Save frames as images
+if not os.path.exists('frames'):
+    os.makedirs('frames')
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10), facecolor='none')
+titles = ['Advection Only', 'Diffusion Only', 'Source Only', 'Full Model']
+pcm_list = []
+
+for ax, title in zip(axes.flat, titles):
+    pcm = ax.pcolormesh(X, Y, np.zeros_like(T_initial), shading='nearest', cmap='coolwarm', vmin=0, vmax=1)
+    ax.set_title(title, color='#d6ebff')
+    ax.set_xlabel('x', color='#d6ebff')
+    ax.set_ylabel('y', color='#d6ebff')
+    ax.set_facecolor('none')
+    ax.tick_params(colors='#d6ebff')
+    for spine in ax.spines.values():
+        spine.set_edgecolor('#d6ebff')
+    pcm_list.append(pcm)
+
+fig.patch.set_alpha(0.0)
+
+# Add colorbar
+cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7])
+cbar = fig.colorbar(pcm_list[-1], cax=cbar_ax)
+cbar.set_label('Tracer Concentration', color='#d6ebff')
+cbar.ax.yaxis.set_tick_params(color='#d6ebff')
+plt.setp(plt.getp(cbar.ax.axes, 'yticklabels'), color='#d6ebff')
+
+filenames = []
+for i in tqdm(range(nt), desc='Saving frames'):
+    fields = [T_advect_list[i], T_diffuse_list[i], T_source_list[i], T_full_list[i]]
+    for pcm, T in zip(pcm_list, fields):
+        pcm.set_array(T.ravel())
+    fname = f'frames/frame_{i:04d}.png'
+    plt.savefig(fname, dpi=100, transparent=True)
+    filenames.append(fname)
+
+plt.close()
+
+# Create GIF from saved frames
+print('Creating GIF...')
+frames = [iio.imread(fname) for fname in filenames]
+iio.imwrite('Lecture1_TracerFieldEvolution.gif', frames, duration=1/30, loop=0)  # 30 fps, infinite replay
+
+# Clean up
+for fname in filenames:
+    os.remove(fname)
+os.rmdir('frames')
+print("Saved as transparent tracer_evolution.gif!")</code></pre>
+    </div>
+    <img src="Figures/Lecture1_TracerFieldEvolution.gif" alt="TracerFieldEvolution" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+
+
+
     <h2>Autocorrelation</h2>
     <p>Many climate data contain autocorrelation, we often can’t avoid it.</p>
 

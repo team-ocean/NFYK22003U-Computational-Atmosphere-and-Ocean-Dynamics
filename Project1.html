@@ -42,6 +42,7 @@
           <ul class="sub-menu">
             <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
           </ul>
+          <li><a href="Lecture2.html">Lecture 2</a></li>
           <li><a href="References.html">References</a></li>
         </li>
       </ul>
@@ -61,6 +62,24 @@
       <li>Describe in your own words and based on your analysis above what explains the DIC maximum in the North Pacific.</li>
       <li>Form groups of 2 or 3 and hand in the answers as PDF by Sunday, midnight (i.e. email to <a href="mailto:mjochum@nbi.dk">mjochum@nbi.dk</a>).</li>
     </ul>
+
+    <h2>Staggered Grids</h2>
+
+    <p>We must choose a grid in such a way that both volume \(V_1\) and \(V_2\) can be accommodated and the 
+      natural way to do 
+      that is take \(u\) and \(v\) in different nodal points.
+      Such an arrangement of nodal point is called a <strong>staggered grid</strong><br>
+      When discretizing a scalar equation, it is often choose the grid that the boundary conditions can be easily implemented.
+    <img src="Figures/Project1_StaggeredGrid.png" alt="StaggeredGrid" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+    <ul>
+      <li>Fluid variables live on “Arakawa Grids”</li><a href="https://2024.sci-hub.st/4320/05b2696e6581c30889a3033acb0fa7c9/arakawa1977.pdf">(Arakawa and Lamb 1977)</a>
+      <li>Variables’ positions are offset</li>
+      <li>Finite-volume calculations must account for this to get correct results</li>
+    </ul>
+
+
+
+    <h2>Commands and Codes</h2>
 
     <p>The <code>pwd</code> command writes to standard output the full path name of your current directory (from the root directory). All directories are separated by a <code>/</code> (slash). Check the current directory:</p>
     <div class="code-block">
@@ -684,7 +703,7 @@ plt.show()</code></pre>
 
 
 
-    <p><strong>Next</strong>: <a href="#"> Lecture 2 – The Dynamics of Rotating Planets</a></p>
+    <p><strong>Next</strong>: <a href="Lecture2.html">Lecture 2 – The Dynamics of Rotating Planets</a></p>
   </div>
 
   <div class="footer">
