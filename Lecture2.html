@@ -71,6 +71,67 @@
 
     <h2>Steady State Assumption</h2>
 
+    <h2>Incompressible Navier-Stokes Equations</h2>
+    \[\left(\frac{\partial}{\partial t} + \mathbf{u}\cdot \nabla - \nu \nabla^2\right) \mathbf{u} = - \frac{1}{\rho} \nabla p + f \]
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+def incompressible_navier_stokes(u, v, dx, dy, dt, viscosity):
+    # Spatial derivatives
+    du_dx = np.gradient(u, dx, axis=1)
+    du_dy = np.gradient(u, dy, axis=0)
+    dv_dx = np.gradient(v, dx, axis=1)
+    dv_dy = np.gradient(v, dy, axis=0)
+    
+    # Laplacians
+    laplacian_u = np.gradient(du_dx, dx, axis=1) + np.gradient(du_dy, dy, axis=0)
+    laplacian_v = np.gradient(dv_dx, dx, axis=1) + np.gradient(dv_dy, dy, axis=0)
+    
+    # Update velocities
+    u_new = u - dt * (u * du_dx + v * du_dy) + dt * viscosity * laplacian_u
+    v_new = v - dt * (u * dv_dx + v * dv_dy) + dt * viscosity * laplacian_v
+    
+    return u_new, v_new
+
+# Example 
+nx, ny = 50, 50
+dx, dy = 1.0 / nx, 1.0 / ny
+x, y = np.meshgrid(np.linspace(0, 1, nx), np.linspace(0, 1, ny))
+
+u = np.sin(2 * np.pi * x) * np.cos(2 * np.pi * y)
+v = -np.cos(2 * np.pi * x) * np.sin(2 * np.pi * y)
+
+dt = 0.001
+viscosity = 0.1
+
+# Time-stepping
+for _ in range(100):
+    u, v = incompressible_navier_stokes(u, v, dx, dy, dt, viscosity)
+
+# Plot
+fig, ax = plt.subplots(figsize=(8, 6), dpi = 300)
+
+fig.patch.set_alpha(0.0)
+ax.set_facecolor('none')
+
+# Streamplot
+ax.streamplot(x, y, u, v, color='#d6ebff')
+
+ax.set_xlabel('x', color='#d6ebff', fontsize=14)
+ax.set_ylabel('y', color='#d6ebff', fontsize=14)
+ax.tick_params(colors='#d6ebff')
+ax.set_title("Incompressible Flow Field", color='#d6ebff', fontsize=16)
+
+# Set frame (spines) color
+for spine in ax.spines.values():
+    spine.set_edgecolor('#d6ebff')
+
+plt.show()</code></pre>
+</div>
+    <img src="Figures/Lecture2_IncompressibleNS.png" alt="IncompressibleNS" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
     <h2>Ekman Transport</h2>
 
     <h2>Sverdrup Transport</h2>
