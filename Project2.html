@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      },
+      svg: {
+        fontCache: 'global',
+        scale: 1.0
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+  <div class="sidebar">
+    <img src="Logo_NS-blackboard-Expand.png" alt="Sidebar Image">
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="Welcome.html">Welcome to NFYK22003U</a></li>
+        <li><a href="CourseInformation.html">Course Information</a></li>
+        <li><a href="Schedule2025.html">Schedule 2025</a></li>
+        <li>
+          <a href="Lecture1.html">Lecture 1</a>
+          <ul class="sub-menu">
+            <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
+          </ul>
+          <li><a href="Lecture2.html">Lecture 2</a></li>
+          <li><a href="References.html">References</a></li>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="main-content">
+    <h1>Project 2 – The Sverdrup Relation</h1>
+
+
+    <h2>Commands and Codes</h2>
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">cd ~/erda_mount</code></pre>
+      </div>
+
+    <p>The Veros cannot overwrite an existing file by default, so if you want to re-run the same script, do something like :</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">rm global_4deg.*.nc global_4deg_*.restart.h5</code></pre>
+    </div>
+
+    <p>Now let's start with your own script</p>
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">cd ~/vs-setups/
+mkdir acc_basic
+cd acc_basic
+</code></pre>
+      </div>
+
+      <p>Save the script <code>acc_basic.py</code> inside this folder, if you are using Jupyter Notebook, in a notebook cell, write:</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">%%writefile acc_basic/acc_basic.py
+
+from veros import VerosSetup, veros_routine
+from veros.variables import allocate, Variable
+from veros.distributed import global_min, global_max
+from veros.core.operators import numpy as npx, update, at
+# (the rest of the script)
+</code></pre>
+      </div>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">conda activate veros
+veros run acc_basic.py --force-overwrite
+</code></pre>
+      </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <p><strong>Next</strong>: <a href="#">To be continued</a></p>
+  </div>
+
+  <div class="footer">
+    Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>
+    It is very much a work in progress! Have you spotted a mistake or an error on this page? 
+    Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
+    &copy; 2025 TeamOcean | NBI/KU
+  </div>
+
+  <script>
+    function copyToClipboard(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      });
+    }
+  </script>
+</body>
+</html>
