@@ -42,6 +42,7 @@
             <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
           </ul>
           <li><a href="Lecture2.html">Lecture 2</a></li>
+            <li><a href="Project2.html">Project 2 – The Sverdrup Relation</a></li>
           <li><a href="References.html">References</a></li>
         </li>
       </ul>
@@ -52,20 +53,186 @@
     <h1>Project 2 – The Sverdrup Relation</h1>
 
 
-    <h2>Commands and Codes</h2>
+    <h2>Ocean Modelling with Veros</h2>
+
+    <h3>Running Veros on ERDA</h3>
 
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
         <pre><code class="language-python">cd ~/erda_mount</code></pre>
       </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">/home/jovyan/erda_mount</pre>
 
-    <p>The Veros cannot overwrite an existing file by default, so if you want to re-run the same script, do something like :</p>
+      
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">!git clone https://github.com/team-ocean/veros.git -b v1.5.2</code></pre>
+      </div>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">cd veros</code></pre>
+      </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">/home/jovyan/erda_mount/veros</pre>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">conda env create -f conda-environment.yml</code></pre>
+      </div>
+
+      <p>Inside the ERDA Jupyter notebook, you cannot do conda activate veros normally, because Jupyter runs inside its own kernel.
+        If you want to properly activate the Veros conda environment and run Veros, you must open a Terminal on ERDA.
+        In the Terminal, type:
+      </p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">conda activate veros</code></pre>
+      </div>
+
+      <p>Then create your setups</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">mkdir ~/vs-setups
+cd ~/vs-setups
+veros copy-setup global_4deg
+cd global_4deg
+</code></pre>
+      </div>
+
+      <p>Right now, your default <code>global_4deg.py</code> has <code>settings.runlen = 0</code>, which means "run for 0 seconds". Edit the setup file to actually run for longer</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">settings.runlen = 86400 * 365 * 10  # 10 model years, = 10 years × 365 days × 86400 seconds/day</code></pre>
+      </div>
+
+      <p>Now run the simulation</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">veros run global_4deg.py</code></pre>
+      </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">veros run global_4deg.py
+Importing core modules
+ Using computational backend numpy on cpu
+ Runtime settings are now locked
+
+Running model setup
+ removing an annual mean heat flux imbalance of 7.860702e-02 W/m^2
+Initializing streamfunction method
+Computing ILU preconditioner...
+ Solving for boundary contribution by island 0
+ Solving for boundary contribution by island 1
+ Solving for boundary contribution by island 2
+ Solving for boundary contribution by island 3
+ Solving for boundary contribution by island 4
+ Solving for boundary contribution by island 5
+ Running diagnostic "averages" every 1.0 days
+ Writing output for diagnostic "averages" every 1.0 years
+ Running diagnostic "energy" every 1.0 days
+ Writing output for diagnostic "energy" every 1.0 years
+ Running diagnostic "overturning" every 1.0 days
+ Writing output for diagnostic "overturning" every 1.0 years
+ Writing output for diagnostic "snapshot" every 1.0 years
+Diffusion grid factor delta_iso1 = 0.013376791936035174
+
+Starting integration for 10.0 years
+ Writing snapshot at 1.00 years                                                  
+ Writing snapshot at 2.00 years                                                  
+ Writing snapshot at 3.00 years                                                  
+ Writing snapshot at 4.00 years                                                  
+ Writing snapshot at 5.00 years                                                  
+ Writing snapshot at 6.00 years                                                  
+ Writing snapshot at 7.00 years                                                 
+ Writing snapshot at 8.00 years                                                 
+ Writing snapshot at 9.00 years                                                 
+ Writing snapshot at 10.00 years                                                  
+ Current iteration: 3600  (10.00/10.00y | 100.0% | 2.38m/(model year) | 0.0s left)
+Integration done
+
+Writing restart file global_4deg_3600.restart.h5</pre>
+
+    <p>It should be noted that Veros cannot overwrite an existing file by default, so if you want to re-run the same script, do something like :</p>
     <div class="code-block">
       <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
       <pre><code class="language-python">rm global_4deg.*.nc global_4deg_*.restart.h5</code></pre>
     </div>
 
-    <p>Now let's start with your own script</p>
+    <p>After a successful run, Veros writes NetCDF files in the current folder <code>~/vs-setups/global_4deg/</code>.
+        You will find files like:
+        <code>global_4deg.snapshot.nc</code>,
+        
+        <code>global_4deg.averages.nc</code>,
+        
+        <code>global_4deg.energy.nc</code>, 
+        
+        <code>global_4deg.overturning.nc</code>,
+        
+        <code>global_4deg_0000.restart.h5</code>.
+    
+    In your notebook, you can load Veros output
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import os
+os.chdir("/home/jovyan/vs-setups/global_4deg")  # Go to correct directory
+
+import xarray as xr
+import matplotlib.pyplot as plt
+import cmocean
+
+ds = xr.open_dataset("global_4deg.snapshot.nc", engine="h5netcdf")
+
+# Extract surface temperature
+temp_surface = ds.temp.isel(Time=-1, zt=-1)
+
+# Start plot
+fig, ax = plt.subplots(figsize=(8, 5), facecolor="none", dpi=300)  # transparent background
+
+# Plot with cmocean thermal colormap
+p = temp_surface.plot.pcolormesh(
+    ax=ax,
+    cmap=cmocean.cm.thermal,
+    add_colorbar=True,
+    cbar_kwargs={"label": "Temperature (°C)", "orientation": "vertical"},
+)
+
+# Set color
+text_color = "#d6ebff"
+ax.set_title("Surface Temperature", color=text_color)
+ax.set_xlabel("Longitude", color=text_color)
+ax.set_ylabel("Latitude", color=text_color)
+
+# Set tick params
+ax.tick_params(axis="both", colors=text_color)
+
+# Set axis spines color (frame lines)
+for spine in ax.spines.values():
+    spine.set_edgecolor(text_color)
+
+# Set colorbar text and frame color
+cbar = p.colorbar
+cbar.ax.yaxis.label.set_color(text_color)
+cbar.ax.tick_params(colors=text_color)
+# Set colorbar outline (the frame)
+cbar.outline.set_edgecolor(text_color)
+
+# Transparent background
+ax.set_facecolor("none")
+fig.patch.set_alpha(0.0)  # fully transparent
+
+fig.savefig("surface_temperature.png", dpi=300, bbox_inches="tight", transparent=True)
+# Show plot
+plt.show()</code></pre>
+      </div>
+      <img src="Figures/Project2_VerosExampleTemp.png" alt="VerosExampleTemp.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+    </p>
+
+
+
+
+
+
+
+
+    <Strong>Now let's start with your own script</Strong>
 
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
@@ -88,12 +255,30 @@ from veros.core.operators import numpy as npx, update, at
 </code></pre>
       </div>
 
+      <p>Then to run, your output NetCDF files will also be inside <code>~/vs-setups/acc_basic/</code>:</p>
       <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
         <pre><code class="language-python">conda activate veros
 veros run acc_basic.py --force-overwrite
 </code></pre>
       </div>
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">Importing core modules
+ Using computational backend numpy on cpu
+ Runtime settings are now locked
+
+Running model setup
+Initializing streamfunction method
+Computing ILU preconditioner...
+ Solving for boundary contribution by island 0
+ Solving for boundary contribution by island 1
+ Running diagnostic "averages" every 5.0 days
+ Writing output for diagnostic "averages" every 1.0 years
+
+Starting integration for 50.7 years
+ Current iteration: 36500 (50.69/50.69y | 100.0% | 29.55s/(model year) | 0.0s left)
+Integration done
+
+Writing restart file acc_sverdrup_36500.restart.h5</pre>
 
     
 
