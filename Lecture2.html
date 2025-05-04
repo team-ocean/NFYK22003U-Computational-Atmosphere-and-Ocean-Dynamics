@@ -43,7 +43,9 @@
             <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
           </ul>
           <li><a href="Lecture2.html">Lecture 2</a></li>
+          <ul class="sub-menu">
             <li><a href="Project2.html">Project 2 – The Sverdrup Relation</a></li>
+          </ul>
           <li><a href="References.html">References</a></li>
         </li>
       </ul>
@@ -57,20 +59,61 @@
     Coriolis Parameter: \[ f = 2\Omega \sin(\phi) \]
 
     <h2>Beta-Plane Approximation</h2>
-    \[ f \approx f_0 + \beta y \]
+    \[ f(y) \approx f_0 + \beta y \]
 
     <h2>Hydrostatic Approximation</h2>
     \[0 = - \frac{1}{\rho} p_z + g\]
     <p>The sum of the pressure gradient and the gravitational force per unit volume must be zero</p>
 
     <h2>Conservation of Mass</h2>
+    <p>In the absence of sources or sinks of mass within the fluid, the condition of mass conservation is expressed by the continuity equation
+      \[
+      \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{u}) = 0 
+      \]
+      where \(\rho\) is the mass density of the fluid. 
+      The equation can be derived by considering a volume \(V\) fixed in space, bounded by a surface \(S\). If the volume is filled by a fluid with density \(\rho\), its mass is \(M = \int_V \rho \, dV\) <br>
+      Divergence \(\nabla \cdot (\cdots)\) indicates the tendency of a vector field to 
+      point outward of a closed surface. 
+      When the divergence of velocity \(\nabla \cdot \mathbf{u}\) is positive, the fluid is expanding; negative divergence indicates contraction. 
+      Imagine a volume of fluid with a complex distribution of \(\mathbf{u}\) at its bounding surface, the \(\nabla \cdot \mathbf{u}\) calculation will isolate the diverging component (right) from uniform flow (centre).
+    <img src="Figures/Lecture2_Divergence.png" alt="Divergence" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">        
 
-    <h2>Linear Approximation</h2>
 
     <h2>Equation of State of Seawater</h2>
+    \[
+    \rho = \rho(\underbrace{T}_{\text{temperature}}, 
+    \underbrace{S}_{\text{salinity}}, \underbrace{P}_{\text{pressure}},  \underbrace{M}_{\text{Moisture}}) 
+    \]
+
+    <h2>Linear Approximation</h2>
     \[\rho = f(T,S,p) \approx \rho_0(1- \alpha T + \beta S)\]
 
+    \[
+    \alpha = \underbrace{\alpha_0}_{\text{reference value}} \left[
+    1
+    + \underbrace{\beta_T (1 + \gamma^* p)(T - T_0)}_{\text{linear thermal expansion}}
+    + \underbrace{\frac{\beta_T^*}{2} (T - T_0)^2}_{\text{nonlinear thermal effect}}
+    - \underbrace{\beta_S (S - S_0)}_{\text{salinity effect}}
+    - \underbrace{\beta_p (p - p_0)}_{\text{pressure effect}}
+    \right]
+    \]
+    <p>If the equation of state were such that it linked only density and pressure, without introducing another variable, 
+      then the equations would be complete; the simplest case of all is a constant density fluid for which the equation of state is just \(\rho = \text{constant}\). 
+      A fluid for which the density is a function of pressure alone is called a barotropic fluid or a homentropic fluid; otherwise, it is a baroclinic fluid. 
+      Equations of state of the form $p = C\rho^\gamma$, where $\gamma$ is a constant, are called polytropic</p>
+
+
+    
     <h2>Steady State Assumption</h2>
+    <p>The continuety equation states that the local increase of density with time must be balanced by a divergence of the mass flux \(\rho \mathbf{u}\). This may also be written
+      \[
+      \frac{d\rho}{dt} + \rho \nabla \cdot \mathbf{u} = 0
+      \]
+      where
+      \[
+      \frac{d}{dt} \equiv \frac{\partial}{\partial t} + \mathbf{u} \cdot \nabla
+      \]
+      is the total derivative (often called the substantial derivative) with respect to time of any property following individual fluid elements</p>
 
     <h2>Incompressible Navier-Stokes Equations</h2>
     \[\left(\frac{\partial}{\partial t} + \mathbf{u}\cdot \nabla - \nu \nabla^2\right) \mathbf{u} = - \frac{1}{\rho} \nabla p + f \]
@@ -134,26 +177,344 @@ plt.show()</code></pre>
     <img src="Figures/Lecture2_IncompressibleNS.png" alt="IncompressibleNS" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
 
     <h2>Ekman Transport</h2>
-    <div class="sketchfab-embed-wrapper"> <iframe title="Ekman Spiral" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="1280" height="960" src="https://sketchfab.com/models/6f14e1007fe44437a7623bde11dfddfb/embed?autostart=1&preload=1&transparent=1&ui_hint=2&ui_theme=dark&dnt=1"> </iframe> </div>
+    <div class="sketchfab-embed-wrapper"> <iframe title="Ekman Spiral" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="896" height="672" src="https://sketchfab.com/models/6f14e1007fe44437a7623bde11dfddfb/embed?autostart=1&preload=1&transparent=1&ui_hint=2&ui_theme=dark&dnt=1"> </iframe> </div>
+    <p>Use the files <code>ERA5_LowRes_MonthlyAvg_uvslp.nc</code> and <code>ERA5_LowRes_Invariant.nc</code> as examples. The first step in calculating the Ekman currents is obtaining wind stress from the wind velocity.</p>
+    
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import os
+import imageio
 
-    <h2>Sverdrup Transport</h2>
+output_dir = 'windstress_gif_frames'
+gif_path = 'windstress_animation.gif'
+os.makedirs(output_dir, exist_ok=True)
 
-    <h2>Sverdrup Gyre</h2>
+# Load data
+ds = xr.open_dataset('ERA5_LowRes_MonthlyAvg_uvslp.nc')
+
+# Constants
+rho_air = 1.225
+cd = 1.5e-3
+R = 6371000
+dpi = 300
+tick_color = '#d6ebff'
+step = 5  # vector density
+
+# Compute wind stress
+u10 = ds['u10']
+v10 = ds['v10']
+ws = np.sqrt(u10**2 + v10**2)
+tau_x = rho_air * cd * ws * u10
+tau_y = rho_air * cd * ws * v10
+tau = np.sqrt(tau_x**2 + tau_y**2)
+
+lon = ds.longitude
+lat = ds.latitude
+
+# Use a fixed vmin/vmax across all frames for consistent colorbar
+tau_vmin = float(tau.min().values)
+tau_vmax = float(tau.max().values)
+
+image_paths = []
+
+
+for month_index in range(len(ds['month'])):
+    tau_plot = tau.isel(month=month_index)
+    tau_x_plot = tau_x.isel(month=month_index)
+    tau_y_plot = tau_y.isel(month=month_index)
+
+    fig = plt.figure(figsize=(10, 5), dpi=dpi)
+    ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
+
+    # Plot tau manually to allow control over colorbar
+    mesh = ax.pcolormesh(
+        lon, lat, tau_plot,
+        cmap='Greens',
+        vmin=tau_vmin, vmax=tau_vmax,
+        transform=ccrs.PlateCarree()
+    )
+
+    # Add quiver
+    ax.quiver(
+        lon[::step], lat[::step],
+        tau_x_plot.values[::step, ::step],
+        tau_y_plot.values[::step, ::step],
+        transform=ccrs.PlateCarree(), scale=700, color=tick_color
+    )
+
+
+    ax.coastlines()
+    ax.add_feature(cfeature.BORDERS, linewidth=0.5, edgecolor=tick_color)
+    gl = ax.gridlines(draw_labels=True, color=tick_color, linestyle='--', linewidth=0.3)
+    gl.xlabel_style = {'color': tick_color}
+    gl.ylabel_style = {'color': tick_color}
+
+    # Colorbar
+    cbar = fig.colorbar(mesh, ax=ax, orientation='vertical', pad=0.02, shrink=0.8)
+    cbar.set_label("Wind Stress (N/m²)", color=tick_color)
+    cbar.outline.set_edgecolor(tick_color)
+    cbar.ax.yaxis.set_tick_params(color=tick_color)
+    plt.setp(cbar.ax.yaxis.get_ticklabels(), color=tick_color)
+
+    # Overlay month label (bottom left corner)
+    ax.text(
+        0.02, 0.02, f"Month {month_index}",
+        transform=ax.transAxes,
+        fontsize=14, color=tick_color,
+        ha='left', va='bottom',
+        bbox=dict(facecolor='white', edgecolor=tick_color, alpha=0.5, boxstyle='round,pad=0.3')
+    )
+
+    # Save frame
+    frame_path = os.path.join(output_dir, f'windstress_frame_{month_index:02d}.png')
+    plt.tight_layout()
+    plt.savefig(frame_path, dpi=dpi, bbox_inches='tight', facecolor='none')
+    image_paths.append(frame_path)
+    plt.close()
+
+# --- Create GIF with infinite loop ---
+with imageio.get_writer(gif_path, mode='I', duration=3, loop=0) as writer: # duration: x seconds per frame
+    for path in image_paths:
+        image = imageio.imread(path)
+        writer.append_data(image)
+
+print(f"GIF created at: {gif_path}")</code></pre></div>
+    <img src="Figures/Lecture2_WindstressAnimation.gif" alt="WindstressAnimation" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">   
+    
+    <p>The transport of water integrated over the Ekman layer is:
+      \[
+      M_{ek} = \frac{\tau_{wind} \times \hat{z}}{f}
+      \]
+
+      From the zonal and meridional components we can calculate the Ekman transport using:
+
+      \[
+      M_x = \frac{\tau_y}{f}
+      \]
+      
+      \[
+      M_y = -\frac{\tau_x}{f}
+      \]
+      
+      Where \(M_x\) is the zonal Ekman transport, \(M_y\) is the meridional Ekman transport, and \(f\) is the Coriolis parameter depends on the latitude \(\theta\):
+      
+      \[
+      f = 2\Omega \sin(\theta)
+      \]
+      
+      Where \(\Omega\) is the angular velocity of the Earth</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python"># Compute Coriolis parameter f (on 1D latitude, then broadcast to 2D)
+lat = ds.latitude
+f = 2 * 7.2921150e-5 * np.sin(np.deg2rad(lat))  # Coriolis at each latitude
+f = f.where((np.abs(lat) > 3) & (np.abs(lat) < 87))  # mask equator & poles
+
+# Broadcast f to match tau shape
+f2d = f.broadcast_like(tau_x_plot)
+
+# Compute Ekman transport (m²/s)
+mek_x = tau_y_plot / f2d
+mek_y = -tau_x_plot / f2d
+
+# Create 2D meshgrid of lat/lon in radians
+lon2d, lat2d = np.meshgrid(ds.longitude, ds.latitude)
+lat2d_rad = np.deg2rad(lat2d)
+lon2d_rad = np.deg2rad(lon2d)
+
+# Grid spacing in meters 
+dy = R * np.gradient(lat2d_rad, axis=0)  # dφ
+dx = R * np.cos(lat2d_rad) * np.gradient(lon2d_rad, axis=1)  # dλ * cos(φ)
+
+# Compute gradients of transport (divergence)
+d_mek_x_dx = np.gradient(mek_x, axis=1) / dx
+d_mek_y_dy = np.gradient(mek_y, axis=0) / dy
+
+# Compute Ekman pumping (m/s → m/year)
+wek = (d_mek_x_dx + d_mek_y_dy) / rho_water
+wek = wek * 60 * 60 * 24 * 365  # m/year
+
+# Convert to xarray for plotting
+wek_da = xr.DataArray(
+    wek,
+    coords={"latitude": ds.latitude, "longitude": ds.longitude},
+    dims=["latitude", "longitude"]
+)
+
+tick_color = '#d6ebff'  
+fig, ax = plt.subplots(figsize=(13, 5), subplot_kw={'projection': ccrs.PlateCarree()})
+
+# Plot the data
+plot = wek_da.plot(
+    ax=ax,
+    transform=ccrs.PlateCarree(),
+    cmap='RdBu_r',
+    vmin=-50,
+    vmax=50,
+    cbar_kwargs={'label': 'Ekman Pumping (m/year)'}
+)
+
+ax.set_title("Ekman Pumping (Vertical Velocity from Wind Stress)", fontsize=14, color=tick_color)
+ax.coastlines()
+ax.add_feature(cfeature.BORDERS, linewidth=0.5, edgecolor=tick_color)
+# Gridlines
+gl = ax.gridlines(draw_labels=True, color=tick_color, linestyle='--', linewidth=0.3)
+gl.xlabel_style = {'color': tick_color}
+gl.ylabel_style = {'color': tick_color}
+
+cbar = plot.colorbar
+cbar.outline.set_edgecolor(tick_color)
+cbar.ax.yaxis.set_tick_params(color=tick_color)
+plt.setp(cbar.ax.yaxis.get_ticklabels(), color=tick_color)
+cbar.set_label("Ekman Pumping (m/year)", color=tick_color)
+
+#plt.savefig('Lecture2_EkmanPumping.png', dpi=300, bbox_inches='tight', facecolor='none')
+plt.show()</code></pre></div>
+
+<img src="Figures/Lecture2_EkmanPumping.png" alt="EkmanPumping" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
+
+<p>One problem with the calculation of Ekman transport is that it tends to infinity close to the equator. Now try to make a combined streamline plot and mask a band of 3 degrees around the equator.</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+import cartopy.feature as cf
+import matplotlib.ticker as mticker
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+import matplotlib.cm as cm
+
+ds = xr.open_dataset('ERA5_LowRes_MonthlyAvg_uvslp.nc')
+month_index = 0  # Choose a month to visualize
+
+# Constants
+rho_air = 1.225
+cd = 1.5e-3
+rho_water = 1000
+R = 6371000  # Earth radius in meters
+tick_color = '#d6ebff'  # consistent theme
+
+# Extract wind components
+u10 = ds['u10'].isel(month=month_index)
+v10 = ds['v10'].isel(month=month_index)
+ws = np.sqrt(u10**2 + v10**2)
+tau_x = rho_air * cd * ws * u10
+tau_y = rho_air * cd * ws * v10
+lat = ds.latitude
+lon = ds.longitude
+
+# Coriolis parameter (masked at equator/poles)
+f = 2 * 7.2921150e-5 * np.sin(np.deg2rad(lat))
+f2d = f.broadcast_like(tau_x)
+
+# Ekman transport
+Mx = tau_y / f2d
+My = -tau_x / f2d
+
+# Apply equatorial mask
+mask = np.abs(lat) < 3
+mask_np = np.broadcast_to(mask.values[:, np.newaxis], Mx.shape)
+Mx_np = np.ma.masked_where(mask_np, Mx.values)
+My_np = np.ma.masked_where(mask_np, My.values)
+Mmag_np = np.sqrt(Mx_np**2 + My_np**2)
+
+# Meshgrid for plotting
+lon2d, lat2d = np.meshgrid(lon, lat)
+
+# Plot
+fig = plt.figure(figsize=(15, 5), dpi=300)
+ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=180))
+ax.set_extent([120, 300, -60, 60], crs=ccrs.PlateCarree())
+ax.coastlines()
+ax.add_feature(cf.BORDERS, linewidth=0.5, edgecolor=tick_color)
+
+# Gridlines styled
+gl = ax.gridlines(draw_labels=True, color=tick_color, linestyle='--', linewidth=0.3)
+gl.xlabels_top = False
+gl.ylabels_right = False
+gl.xlabel_style = {'color': tick_color}
+gl.ylabel_style = {'color': tick_color}
+gl.xlocator = mticker.FixedLocator([120, 150, 180, -150, -120, -90, -60])
+gl.ylocator = mticker.FixedLocator([-60, -40, -20, 0, 20, 40, 60])
+gl.xformatter = LongitudeFormatter()
+gl.yformatter = LatitudeFormatter()
+
+# Streamplot of Ekman transport
+strm = ax.streamplot(
+    lon2d, lat2d, Mx_np, My_np,
+    transform=ccrs.PlateCarree(),
+    color=Mmag_np,
+    density=5,
+    linewidth=2,
+    cmap=cm.jet
+)
+
+ax.set_title("Ekman Transport (from Wind Stress)", fontsize=14, color=tick_color, pad=10)
+
+cbar = fig.colorbar(strm.lines, ax=ax, orientation='vertical', pad=0.02, shrink=0.8)
+cbar.set_label("Transport Magnitude (m²/s)", color=tick_color)
+cbar.outline.set_edgecolor(tick_color)
+cbar.ax.yaxis.set_tick_params(color=tick_color)
+plt.setp(cbar.ax.yaxis.get_ticklabels(), color=tick_color)
+
+plt.savefig("ekman_transport_streamplot.png", dpi=300, bbox_inches='tight', facecolor='none')
+plt.show()</code></pre></div>
+
+<img src="Figures/Lecture2_EkmanTransportStreamplot.png" alt="EkmanTransportStreamplot" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
+
+    
+    <h2>Sverdrup Relation</h2>
+    \[
+    V = \frac{1}{\rho_0 \beta} \nabla \times \tau
+    \]
+
+    \(V\) is the meridional (north–south) transport, \(\rho_0 \approx 1024 \, \text{kg m}^{-3}\) the density of sea water, \(\beta\) the Rossby parameter, and \(\tau\) the surface wind stress.
+
+    We study the connection of the Sverdrup relation to the barotropic streamfunction \(\Psi\), for which
+
+    \[
+    \frac{\partial \Psi}{\partial y} = -U, \quad \frac{\partial \Psi}{\partial x} = V
+    \]
+
+    <ul>
+        <li>Depth integral over Sverdrup Relation</li>
+        \(U\) and \(V\) are defined as
+
+        \[
+        U(x, y, t) = \int_{-D}^0 u(x, y, z, t) \, dz, \quad V(x, y, t) = \int_{-D}^0 v(x, y, z, t) \, dz
+        \]
+        <li>The Sverdrup balance describes the relationship between the curl of the wind stress $\tau$ and the vertical integral of the horizontal velocity V in the ocean</li>
+        <li>Illustrates how wind stress drives large-scale ocean circulation patterns, such as gyres, by inducing a circulation balanced by the Coriolis force</li>
+    </ul>
+
+    <h2>Ocean Gyre</h2>
+    \[
+    U_x + V_y = 0 \]
+    \[
+    U = \frac{-1}{\beta\rho_0} \int_x^{x_e} (\text{curl} \tau)_y \text{d}x
+    \]
+
+  <p>Assume \(\tau^y = 0\) and \(\tau^x_x = 0\) </p>
+    \[
+    U = \frac{1}{\beta \rho_0} \tau^x_{yy} \Delta x
+    \]
     <p>The flow is proportional to the curvature of the zonal wind stress, not the wind itself.</p>
+    <img src="Figures/Lecture2_BarotropicGyreNumericalExperiment.png" alt="BarotropicGyreNumericalExperiment" style="margin-top: 1.5em; max-width: 29%; display: block;">        
+    <div class="figure-caption">(Illustration by © Copyright 1997-, MITgcm contributors)</div>
+
 
 
     
 
-
-
-
-
-
-
-
-
-
-
+  
 
 
 

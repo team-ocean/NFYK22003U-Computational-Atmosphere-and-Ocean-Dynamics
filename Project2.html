@@ -29,28 +29,36 @@
 </head>
 
 <body>
-  <div class="sidebar">
-    <img src="Logo_NS-blackboard-Expand.png" alt="Sidebar Image">
-    <nav>
-      <ul class="nav-menu">
-        <li><a href="Welcome.html">Welcome to NFYK22003U</a></li>
-        <li><a href="CourseInformation.html">Course Information</a></li>
-        <li><a href="Schedule2025.html">Schedule 2025</a></li>
-        <li>
-          <a href="Lecture1.html">Lecture 1</a>
-          <ul class="sub-menu">
-            <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
+    <div class="sidebar">
+        <img src="Logo_NS-blackboard-Expand.png" alt="Sidebar Image">
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="Welcome.html">Welcome to NFYK22003U</a></li>
+            <li><a href="CourseInformation.html">Course Information</a></li>
+            <li><a href="Schedule2025.html">Schedule 2025</a></li>
+            <li>
+              <a href="Lecture1.html">Lecture 1</a>
+              <ul class="sub-menu">
+                <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
+              </ul>
+              <li><a href="Lecture2.html">Lecture 2</a></li>
+              <ul class="sub-menu">
+                <li><a href="Project2.html">Project 2 – The Sverdrup Relation</a></li>
+              </ul>
+              <li><a href="References.html">References</a></li>
+            </li>
           </ul>
-          <li><a href="Lecture2.html">Lecture 2</a></li>
-            <li><a href="Project2.html">Project 2 – The Sverdrup Relation</a></li>
-          <li><a href="References.html">References</a></li>
-        </li>
-      </ul>
-    </nav>
-  </div>
+        </nav>
+      </div>
 
   <div class="main-content">
     <h1>Project 2 – The Sverdrup Relation</h1>
+
+    <p>Use the ACC setup of Veros to test the Sverdrup theory.<br><br>
+      Show the model’s stream function and compare it to the theory’s.<br>
+      Make sure the model is spun up, and be careful with the units.<br><br>
+      Where does the model deviate from the theory and why?
+      </p>
 
 
     <h2>Ocean Modelling with Veros</h2>
@@ -89,7 +97,7 @@
         <pre><code class="language-python">conda activate veros</code></pre>
       </div>
 
-      <p>Then create your setups</p>
+      <p>To tell Veros what to do, you need to write a so-called <i>setup</i>, create your setups</p>
       <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
         <pre><code class="language-python">mkdir ~/vs-setups
@@ -225,13 +233,6 @@ plt.show()</code></pre>
       <img src="Figures/Project2_VerosExampleTemp.png" alt="VerosExampleTemp.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
     </p>
 
-
-
-
-
-
-
-
     <Strong>Now let's start with your own script</Strong>
 
     <div class="code-block">
@@ -280,17 +281,183 @@ Integration done
 
 Writing restart file acc_sverdrup_36500.restart.h5</pre>
 
+<p>There are many predefined setups in Veros, so you will not have to write one from scratch, you can also do</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">veros copy-setup acc</code></pre>
+        </div>
+
+<p>If you want a fresh copy, remove the existing <code>acc/</code> folder and copy again:</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">rm -rf acc
+veros copy-setup acc</code></pre>
+        </div>
+
+<p>Then just go inside the <code>acc/</code> folder and run it, make sure the file path is correct</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">veros run acc/acc.py</code></pre>
+        </div>
+
+
+
+<h3>Load output and inspect \(\Psi\)</h3>
+
+<p>Plot the 1D curve of the maximum value of $\Psi$ over time and check whether the model is fully spun up, ie. whether it has reached the steady state.</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">ds['psi'].max(dim=("xu", "yu")).plot()</code></pre>
+        </div>
+
+<p>If you are satisfied with the plot, go ahead and re-define 'ds' as the last model year of the original output set.</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">ds = ds.isel(Time=-1)</code></pre>
+        </div>
+
+<h3>Compute wind stress curl</h3>
+<p>Define $\rho_0$, $\Omega$ and the Earth's radius, $a$</p>
+<div class="code-block">
+<button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+<pre><code class="language-python">#rho_0 = 
+#omega = 
+#earth_radius = 
+#beta = 2 * omega * np.cos(np.radians(ds['yu'].values)) / earth_radius</code></pre>
+</div>
+
+<p>Now you need to export and define some variables from the output set. Namely, the output barotropic stream function to compare with the computed $\Psi_{Sv}$, and the grid coordinates $x$ and $y$.
+  The <code>values()</code> method is one of the <a href="https://www.w3schools.com/python/python_ref_dictionary.asp">Python Dictionary Methods</a>, it returns a list of all the values in the dictionary. The view object contains the values of the dictionary, as a list.
+  Define variables <code>psi</code>, <code>yt</code> and <code>xt</code> from <code>ds</code>.</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">#course = {
+  #"university": "UCPH",
+  #"name": "Computational Atmosphere and Ocean Dynamics",
+  #"code": "NFYK22003U",
+  #"year": 2025
+#}
+
+#x = course.values()
+
+#print(x)</code></pre>
+  </div>
+
+<p>Correct the definitions below to express $dx$ and $dy$ in meters</p>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">dx = (xt[1] - xt[0]) * np.cos(np.radians(yt))
+dy = (yt[1] - yt[0])</code></pre>
+  </div>
+
+
+<p>The following two functions can integrate and compute the gradient of an array. 
+
+  The function <code>integrate</code> takes 3 arguments: the array you wish to integrate over, the direction (either $x$ or $y$), and a boolean variable which, when set to <code>True</code>, will flip the limits of the integral. For example, if we have:
+  
+  \[
+  \int^{x_1}_{x_0} f(x,y) dx,
+  \]
+  
+  setting the variable <code>reverse=True</code> will result in the function output $\int_{x_1}^{x_0} f(x,y) dx$.
+  
+  The function <code>gradient</code> takes 2 arguments: the array you wish to differentiate over, and the direction (either $x$ or $y$). Let the imput function be $g(x,y)$ and the direction $x$, the function output is then:
+  
+  \[
+  \frac{\partial}{\partial x} g(x,y)
+  \]
+  <div class="code-block">
+    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+    <pre><code class="language-python">def integrate(q, direction, reverse=False):
+    if direction == 'x':
+        dxi = dx[:, np.newaxis]
+        axis = 1
+        
+        if reverse:
+            q = q[:, ::-1]
+            
+    elif direction == 'y':
+        dxi = dy
+        axis = 0
+        
+        if reverse:
+            q = q[::-1]
+            
+    else:
+        raise ValueError('direction must be "x" or "y"')
+        
+    out = np.nancumsum(q * dxi, axis=axis)
+    out[np.isnan(q)] = np.nan
     
+    if reverse:
+        if direction == 'x':
+            out = -out[:, ::-1]
+        else:
+            out = -out[::-1, :]
+        
+    return out
 
 
+def gradient(q, direction):
+    """Compute the gradient of a 2D variable on a C-grid"""
+    if direction == 'x':
+        arr_pad = np.pad(q, ([0], [1]), 'wrap')
+        return (arr_pad[:, 2:] - arr_pad[:, 1:-1]) / dx[:, np.newaxis]
 
+    elif direction == 'y':
+        arr_pad = np.pad(q, ([1], [0]), 'constant', constant_values=np.nan)
+        return (arr_pad[2:, :] - arr_pad[1:-1, :]) / dy
 
+    raise ValueError('direction must be "x" or "y"')</code></pre>
+  </div>
 
+</p>Use a suitable function to compute $\nabla \times \tau$.
+<i>Hint: The definition of a curl in 2D is $\nabla \times f(x,y) = \frac{\partial}{\partial x} f_y(x,y) - \frac{\partial}{\partial y} f_x(x,y)$</i>
+<div class="code-block">
+  <pre><code class="language-python"></code></pre>
+  </div>
 
+<p>Check your solution by ploting $\nabla \times \tau$. Does the calculated $\nabla \times \tau$ make sense? Why?</p>
+<div class="code-block">
+  <pre><code class="language-python"></code></pre>
+  </div>
 
+<h3>Compute $\Psi_\text{Sv}$ and compare</h3>
+<p>Well done so far, you are almost there! 
 
+  The task is now to compare the output barotropic streamfunction <code>ds['psi']</code> to the $\Psi_{Sv}$ calculated from:
+  
+  \[
+  \Psi_{Sv} = \int_{East}^{West}V_{Sv}dx
+  \]
+  
+  <i>Note that the integral goes from East to West, as the boundary wall is placed on the eastern end of the basin.</i><br>
+  
+  Use the definition of $V_{Sv}$ to compute it from the defined constants and the calculated curl of $\tau$. Then, compute the barotropic stream function $\Psi_{Sv}$ and compare it to the $\Psi$ from the model output by examining their successive plots.</p>
+  <div class="code-block">
+    <pre><code class="language-python"></code></pre>
+    </div>
 
+  <p>It should be noted that mathematically, a reverse integration over a variable (integrating from right to left) is not the same as just flipping the input and calling <code>np.cumsum()</code> — you need to negate the result too </p>
 
+<h3>Conclusions</h3>
+<ul>
+<li>How does the diagnostic streamfunction differ from the one calculated from the Sverdrup balance?</li>
+
+<li>How do these two solutions compare in the open ocean vs. at the boundaries?</li>
+
+<li>How well does this idealized model reflect real winds and ocean currents?</li>
+</ul>
+
+<div class="code-block">
+  <pre><code class="language-python"></code></pre>
+  </div>
+<div class="code-block">
+  <pre><code class="language-python"></code></pre>
+</div>
+<div class="code-block">
+  <pre><code class="language-python"></code></pre>
+</div>
 
 
 
