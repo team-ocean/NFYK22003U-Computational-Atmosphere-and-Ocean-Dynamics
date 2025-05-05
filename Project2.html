@@ -438,7 +438,67 @@ def gradient(q, direction):
     <pre><code class="language-python"></code></pre>
     </div>
 
-  <p>It should be noted that mathematically, a reverse integration over a variable (integrating from right to left) is not the same as just flipping the input and calling <code>np.cumsum()</code> — you need to negate the result too </p>
+  <p>It should be noted that mathematically, a reverse integration over a variable (integrating from right to left) is not the same as just flipping the input and calling <code>np.cumsum()</code> — you need to negate the result too.
+  Because if you are integrating a function $f(x)$ on a discrete 1D grid with uniform spacing \(\Delta x > 0\), your discrete integral becomes a sum:
+  \[
+  \int_{x_0}^{x_n} f(x)\,dx \approx \sum_{i=0}^{n-1} f_i \, \Delta x
+  \]
+  This is equivalent to <code>np.cumsum(f * dx)</code> in NumPy.
+Let
+<ul>
+<li>\(f = [f_0, f_1, f_2, f_3]\)</li>
+<li>\(\Delta x > 0\)</li>
+</ul>
+
+Then the cumulative integral is:
+
+\(
+\text{cumint}[0] = f_0 \Delta x \)<br>
+\(\text{cumint}[1] = (f_0 + f_1) \Delta x \)<br>
+\(\text{cumint}[2] = (f_0 + f_1 + f_2) \Delta x \)<br>
+\(\text{cumint}[3] = (f_0 + f_1 + f_2 + f_3) \Delta x \)<br>
+
+This is what <code>np.cumsum(f * dx)</code> does.
+
+Now suppose you want to integrate right to left (from $x_n$ to $x_0$):
+
+\[
+\int_{x_n}^{x_0} f(x)\,dx = - \int_{x_0}^{x_n} f(x)\,dx
+\]
+
+If you do
+
+<code>
+np.cumsum(f[::-1] * dx)[::-1]
+</code>
+
+you're computing the values of integration in reverse order, but the sign is still assuming $x_0 \to x_n$, not $x_n \to x_0$. You’re essentially computing:<br>
+
+\(
+\text{bad_reverse}[0] = (f_3) \Delta x \)<br>
+\(\text{bad_reverse}[1] = (f_3 + f_2) \Delta x \)<br>
+\(\text{bad_reverse}[2] = (f_3 + f_2 + f_1) \Delta x \)<br>
+\(\text{bad_reverse}[3] = (f_3 + f_2 + f_1 + f_0) \Delta x\)<br>
+
+
+Then reversing the array order doesn't fix the fact that this is still a positive integral, just with terms accumulated in reverse.
+Because you're still summing the same values — just in reverse. But the limits of integration are reversed, so you must negate the sum to account for this.
+
+
+
+To compute the correct integral from $x_n$ to $x_0$
+
+\[
+\int_{x_n}^{x_0} f(x)\,dx = -\sum_{i=0}^{n-1} f_i \Delta x
+\]
+
+So your NumPy expression must include a negation:
+
+<code>
+- np.cumsum(f[::-1] * dx)[::-1]
+</code>
+
+
 
 <h3>Conclusions</h3>
 <ul>
