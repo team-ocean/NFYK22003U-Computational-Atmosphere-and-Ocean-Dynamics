@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      },
+      svg: {
+        fontCache: 'global',
+        scale: 1.0
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="Logo_NS-blackboard-Expand.png" alt="Sidebar Image">
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="Welcome.html">Welcome to NFYK22003U</a></li>
+            <li><a href="CourseInformation.html">Course Information</a></li>
+            <li><a href="Schedule2025.html">Schedule 2025</a></li>
+            <li>
+              <a href="Lecture1.html">Lecture 1</a>
+              <ul class="sub-menu">
+                <li><a href="Project1.html">Project 1 – Oxygen Budget</a></li>
+              </ul>
+              <li><a href="Lecture2.html">Lecture 2</a></li>
+              <ul class="sub-menu">
+                <li><a href="Project2.html">Project 2 – The Sverdrup Relation</a></li>
+              </ul>
+              <li><a href="Lecture3.html">Lecture 3</a></li>
+              <li><a href="Lecture4.html">Lecture 4</a></li>
+              <ul class="sub-menu">
+                <li><a href="Project3.html">Project 3 – Western Boundary Currents</a></li>
+              </ul>
+              <li><a href="Lecture5.html">Lecture 5</a></li>
+              <li><a href="References.html">References</a></li>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+  <div class="main-content">
+    <h1>Project 3 – Western Boundary Currents</h1>
+
+<p>
+Use the ACC setup of Veros to test the various theories about the western boundary current.
+<ul>
+    <li>What are the lateral boundary conditions Veros uses?</li>
+    <li>Which friction balances the advection of planetary vorticity (bottom or sidewall), and how did you
+    establish that?</li>
+    <li>Modify this friction and test if the boundary layer width does indeed follow the relevant scaling law
+    (bottom viscosity is <code>r_bot</code>, and horizontal viscosity is <code>A_h</code>)</li>
+</ul>
+</p>
+
+<img src="Figures/Lecture3_StommelMunkLetter.png" alt="StommelMunkLetter" style="margin-top: 1.5em; max-width: 100%; display: block;">        
+
+
+
+
+
+
+
+
+
+
+
+    <p><strong>Next</strong>: <a href="#">To be continued</a></p>
+</div>
+
+<div class="footer">
+  Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>
+  It is very much a work in progress! Have you spotted a mistake or an error on this page? 
+  Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
+  &copy; 2025 TeamOcean | NBI/KU
+</div>
+
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
+</body>
+</html>
