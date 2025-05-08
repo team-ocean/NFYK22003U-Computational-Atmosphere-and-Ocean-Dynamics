@@ -149,7 +149,140 @@
     <h2>Stellar physics : HR-diagram</h2>
     <img src="Figures/Lecture3_HRdiagram.png" alt="HRdiagram" style="margin-top: 1.5em; max-width: 100%; display: block;"> 
     <div class="figure-caption">(Credits:ESO)</div>
-       
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
+import math
+
+##Solar parameters
+L_sun=3.83*10*26 ##J/s
+R_sun=6.96*10**8 ##meter
+T_sun=5780. ##Kelvin
+rotated_labels = []
+
+def text_slope_match_line(text, x, y, line):
+    global rotated_labels
+
+    # find the slope
+    xdata, ydata = line.get_data()
+
+    x1 = xdata[0]
+    x2 = xdata[-1]
+    y1 = ydata[0]
+    y2 = ydata[-1]
+
+    rotated_labels.append({"text":text, "line":line, "p1":np.array((x1, y1)), "p2":np.array((x2, y2))})
+
+def update_text_slopes(ax):
+    global rotated_labels
+
+    for label in rotated_labels:
+        # slope_degrees is in data coordinates, the text() and annotate() functions need it in screen coordinates
+        text, line = label["text"], label["line"]
+        p1, p2 = label["p1"], label["p2"]
+
+        ax = ax
+        sp1 = ax.transData.transform_point(p1)
+        sp2 = ax.transData.transform_point(p2)
+
+        rise = (sp2[1] - sp1[1])
+        run = (sp2[0] - sp1[0])
+
+        slope_degrees = math.degrees(math.atan(rise/run))
+
+        text.set_rotation(slope_degrees)
+def init():
+    line.set_data([], [])
+    return line,
+
+def animate(i):
+    line.set_data(xse[:i],yse[:i])
+    return line
+
+def HRD(SE, ADDSTAR, Temperature, Luminosity):
+    cm = plt.cm.get_cmap('coolwarm_r')  # '_r' reverses the colormap
+    ax.scatter(xhr, yhr, c=xhr, cmap=cm, s=zhr, zorder=2, alpha=0.8)
+    
+    if SE=='yes':
+        anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(xse), interval=150, blit=False)
+        ax.scatter(15000, 0.005, marker='D', s=600, alpha=0.5)
+        corry=-0.001; corrx=1000
+        ax.annotate('WD', xy=(15000+corrx, 0.005+corry))
+        return anim
+
+    if ADDSTAR=='yes':
+        thestar=ax.scatter(Temperature, Luminosity, color='lightseagreen',lw=2, s=500,\
+                           marker='*', facecolor='none', zorder=3)
+        return thestar
+
+# Read the star data extracted with online plot digitizer.
+HRstars=np.genfromtxt('HRstars.csv',delimiter=',')
+xhr=HRstars[:,0]; yhr=HRstars[:,1]
+zhr=pow(np.array(yhr)/pow(np.array(xhr)/T_sun,4),0.25)
+zhr=12*zhr/min(zhr)
+# Read the Sun evolution trajectory data extracted with online plot digitizer
+SunEvoldata=np.genfromtxt('SunEvol.csv', delimiter=',')
+xse=SunEvoldata[:,0]; yse=SunEvoldata[:,1]
+# Read the Sun evolution main stage data
+MainStagedata=np.genfromtxt('MainStage.csv', delimiter=',')
+xms=MainStagedata[:,0]; yms=MainStagedata[:,1]
+# Generate L and T array for constant radii lines
+R=np.array([0.001, 0.01, 0.1, 1., 10., 100., 1000.])
+T=np.linspace(1000., 50000., num=50)
+# Location for line annotation
+xloc=np.array([48000, 48000, 48000, 48000, 48000, 28000, 8000])
+yloc=(xloc/T_sun)**4*R**2
+
+
+fig = plt.figure(figsize=(12, 8), dpi=300) 
+ax = plt.gca()
+fig.patch.set_facecolor('none')  
+
+for i in range(len(R)):
+    L = pow(T/T_sun, 4) * pow(R[i], 2)
+    greyline, = ax.plot(T, L, '--', c='silver', lw=0.8, zorder=1)
+    t = ax.annotate(str(R[i])+'$R_{\odot}$', xy=(xloc[i], yloc[i]), xytext=(12, 0),
+                    textcoords='offset points', ha='left', va='center_baseline',
+                    color='#d6ebff')
+    text_slope_match_line(t, 40000, L[-1], greyline)
+
+cm = plt.cm.get_cmap('coolwarm_r') # reversed colormap
+sc = ax.scatter(xhr, yhr, c=xhr, cmap=cm, s=zhr, zorder=2, alpha=0.8)
+
+cbar = plt.colorbar(sc, ax=ax)
+# Set colorbar label and tick colors
+cbar.set_label('Temperature (K)', color='#d6ebff')
+cbar.ax.yaxis.set_tick_params(color='#d6ebff')
+plt.setp(cbar.ax.get_yticklabels(), color='#d6ebff')
+# Set colorbar frame (spines) to #d6ebff
+for spine in cbar.ax.spines.values():
+    spine.set_edgecolor('#d6ebff')
+
+
+ax.set_facecolor('none')
+ax.tick_params(axis='both', which='both', colors='#d6ebff')
+ax.xaxis.label.set_color('#d6ebff')
+ax.yaxis.label.set_color('#d6ebff')
+ax.title.set_color('#d6ebff')
+
+for spine in ax.spines.values():
+    spine.set_color('#d6ebff')
+
+ax.set_xlim(2000, 50000)
+ax.set_ylim(1e-5, 1e7)
+ax.invert_xaxis()
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.set_xlabel(r'$Temperature\ (K)$')
+ax.set_ylabel(r'$Luminosity\ (L/L_{\odot})$')
+ax.set_title('HRD')
+
+update_text_slopes(ax)</code></pre>
+    </div>       
 
 
 
