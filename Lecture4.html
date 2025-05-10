@@ -63,8 +63,140 @@
   <div class="main-content">
     <h1>Lecture 4 – The Gulfstream</h1>
 
-    <h2>Vorticity Equation</h2>
-    <p>Our full vorticity equation rewritten with \(\psi\) is:
+    <h2>Western Boundary Currents</h2>
+    \(
+    u_t + \vec{u} \cdot \nabla u - fv = -\frac{1}{\rho_0}p_x + k \nabla^2 u + F^x
+    \)<br>
+
+    \(
+    v_t + \vec{u} \cdot \nabla v + fu = -\frac{1}{\rho_0}p_y + k \nabla^2 v + F^y
+    \)<br>
+
+    \(
+    0 = -\frac{1}{\rho}p_z + g
+    \)<br>
+
+    \(
+    u_x + v_y + w_z = 0
+    \)<br>
+
+Since geostrophy is the dominant balance underneath the mixed layer, it is convenient to define:
+
+\[
+u = -\Psi_y, \quad v = \Psi_x, \quad \text{where } \Psi = \frac{p}{\rho_0 f_0}, \quad \text{the streamfunction}
+\]
+
+Form the vorticity equation by \((II)_y - (I)_x\) (as before, but now complete, with all the terms):
+
+$$
+\zeta_t + \vec{u} \cdot \nabla \zeta + \beta v = (f_0 + \beta y + \zeta) w_z + k_H \nabla^2 \zeta
+$$
+
+With $\zeta$ being the <strong>relative vorticity</strong>,
+
+$$
+\zeta = v_x - u_y = \nabla^2 \Psi
+$$
+
+Exploiting that $f_0 \ll \beta y + \zeta$ (why?) and integrating from top to bottom:
+
+$$
+\zeta_t + \vec{u} \cdot \nabla \zeta + \beta v = \frac{f_0}{D}(w_E - w_B) + k_H \nabla^2 \zeta
+$$
+
+Three Extra Terms!!
+
+$$
+\zeta_t + \vec{u} \cdot \nabla \zeta + \beta v = \frac{f_0}{D}(w_E - w_B) + k_H \nabla^2 \zeta
+$$
+
+There is now also an Ekman layer at the bottom of the ocean, but here the friction depends on the flow, i.e., it is part of the solution. At the surface, the stress caused by flow is independent of the flow, since $U_{\text{wind}} \gg U_{\text{ocean}}$.
+
+Let's assume:
+
+$$
+\tau^x_{\text{Bottom}} = \alpha u, \quad \tau^y_{\text{Bottom}} = \alpha v
+$$
+
+Analogous to the surface Ekman pumping, we then have a bottom Ekman pumping:
+
+$$
+w_B = -\frac{\alpha}{\rho_0 f}(v_x - u_y)
+$$
+
+So we replace $\frac{f_0}{D} w_B$ with:
+
+$$
+r \nabla^2 \psi, \text{ where } r \text{ is a decay rate (think } \zeta_t = -r \nabla^2 \psi \text{)}
+$$
+
+<h2>Stream Field</h2>
+Stream field in any significant small area can be considered as a set of four basic elementary stream areas: translation, rotation, divergence, and deformation <a href="References.html">[12]</a>.
+<ul>
+  <li>Streamlines: Line represents the linear curve which is tangential with the local vector current speed.</li>
+  <li>Translator field: Because the speed of flow is the vector size, translator field represents movement through the displacement vector field for translation. The fluid moves around the same speed and direction and intensity. Streamlines lie in the direction of flow are the parallel lines. That stream field does not change the volume or shape of the fluid.</li>
+  <li>Rotation field: Streamlines are concentric circles. The fluid rotates around a common centre of stream field. The speed of flow increases linearly with increasing distance of streamlines from the centre of rotation. During the rotation, individual air particles do not change its shape or volume.</li>
+  <li>Divergence and convergence field: Streamlines are straight and pass through the centre of the field as a joint stream point. 
+    When fluid flows towards the centre, flow is convergent, and the point is called convergent point. If the flow is done from the center to the field, it is called the point of divergence. 
+    The convergence of a fluid particle does not alter its shape, while both the rate of flow and volume of particle are going to reduce the convergence point. 
+    In the divergence, flow is from the centre towards the outer area, the flow increases its velocity and volume, but particles in this case do not change their shape.</li>
+  <li>Deformation field: Streamlines are concentric equilateral hyperbolas and their velocity increases linearly in any direction from the center to the field. Linear speed of the centre field linearly increases. 
+    Movement does not change the volume of the fluid particle, but it changes its shape. When approaching the common center of the hyperbola (center of the field), the dimensions of the particles decrease in the direction of flow, and when moving away from the center, the dimensions of the particles increase in the direction of flow.</li>
+</ul>
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Set up the common grid
+x = np.linspace(-5, 5, 20)
+y = np.linspace(-5, 5, 20)
+X, Y = np.meshgrid(x, y)
+
+# Define velocity fields
+# (a) Translation field: constant velocity
+U_a = np.ones_like(X)
+V_a = np.zeros_like(Y)
+
+# (b) Rotation field: circular streamlines
+U_b = -Y
+V_b = X
+
+# (c) Divergence field: radial outward flow
+U_c = X
+V_c = Y
+
+# (d) Deformation field: saddle/hyperbolic flow
+U_d = X
+V_d = -Y
+
+vec_color = "#d6ebff"
+vec_alpha = 0.8
+bg_color = 'none'  # Transparent background
+
+# Create subplots
+fig, axs = plt.subplots(2, 2, figsize=(12, 12), tight_layout=True, dpi=300, facecolor=bg_color)
+
+titles = ["(a) Translation", "(b) Rotation", "(c) Divergence", "(d) Deformation"]
+fields = [(U_a, V_a), (U_b, V_b), (U_c, V_c), (U_d, V_d)]
+
+for ax, title, (u, v) in zip(axs.flat, titles, fields):
+    ax.set_facecolor(bg_color)
+    ax.quiver(X, Y, u, v, color=vec_color, alpha=vec_alpha)
+    ax.set_title(title, fontsize=16, color=vec_color)
+    ax.tick_params(colors=vec_color, labelsize=12)
+    ax.spines[:].set_color(vec_color)
+    ax.set_aspect('equal')
+    ax.grid(True, color=vec_color, alpha=0.3)
+
+plt.show()</code></pre>
+</div>
+<img src="Figures/Lecture4_StreamField.png" alt="StreamField" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+
+    
+<h2>Vorticity Equation</h2>
+  <p>Since the horizontal velocity is divergence-free (because of the flat-bottom and rigid-lid) we may represent it as a streamfunction \(\psi\). Our full vorticity equation rewritten with \(\psi\) is:
       \[
       \overbrace{
         \underbrace{\frac{\partial}{\partial t} (\nabla^2 \psi)}_{\text{Local change of relative vorticity } \zeta = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}} + 
@@ -76,8 +208,7 @@
         \underbrace{k_H \nabla^4 \psi}_{\text{Horizontal friction}}
       \]
       with
-      \[J(A, B) = A_x B_y - A_y B_x\]
-
+      \[J(A, B) = A_x B_y - A_y B_x\] 
 
 
 
