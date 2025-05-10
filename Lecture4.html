@@ -66,12 +66,14 @@
     <h2>Vorticity Equation</h2>
     <p>Our full vorticity equation rewritten with \(\psi\) is:
       \[
-      \underbrace{\frac{\partial}{\partial t} (\nabla^2 \psi)}_{\text{Local change of relative vorticity } \zeta = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}} + 
-      \underbrace{J(\psi, \nabla^2 \psi)}_{\text{Jacobian, Nonlinear advection of vorticity}} + 
-      \underbrace{\beta \psi_x}_{\text{Meridional advection of planetary vorticity}} = 
-      \underbrace{\frac{f_0}{D} w_E}_{\text{Column Stretching/compression by Ekman pumping}} - 
-      \underbrace{r \nabla^2 \psi}_{\text{Linear bottom friction}} + 
-      \underbrace{k_H \nabla^4 \psi}_{\text{Horizontal friction}}
+      \overbrace{
+        \underbrace{\frac{\partial}{\partial t} (\nabla^2 \psi)}_{\text{Local change of relative vorticity } \zeta = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}} + 
+        \underbrace{J(\psi, \nabla^2 \psi)}_{\text{Jacobian, Nonlinear advection of vorticity}}
+        }^{\text{Material derivative } \frac{D\zeta}{Dt}} + 
+        \underbrace{\beta \psi_x}_{\text{Meridional advection of planetary vorticity}} = 
+        \underbrace{\frac{f_0}{D} w_E}_{\text{Column Stretching/compression by Ekman pumping}} - 
+        \underbrace{r \nabla^2 \psi}_{\text{Linear bottom friction}} + 
+        \underbrace{k_H \nabla^4 \psi}_{\text{Horizontal friction}}
       \]
       with
       \[J(A, B) = A_x B_y - A_y B_x\]
