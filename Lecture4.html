@@ -235,15 +235,62 @@ $$
 We still cannot solve that, but can use perturbation methods, developed in the late fourties ;-)
 
 
-
-
-
-
-
 <h2>Stommel's Solution</h2>
+$$
+\Psi_{xx} \gg \Psi_{yy} \Longrightarrow \beta \Psi_x = \frac{f_0}{D} w_E - r \Psi_{xx}
+$$
+
+Let $\Psi = \Psi^S + \Psi^W$, with $\Psi^S = \frac{f_0}{\beta D} \int_x^{x_E} w_E \, dx$
+
+and $\Psi = 0$ at $x = 0$, $\Psi = \Psi^S$ for large $x$.
+
+$$
+\Rightarrow \quad r \Psi^W_{xx} + \beta \Psi^W_x = 0
+$$
+
+$$
+\Rightarrow \quad \Psi^W = -\Psi^S e^{-x/\delta_S}, \quad \text{and} \quad \Psi = \Psi^S (1 - e^{-x/\delta_S})
+$$
+
+with \(\boxed{\delta_S = \beta / r}\), the Stommel boundary layer width
+
+$$
+\Rightarrow \quad v = \Psi_x = v_s + \frac{1}{\delta_S} e^{-x/\delta_S}
+$$
 
 
 <h2>Munk's Solution</h2>
+$$
+\Psi_{xx} \gg \Psi_{yy} \Longrightarrow \beta \Psi_x = \frac{f_0}{D} w_E + k_H \Psi_{xxxx}
+$$
+
+Let $\Psi = \Psi^S + \Psi^W$, with
+
+$$
+\Psi^S = \frac{f_0}{\beta D} \int_x^{x_E} w_E \, dx
+$$
+
+and $\Psi = 0$ at $x = 0$, $\Psi = \Psi^S$ for large $x$.<br>
+
+We need more boundary conditions though!<br>
+
+<span class= "bullet"></span>No slip: $\Psi_x = v = 0$ at $x = 0$<br>
+
+<span class= "bullet"></span>Free slip: $\Psi_{xx} = v_x = 0$ at $x = 0$<br>
+
+The most general solution to Munk’s vorticity equation:
+
+$$
+\Psi = \Psi^S \left(1 - e^{\frac{-x}{2 \delta_M}} \cos\left(\sqrt{3}/2 \delta_M x\right)\right) + C(y) \, e^{\frac{-x}{2 \delta_M}} \sin\left(\sqrt{3}/2 \delta_M x\right)
+$$
+
+with \(\boxed{\delta_M = \left(\frac{k_H}{\beta}\right)^{1/3}}\), the Munk boundary layer width.
+
+C(y) has to be determined as a function of the boundary conditions:
+
+$$
+\Psi = \Psi^S \left(1 - e^{\frac{-x}{2 \delta_M}} \cos\left(\sqrt{3}/2 \delta_M x\right)\right) \pm \frac{1}{\sqrt{3}} \sin\left(\sqrt{3}/2 \delta_M x\right)
+$$
 
 
 
