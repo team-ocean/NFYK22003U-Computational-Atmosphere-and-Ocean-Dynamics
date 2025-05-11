@@ -338,7 +338,21 @@ body::-webkit-scrollbar-thumb:hover {
   margin-bottom: 2em;
 }
 
+::selection {
+  background-color: rgba(102, 170, 255, 0.3); /* Semi-transparent Royal Blue */
+  color: #aaccee; /* text color*/
+}
 
-  
+/* For Firefox */
+::-moz-selection {
+  background-color: rgba(102, 170, 255, 0.3);
+  color: #aaccee;
+}
+
+.bullet::before {
+  content: "■ ";
+  color: #7DCDF4;
+  }
+
   
   

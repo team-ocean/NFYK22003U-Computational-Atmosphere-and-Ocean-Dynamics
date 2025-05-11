@@ -503,7 +503,7 @@ plt.show()</code></pre></div>
         <li>Illustrates how wind stress drives large-scale ocean circulation patterns, such as gyres, by inducing a circulation balanced by the Coriolis force</li>
     </ul>
 
-    <h2>Ocean Gyre</h2>
+    <h2>Wind Driven Gyres</h2>
     \[
     U_x + V_y = 0 \]
     \[
@@ -514,10 +514,58 @@ plt.show()</code></pre></div>
     \[
     U = \frac{1}{\beta \rho_0} \tau^x_{yy} \Delta x
     \]
-    <p>The flow is proportional to the curvature of the zonal wind stress, not the wind itself.</p>
     <img src="Figures/Lecture2_BarotropicGyreNumericalExperiment.png" alt="BarotropicGyreNumericalExperiment" style="margin-top: 1.5em; max-width: 29%; display: block;">        
     <div class="figure-caption">(Illustration by © Copyright 1997-, MITgcm contributors)</div>
+    \(
+    \text{I} \quad -fv = -\frac{1}{\rho_0} p_x + \frac{1}{\rho_0} \tau^x_z
+    \)<br>
 
+    \(
+    \text{II} \quad fu = -\frac{1}{\rho_0} p_y + \frac{1}{\rho_0} \tau^y_z
+    \)<br>
+
+    \(
+    \text{III} \quad 0 = -\frac{1}{\rho} p_z + g
+    \)<br>
+
+    \(
+    \text{IV} \quad u_x + v_y + w_z = 0 \quad \text{(continuity equation)}
+    \)<br>
+
+What were our assumptions/approximations that got us here?
+$(II)_x - (I)_y$, combine with continuity equation (IV):
+
+\[
+\beta v = f w_z + \frac{1}{\rho_0} \frac{\delta}{\delta z} \text{curl} \, \vec{\tau}
+\quad \text{no friction below the mixed layer, so}
+\]
+
+At the ocean top and bottom $w = 0$, so a depth integral yields:
+
+\[
+\vec{V}_S = \frac{1}{\beta \rho_0} \text{curl} \, \vec{\tau}
+\quad \boxed{\textbf{!!! The Sverdrup Balance!}}
+\]
+
+What about $U$, the zonal transport?
+At the ocean top and bottom $w = 0$, so a depth integral of IV yields:
+
+$$
+U_x + V_y = 0
+$$
+
+which, combined with $\vec{V}_S = \frac{1}{\beta \rho_0} \text{curl} \, \vec{\tau}$, yields:
+
+$$
+U = -\frac{1}{\beta \rho_0} \int_x^{x_e} (\text{curl} \, \vec{\tau})_y \, dx
+$$
+
+Let’s assume $\tau^y = 0$ and $\tau^x_x = 0$, so:
+
+$$
+U = \frac{1}{\beta \rho_0} \tau^x_{yy} \, \Delta x
+$$
+    <p>The flow is proportional to the curvature of the zonal wind stress, not the wind itself.</p>
 
 
     
