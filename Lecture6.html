@@ -68,11 +68,82 @@
     <img src="Figures/Lecture6_PedloskyHistory.png" alt="PedloskyHistory" style="margin-top: 1.5em; max-width: 100%; display: block;">        
 
 
+    <h2>Vertical Structure: Baroclinic Quasi-Geostrophic Models</h2>
+    The simultaneous explanation of the vertical and horizontal structures of the density field and renders the physics very difficult. It has been possible to effect great simplifications in the theoretical treatment of the problem by employing quasi-geostrophic models of the stratified, wind-driven ocean circulation.
+    Since the vertical structure of the horizontal velocity field is related to the <i>horizontal</i> density gradient, 
+    we can with these models concentrate first on describing the structure of the horizontally varying part of the density field accepting, as given, the vertical density gradient. 
+    This considerably simplifies the problem and renders it nearly <i>linear</i>, although with important and essential nonlinear aspects.
+    The density field is written:
+$$
+\rho_{\text{total}} = \rho_s(z) + \rho(x, y, z, t) 
+$$
 
+where, $\rho(x, y, z, t)$ is the density variation around the laterally averaged density field, $\rho_s(z)$, which is a function only of depth. A principal feature and requirement of quasi-geostrophic theory is that:
 
+$$
+\frac{\partial \rho}{\partial z} \ll \frac{\partial \rho_s}{\partial z}
+$$
 
+    <img src="Figures/Lecture6_NLayerQuasi.png" alt="OceanOxygenMixing" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+    <div class="figure-caption">(Schematic presentation of an \(N\)- layer quasi-geostrophic model. The density is constant in each layer. The top of the \(n\)th layer is at $z = z_n$ and the thickness of each layer is $h_n$. Credit: Pedlosky 1996. Ocean Circulation Theory.)</div>
 
+<h2>A simple perturbation on the mean stratification</h2>
+Underneath the mixed layer, the flow is adiabatic and for every layer $((v_n)_z = 0!)$ we have:
+<ul>
 
+<li>I $u_t + \vec{u} \cdot \nabla u - fv = -\frac{1}{\rho_0} p_x$</li>
+
+<li>II $v_t + \vec{u} \cdot \nabla v + fu = -\frac{1}{\rho_0} p_y$</li>
+
+<li>III $0 = -\frac{1}{\rho_0} p_z + g$</li>
+
+<li>IV $u_x + v_y + w_z = 0$</li>
+
+</ul>
+
+Since geostrophy is the dominant balance:
+
+$$
+u_t + \vec{u} \cdot \nabla u - (f_0 + \beta y)v = -\frac{1}{\rho} p_x
+$$
+
+$$
+O(\epsilon) \quad O(\epsilon) \quad O(1) \quad O(\epsilon) \quad O(1)
+$$
+
+Let’s set $u = u_g + \epsilon u_{ag}$, with $O(u_{ag}/u_g) = 1 \gg \epsilon$,
+
+and collect terms of $O(1)$:
+
+$$
+f_0 v_g = \frac{1}{\rho_0} p_x
+$$
+
+$$
+\Longrightarrow \Psi = \frac{p}{f_0 \rho_0} \quad \text{and} \quad (u_g)_x + (v_g)_y = -(w_g)_z = 0
+$$
+
+<ul><li>IVa $\Longrightarrow (u_g)_x + (v_g)_y + (w_g)_z = 0$</li></ul>
+
+Now collect terms of $O(\epsilon)$:
+
+<ul><li>Ia:
+
+$$
+(u_g)_t + \vec{u}_g \cdot \nabla u_g - \beta y v_g - f_0 v_a = 0
+$$</li></ul>
+
+Combine IIa$_y$ - Ia$_x$ with IVa:
+
+$$
+(\zeta_g)_t + \vec{u}_g \cdot \nabla \zeta_g + \beta v_g = -f_0 \left((u_a)_x + (v_a)_y \right)
+$$
+
+$$
+= -f_0 \nabla H \cdot \vec{u}
+$$
+
+The convergence of the ageostrophic flow modifies layer thickness and shapes the geostrophic flow!
 
 
     <p><strong>Next</strong>: <a href="#">To be continued</a></p>
