@@ -63,7 +63,7 @@
     </nav>
   </div>
 
-  <div class="main-content">
+<div class="main-content">
     <h1>Project 4 – Shadow Zone</h1>
 
 <p>
@@ -80,3 +80,79 @@ Be explicit about how you chose your density layers, the northern and
         southern boundary of your subtropical box, and the shape of the oxygen
         minimum zone.
 </p>
+
+<img src="Figures/Project4_OceanOxygenMixing.png" alt="OceanOxygenMixing" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Ocean mixing and the interaction of currents govern oxygen availability and determine how and when it’s used. Credit: J K/Unsplash)</div>
+The thermocline theory is tested by <code>theocean.nc</code> on Absalon using Community Earth System Model (CESM) 100 year average output from a fully coupled simulation with ocean, atmosphere, land, sea ice and biogeochemistry components. The model grid resolution varies with latitude, with a total of 100×118 grid points and 60 depth levels.
+
+A theoretical box is set up within the output domain, which is meant to capture the extent of the northern subtropical gyre in the Pacific Ocean. The extent of the box along the meridional direction is determined by finding two points at which the Ekman transport is zero, defined as:
+
+$$
+w_E = \frac{1}{\rho_0} \nabla \times \left( \frac{\tau}{f} \right) = \frac{1}{\rho_0} \left( \frac{\partial}{\partial x} \frac{\tau_y}{f} - \frac{\partial}{\partial y} \frac{\tau_x}{f} \right)
+$$
+where $\rho_0$ is the density of salt water, $\tau$ is the horizontal wind stress vector and $f$ is the Coriolis parameter. The magnitude of the zonal winds is an order of magnitude larger than the meridional winds, therefore the Ekman transport simplifies to:
+
+$$
+w_E = -\frac{1}{\rho_0} \frac{\partial}{\partial y} \left( \frac{\tau_x}{f} \right)
+$$
+The wind stress is further simplified by computing the zonal average and assuming that $w_e$ is constant in the zonal direction. The idealized ocean within the box has three density layers, the top light layer, the subducted layer and the stagnant abyss. The thermocline theory states that:
+
+$$
+D^2 = H^2 \frac{\gamma_1}{\gamma_2} \left(1 - \frac{f}{f_2} \right)^2
+$$
+
+where $H$ is the height of the subducted layer at the point of subduction, $f_2$ is the Coriolis parameter at the point of subduction, $\gamma_1$ and $\gamma_2$ are the reduced gravities of the top two layers, and
+
+$$
+D^2 = -\frac{2f^2}{\beta \gamma_2} \int_x^{x_E} w_E dx
+$$
+
+with the Rossby parameter $\beta$ and the reduced gravity of the subducted layer $\gamma_2$. In our idealized case $w_E$ is independent of $x$, therefore $D^2$ reduces to:
+
+$$
+D^2 = -\frac{2f^2}{\beta \gamma_2} w_E (x_E - x)
+$$
+
+and combining with equations \(\boxed{w_E = -\frac{1}{\rho_0} \frac{\partial}{\partial y} \left( \frac{\tau_x}{f} \right)}\) and \(\boxed{D^2 = H^2 \frac{\gamma_1}{\gamma_2} \left(1 - \frac{f}{f_2} \right)^2}\), we can solve for $x$:
+
+$$
+x_E - x = H^2 \left(1 - \frac{f}{f_2} \right)^2 \frac{\beta \gamma_1 \rho_0}{2 f^2} \frac{1}{\frac{\partial (\tau_x / f)}{\partial y}}
+$$
+
+This equation can be used to trace the zonal distance from the Eastern boundary $x_E$ of the subducted layer in the interior of the ocean, and thereby determine the shape of the shadow zone.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>Next</strong>: <a href="#">To be continued</a></p>
+</div>
+
+<div class="footer">
+  Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>
+  It is very much a work in progress! Have you spotted a mistake or an error on this page? 
+  Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
+  &copy; 2025 TeamOcean | NBI/KU
+</div>
+
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
+</body>
+</html>
