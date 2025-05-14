@@ -24,6 +24,16 @@
         scale: 1.0
       }
     };
+    document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('.main-content');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'layout';
+
+    sidebar.parentNode.insertBefore(wrapper, sidebar);
+    wrapper.appendChild(sidebar);
+    wrapper.appendChild(main);
+  });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
   
@@ -84,8 +94,8 @@ $$
 \frac{\partial \rho}{\partial z} \ll \frac{\partial \rho_s}{\partial z}
 $$
 
-    <img src="Figures/Lecture6_NLayerQuasi.png" alt="OceanOxygenMixing" style="margin-top: 1.5em; max-width: 100%; display: block;">    
-    <div class="figure-caption">(Schematic presentation of an \(N\)- layer quasi-geostrophic model. The density is constant in each layer. The top of the \(n\)th layer is at $z = z_n$ and the thickness of each layer is $h_n$. Credit: Pedlosky 1996. Ocean Circulation Theory.)</div>
+<img src="Figures/Lecture6_NLayerQuasi.png" alt="OceanOxygenMixing" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Schematic presentation of an \(N\)- layer quasi-geostrophic model. The density is constant in each layer. The top of the \(n\)th layer is at $z = z_n$ and the thickness of each layer is $h_n$. Credit: Pedlosky 1996. Ocean Circulation Theory.)</div>
 
 <h2>A simple perturbation on the mean stratification</h2>
 Underneath the mixed layer, the flow is adiabatic and for every layer $((v_n)_z = 0!)$ we have:
@@ -145,8 +155,65 @@ $$
 
 The convergence of the ageostrophic flow modifies layer thickness and shapes the geostrophic flow!
 
+$$
+(\zeta_g)_t + \vec{u}_g \cdot \nabla \zeta_g + \beta v_g = -f_0 \nabla_H \cdot \vec{u}
+$$
 
-    <p><strong>Next</strong>: <a href="#">To be continued</a></p>
+$$
+\nabla_H \cdot \vec{u} = w_z \, \text{(integral over layer depth)}
+$$
+
+$$
+\Longrightarrow h_n \nabla_H \cdot \vec{u}_n = -w_n + w_{n+1}
+$$
+
+of course,
+
+$$
+w_n = \delta z_n / \delta t + u \, \delta z_n / \delta x + v \, \delta z_n / \delta y, \quad \text{and} \quad h_n = z_n - z_{n+1}
+$$
+
+$$
+\Longrightarrow \frac{d h_n}{d t} + h \nabla \cdot \vec{u}_n = 0,
+$$
+
+a layer version of the continuity equation; $\vec{u} = (u, v)$
+
+$$
+\Longrightarrow h_n \left( \frac{d \zeta_n}{d t} + \beta v_n \right) = f_0 \frac{d h_n}{d t}; \quad \text{(non-linear :-()}
+$$
+
+
+<strong>The QG approximation:
+
+\[
+h_n = H_n \text{(constant)} + \delta h_n; \quad \delta h_n \ll H_n
+\]
+</strong>
+
+
+<img src="Figures/Lecture6_LayerModelFormulation.png" alt="LayerModelFormulation" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Schematic of a layered ocean model in quasi-geostrophic theory. Each layer $n$ lies between interfaces at $z = z_n(\phi, \theta)$ (top) and $z = z_{n+1}(\phi, \theta)$ (bottom), where $\phi$ is latitude and $\theta$ is longitude. Each layer has constant density and depth-independent horizontal velocity. Vertical mass exchange across layers is allowed via the cross-isopycnal flux $w^*$ (per unit horizontal area).
+
+  A control volume is defined for layer $n$, with projection along the $x$-axis. Mass conservation requires that net volume flux into this volume changes the layer thickness. Pressure gradient forces in the $x$-direction, shown in the $x$-$z$ plane, drive the horizontal flow and balance geostrophically in the quasi-geostrophic approximation.
+  Credit: Pedlosky 1996. Ocean Circulation Theory.)</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>Next</strong>: <a href="#">To be continued</a></p>
 </div>
 <div class="footer">
   Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>

@@ -9,6 +9,44 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      },
+      svg: {
+        fontCache: 'global',
+        scale: 1.0
+      }
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('.main-content');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'layout';
+
+    sidebar.parentNode.insertBefore(wrapper, sidebar);
+    wrapper.appendChild(sidebar);
+    wrapper.appendChild(main);
+  });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
   <div class="sidebar">
@@ -62,6 +100,9 @@
     <p>[13] Hans Petter Langtangen, and G. K. Pedersen, 2016: <i>Scaling of Differential Equations</i>. Cham Springer International Publishing.</p>
     <p>[14] Pedlosky, J. (1996). <i>Ocean Circulation Theory</i>. Springer, Berlin, Heidelberg.</p>
     <p>[15] Shultz, D. (2021), Tracking oxygen in the Sargasso Sea’s 18 degree water, Eos, 102, https://doi.org/10.1029/2021EO157055. Published on 15 April 2021.</p>
+    <p>[16] Underwood, E. (2019), How the ocean’s “shadow zone” breathes, Eos, 100, https://doi.org/10.1029/2019EO131849. Published on 28 August 2019.</p>
+    <p>[17] Wheeling, K. (2020), Deep-ocean oxygen may increase with climate change, Eos, 101, https://doi.org/10.1029/2020EO149201. Published on 17 September 2020.</p>
+    <p>[18] </p>
 
 
 

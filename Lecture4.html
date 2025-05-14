@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 1 – Oxygen Budget</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
   <link rel="stylesheet" href="style.css">
@@ -25,6 +24,16 @@
         scale: 1.0
       }
     };
+    document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('.main-content');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'layout';
+
+    sidebar.parentNode.insertBefore(wrapper, sidebar);
+    wrapper.appendChild(sidebar);
+    wrapper.appendChild(main);
+  });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
   
@@ -261,6 +270,99 @@ with \(\boxed{\delta_S = \beta / r}\), the Stommel boundary layer width
 $$
 \Rightarrow \quad v = \Psi_x = v_s + \frac{1}{\delta_S} e^{-x/\delta_S}
 $$
+
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.sparse import diags, kron, identity, csr_matrix
+from scipy.sparse.linalg import spsolve
+
+def laplacian_2d(nx, ny, dx, dy):
+    Lx = diags([1, -2, 1], [-1, 0, 1], shape=(nx, nx)) / dx**2
+    Ly = diags([1, -2, 1], [-1, 0, 1], shape=(ny, ny)) / dy**2
+    Ix = identity(nx)
+    Iy = identity(ny)
+    return kron(Iy, Lx) + kron(Ly, Ix)
+
+# The Stommel model is given as: \frac{R}{D}\nabla^2 \psi - \beta\frac{\partial \psi}{\partial x} = - \frac{\hat\nabla \cdot \vec\tau}{\rho_0 D}
+# streamfunction ψ given wind-stress
+# curl \hat\nabla \cdot \vec\tau
+def solve_stommel(curl_tau, dx, dy, R, D, beta, rho0):
+    ny, nx = curl_tau.shape
+    N = nx * ny
+    rhs = -curl_tau.flatten() / (rho0 * D)
+
+    L = laplacian_2d(nx, ny, dx, dy)
+    linear_term = -(R / D) * L
+
+    rows, cols, data = [], [], []
+    for j in range(ny):
+        for i in range(1, nx - 1):
+            idx = j * nx + i
+            rows.extend([idx, idx])
+            cols.extend([idx - 1, idx + 1])
+            data.extend([beta / (2 * dx), -beta / (2 * dx)])
+    # Beta term: sparse matrix for -beta * dψ/dx
+    beta_term = csr_matrix((data, (rows, cols)), shape=(N, N))
+    # Final system matrix
+    A = linear_term + beta_term
+    # Solve A * psi = rhs
+    psi_flat = spsolve(A, rhs)
+    return psi_flat.reshape(ny, nx)
+
+def compute_velocity(psi, dx, dy):
+    v = np.gradient(psi, dx, axis=1) # ∂ψ/∂x
+    u = -np.gradient(psi, dy, axis=0) # -∂ψ/∂y
+    return u, v
+
+
+nx, ny = 64, 64
+Lx, Ly = 1e6, 1e6
+x = np.linspace(0, Lx, nx)
+y = np.linspace(0, Ly, ny)
+dx = x[1] - x[0]
+dy = y[1] - y[0]
+X, Y = np.meshgrid(x, y)
+
+curl_tau = np.sin(np.pi * Y / Ly) * np.ones_like(X) # Or curl_tau = np.cos(np.pi * (Y - Ly/2) / Ly) * np.ones_like(X), need to shift the cosine so that the maximum curl is centered in the domain, and zero curl at the edges
+
+# Physical parameters
+R = 5e-5  # Rayleigh friction, linear drag?
+D = 100 # ocean depth
+beta = 2e-11 # Coriolis gradient
+rho0 = 1027 # Seawater density
+
+psi = solve_stommel(curl_tau, dx, dy, R, D, beta, rho0)
+u, v = compute_velocity(psi, dx, dy)
+
+
+custom_color = "#d6ebff"
+
+fig, ax = plt.subplots(figsize=(6, 5), facecolor='none', dpi=300)  # transparent background
+
+# Streamlines
+stream = ax.streamplot(x, y, u, v, density=1.2, color=custom_color)
+
+ax.set_title("Stommel Gyre Streamlines", color=custom_color)
+ax.set_xlabel("x (m)", color=custom_color)
+ax.set_ylabel("y (m)", color=custom_color)
+
+ax.tick_params(colors=custom_color)
+
+for spine in ax.spines.values():
+    spine.set_edgecolor(custom_color)
+
+# Set transparent figure background
+fig.patch.set_alpha(0.0)
+ax.set_facecolor('none')  # transparent plot area
+
+plt.savefig("Lecture4_StommelGyre.png", dpi=300, transparent=True)
+plt.tight_layout()
+plt.show()</code></pre>
+</div>
+<img src="Figures/Lecture4_StommelGyre.png" alt="StommelGyre" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
 
 
 <h2>Munk's Solution</h2>

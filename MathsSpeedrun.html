@@ -24,6 +24,16 @@
         scale: 1.0
       }
     };
+    document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('.main-content');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'layout';
+
+    sidebar.parentNode.insertBefore(wrapper, sidebar);
+    wrapper.appendChild(sidebar);
+    wrapper.appendChild(main);
+  });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
   
