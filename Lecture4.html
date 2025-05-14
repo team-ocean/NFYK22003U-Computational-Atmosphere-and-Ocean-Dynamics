@@ -364,7 +364,6 @@ plt.show()</code></pre>
 <img src="Figures/Lecture4_StommelGyre.png" alt="StommelGyre" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
-
 <h2>Munk's Solution</h2>
 $$
 \Psi_{xx} \gg \Psi_{yy} \Longrightarrow \beta \Psi_x = \frac{f_0}{D} w_E + k_H \Psi_{xxxx}
@@ -400,8 +399,105 @@ $$
 <img src="Figures/Lecture4_MunkSolution.png" alt="MunkSolution" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 <div class="figure-caption">(Illustration by Munk, M.M. (1950) The Reversal Theorem of Linearized Supersonic Airfoil Theory. Journal of Applied Physics, 21, 159-161.)</div>
 
+<div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.sparse import diags, kron, identity, csr_matrix
+from scipy.sparse.linalg import spsolve
 
+def laplacian_2d(nx, ny, dx, dy):
+    Lx = diags([1, -2, 1], [-1, 0, 1], shape=(nx, nx)) / dx**2
+    Ly = diags([1, -2, 1], [-1, 0, 1], shape=(ny, ny)) / dy**2
+    Ix = identity(nx)
+    Iy = identity(ny)
+    return kron(Iy, Lx) + kron(Ly, Ix)
+    
+# The Stommel-Munk model is given as: A_4\nabla^4\psi - \frac{R}{D}\nabla^2 \psi - \beta\frac{\partial \psi}{\partial x} = - \frac{\hat\nabla \cdot \vec\tau}{\rho_0 D}
+# beta: Meridional derivative of Coriolis parameter.
+# R: Laplacian viscosity.
+# D: Depth of the ocean or mixed layer depth.
+# rho0: Density of the fluid.
+# A4: Hyperviscosity.
+def solve_stommel_munk(curl_tau, dx, dy, A4, R, D, beta, rho0):
+    ny, nx = curl_tau.shape
+    N = nx * ny
+    rhs = -curl_tau.flatten() / (rho0 * D)
 
+    L = laplacian_2d(nx, ny, dx, dy)
+    biharmonic = L @ L
+    linear_term = -(R / D) * L
+
+    # Beta term: sparse matrix for -beta * dψ/dx
+    rows, cols, data = [], [], []
+    for j in range(ny):
+        for i in range(1, nx - 1):
+            idx = j * nx + i
+            rows.extend([idx, idx])
+            cols.extend([idx - 1, idx + 1])
+            data.extend([beta / (2 * dx), -beta / (2 * dx)])
+    beta_term = csr_matrix((data, (rows, cols)), shape=(N, N))
+
+    # Final system matrix
+    A = A4 * biharmonic + linear_term + beta_term
+
+    # Solve A * psi = rhs
+    psi_flat = spsolve(A, rhs)
+    psi = psi_flat.reshape(ny, nx)
+    return psi
+
+def compute_velocity(psi, dx, dy):
+    v = np.gradient(psi, dx, axis=1)  # ∂ψ/∂x
+    u = -np.gradient(psi, dy, axis=0) # -∂ψ/∂y
+    return u, v
+
+# Grid
+nx, ny = 64, 64
+Lx, Ly = 1e6, 1e6
+x = np.linspace(0, Lx, nx)
+y = np.linspace(0, Ly, ny)
+dx = x[1] - x[0]
+dy = y[1] - y[0]
+X, Y = np.meshgrid(x, y)
+
+# Example wind stress curl forcing
+curl_tau = np.sin(np.pi * Y / Ly) * np.ones_like(X)
+
+# Physical parameters
+A4 = 1e3        # biharmonic viscosity, modify based on the condition
+R = 0           # Rayleigh friction, linear drag (Stommel)?
+D = 100         # depth
+beta = 2e-11    # beta plane
+rho0 = 1027     # density
+
+# Solve streamfunction
+psi = solve_stommel_munk(curl_tau, dx, dy, A4, R, D, beta, rho0)
+u, v = compute_velocity(psi, dx, dy)
+
+custom_color = "#d6ebff"
+fig, ax = plt.subplots(figsize=(6, 5), facecolor='none', dpi=300)  # transparent background
+
+stream = ax.streamplot(x, y, u, v, density=1.2, color=custom_color)
+
+ax.set_title("Stommel-Munk Gyre Streamlines", color=custom_color)
+ax.set_xlabel("x (m)", color=custom_color)
+ax.set_ylabel("y (m)", color=custom_color)
+
+ax.tick_params(colors=custom_color)
+
+for spine in ax.spines.values():
+    spine.set_edgecolor(custom_color)
+
+# Set transparent figure background
+fig.patch.set_alpha(0.0)
+ax.set_facecolor('none')  # transparent plot area
+
+plt.savefig("Lecture4_StommelMunkGyre.png", dpi=300, transparent=True)
+plt.tight_layout()
+plt.show()</code></pre>
+</div>
+
+<img src="Figures/Lecture4_StommelMunkGyre.png" alt="StommelMunkGyre" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
 
