@@ -191,7 +191,6 @@ h_n = H_n \text{(constant)} + \delta h_n; \quad \delta h_n \ll H_n
 \]
 </strong>
 
-
 <img src="Figures/Lecture6_LayerModelFormulation.png" alt="LayerModelFormulation" style="margin-top: 1.5em; max-width: 100%; display: block;">    
 <div class="figure-caption">(Schematic of a layered ocean model in quasi-geostrophic theory. Each layer $n$ lies between interfaces at $z = z_n(\phi, \theta)$ (top) and $z = z_{n+1}(\phi, \theta)$ (bottom), where $\phi$ is latitude and $\theta$ is longitude. Each layer has constant density and depth-independent horizontal velocity. Vertical mass exchange across layers is allowed via the cross-isopycnal flux $w^*$ (per unit horizontal area).
 
@@ -199,6 +198,86 @@ h_n = H_n \text{(constant)} + \delta h_n; \quad \delta h_n \ll H_n
   Credit: Pedlosky 1996. Ocean Circulation Theory.)</div>
 
 
+  Taylor approximation of
+
+  $$
+  \frac{1}{1 + \delta} \approx 1 - \delta
+  $$
+  
+  $$
+  \Rightarrow \frac{1}{h_n} = \frac{1}{H_n} \left(1 - \frac{\delta h_n}{H_n} \right)
+  $$
+  
+  $$
+  \frac{d\zeta_n}{dt} + \beta v_n = \frac{f_0}{H_n} \frac{d (\delta h_n)}{dt}
+  $$
+  
+  $$
+  \frac{d}{dt} \left( \zeta + \beta y_n - \frac{f_0}{H_n} \delta h_n \right) = 0
+  $$
+  
+  $$
+  \frac{d}{dt} q = 0; \quad \text{q is the quasi-geostrophic potential vorticity}
+  $$
+  
+  <strong>QGPV is conserved!</strong>
+  
+  Now we only have to connect layer thickness to velocities or streamfunctions.
+  The general case is tricky, but for the 2 layer case we know:
+  
+  $$
+  h_1 = z_1 - z_2 \quad \text{and} \quad h_2 = z_3 - z_2,
+  $$
+  
+  with
+  
+  $$
+  \frac{d}{dt} z_1 = w_E \quad \text{and} \quad \frac{d}{dt} z_3 = w_B = 0,
+  $$
+  
+  so only need to figure out
+  
+  \[\boxed{
+  \frac{d}{dt} z_2}!
+  \]
+
+Now we only need to connect layer thickness to velocities and Psi!
+
+$$
+f_0 v = \frac{1}{\rho_0} p_x \quad \Longrightarrow \quad v_2 = \frac{g}{f_0 \rho_0} \rho_x
+$$
+
+Discretize it:
+
+$$
+\frac{v_2 - v_1}{\Delta z_2} = \frac{g}{f_0 \rho_0} \frac{\rho_2 - \rho_1}{\Delta x}
+$$
+
+For simplicity’s sake, assume* $v_2 = 0$. Then there is no pressure gradient in the second layer, and the pressure gradient induced by the surface elevation is balanced by the sloping isopycnal. It also means:
+
+$$
+\Longrightarrow \quad v_1 = \frac{-g}{f_0 \rho_0} \Delta \rho \frac{\Delta z_2}{\Delta x}
+$$
+
+(the velocity is proportional to the isopycnal slope!)
+
+Define reduced gravity:
+
+$$
+\gamma_1 = \frac{\rho_2 - \rho_1}{\rho_0} g
+$$
+
+so that for the more general case of a non-zero $v_2$:
+
+$$
+v_2 - v_1 = \frac{\gamma_1}{f_0} \frac{\Delta z_2}{\Delta x} = \frac{\Delta \psi_2 - \Delta \psi_1}{\Delta x}
+$$
+
+Or, after cancelling $\Delta x$ and shrinking $\Delta$:
+
+\[\boxed{
+  \frac{d}{dt} z_2 = \frac{f_0}{\gamma_1} (d\Psi_2 - d\Psi_1)}!
+\]
 
 
 
