@@ -247,6 +247,8 @@
   }
   
   .sidebar nav ul.nav-menu > li {
+    display: flex;            /* Align bullet and text side by side */
+    align-items: center;      /* Vertically center them */
     margin: 0.5em 0;
   }
   
@@ -268,6 +270,21 @@
     color: #99ccff;
     padding-left: 1em;
   }
+
+  .sidebar nav ul.sub-menu > li {
+    display: flex;
+    align-items: center;
+    margin: 0.3em 0;
+  }
+  
+  .sidebar nav ul.sub-menu li::before {
+    content: "■";
+    color: #99ccff; /* lighter for sub-items */
+    margin-right: 0.4em;
+    font-size: 0.8em;
+    line-height: 1;
+  }
+  
   
   html {
     transform-origin: top left;
