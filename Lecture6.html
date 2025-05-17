@@ -67,6 +67,11 @@
           <ul class="sub-menu">
             <li><a href="Project4.html">Project 4 – Shadow Zone</a></li>
           </ul>
+          <li><a href="Lecture8.html">Lecture 8</a></li>
+          <li><a href="Lecture9.html">Lecture 9</a></li>
+          <ul class="sub-menu">
+            <li><a href="Project5.html">Project 5 – Hadley Cell</a></li>
+          </ul>
           <li><a href="References.html">References</a></li>
         </li>
       </ul>
@@ -291,23 +296,120 @@ $$
 
 
 <img src="Figures/Lecture6_StructureBaroclinicPlanetaryWave.png" alt="StructureBaroclinicPlanetaryWave" style="margin-top: 1.5em; max-width: 100%; display: block;">    
-
-
-
-
-
-
-
-
-
-<p><strong>Next</strong>: <a href="#">To be continued</a></p>
+<div class="figure-caption">(Structure of a baroclinic planetary wave with
+  $f_0 > 0, \, k_x > 0, \, k_y = 0,$ and $k_z = \pi / H$,
+  which yield $\omega < 0$ and a wave structure with a single reversal in the vertical. Credit: Cushman-Roisin & Beckers 2011. Introduction to Geophysical Fluid Dynamics - Physical and Numerical Aspects.)
 </div>
+
+Even simpler, a linear version
+(remember: $ds/dt = \partial s / \partial t + u \, \partial s / \partial x + v \, \partial s / \partial y$)<br>
+
+When n = 2
+
+$$
+\frac{\partial}{\partial t} \left( \nabla^2 \Psi_1 - \frac{f_0^2}{H_1 \gamma_1} (\Psi_2 - \Psi_1) \right) + \beta \frac{\partial \Psi_1}{\partial x} = \frac{f_0}{H_1} w_E
+$$
+
+$$
+\frac{\partial}{\partial t} \left( \nabla^2 \Psi_2 - \frac{f_0^2}{H_2 \gamma_1} (\Psi_1 - \Psi_2) \right) + \beta \frac{\partial \Psi_2}{\partial x} = 0
+$$
+
+Steady State $\partial / \partial t = 0$
+
+$$
+\beta \frac{\partial \Psi_1}{\partial x} = \frac{f_0}{H_1} w_E
+$$
+
+$$
+\beta \frac{\partial \Psi_2}{\partial x} = 0
+$$
+
+All the Sverdrup flow is trapped in the upper layer! A layer that is not connected to the surface does not move in a linear model.
+
+A nonlinear steady solution:
+
+$$
+\frac{d}{dt} \left( \nabla^2 \Psi_1 + \beta y - \frac{f_0^2}{H_1 \gamma_1} (\Psi_2 - \Psi_1) \right) = \frac{f_0}{H_1} w_E
+$$
+
+$$
+\frac{d}{dt} \left( \nabla^2 \Psi_2 + \beta y - \frac{f_0^2}{H_2 \gamma_1} (\Psi_1 - \Psi_2) \right) = 0
+$$
+
+Simplify through scaling:
+$$O(\nabla^2 \Psi_1 / \frac{f_0^2}{H_1 \gamma_1} \Psi_1) = H_1 \gamma_1 / f^2 L^2$$
+
+
+Thermal wind:
+$$f v_z = \frac{g}{\rho_0} \rho_x \quad \Rightarrow \quad O(v) = \frac{gH}{f_0} \frac{\Delta \rho}{L}$$
+
+$$
+\frac{H_1 \gamma_1}{f^2 L^2} = \frac{\Delta \rho H g}{\rho_0 f^2 L^2} = \frac{v}{fL} \quad \boxed{\text{the Rossby number!}}
+$$
+
+Thus 
+$$
+\frac{d}{dt} \left( \beta y - \frac{f_0^2}{H_1 \gamma_1} (\Psi_2 - \Psi_1) \right) = \frac{f_0}{H_1} w_E
+$$
+
+$$
+\frac{d}{dt} \left( \beta y - \frac{f_0^2}{H_2 \gamma_1} (\Psi_1 - \Psi_2) \right) = 0
+$$
+
+For steady state, and since $J(\Psi_1, \Psi_1) = 0$:
+
+$$
+\frac{f_0^2}{H_1 \gamma_1} J(\Psi_1, \Psi_2) + \beta \frac{\partial \Psi_1}{\partial x} = \frac{f_0}{H_1} w_E
+$$
+
+$$
+\frac{f_0^2}{H_2 \gamma_1} J(\Psi_2, \Psi_1) + \beta \frac{\partial \Psi_2}{\partial x} = 0
+$$
+
+For illustrate the main dynamics at work, let’s assume $v_2 = 0$, then
+
+$$
+u_2 \frac{f_0^2}{H_2 \gamma_1} (\Psi_2 - \Psi_1))_x = \beta \frac{\delta \Psi_2}{\delta x}
+$$
+
+Southward movement can be balanced by advection of thinner layers!
+
+<img src="Figures/Lecture6_StreamlineNorthEast.png" alt="StreamlineNorthEast" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Schematic streamlines in layer 2 as they emanate from the outcrop line. Through the point $(\phi', \theta_2)$ on the outcrop line a geostrophic streamline passes to the point $(\phi, \theta)$ along a line of constant $z_3$ or $h$. The streamline, which north of the outcrop line is contiguous with the eastern wall, must leave the wall at the outcrop line and trend westward exposing a zone near the eastern wall that is not reached by any streamline originating from the outcrop line.
+  Credit: Pedlosky 1996. Ocean Circulation Theory.)
+</div>
+
+The following figure shows a solution for this 2 layer system for an idealized sinusoidal wind stress profile. Mostly the 2nd layer is indeed at rest, but in the west the flow, and the advection of layer thickness is strong enough to balance the advection of the planetary vorticity gradient.
+
+<img src="Figures/Lecture6_Streamline2.5layer.png" alt="Streamline2.5layer" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Streamfunction in the 2.5-layer model with the assumption that the potential vorticity in layer 2 is homogenized within the pool of closed geostrophic contours. In the figure
+
+  $
+  \alpha = \frac{f_0 w_0}{\beta^2 L^2 \bar{H}} = 0.3
+  $
+  
+  The layer depths and the density jumps at the two active interfaces are taken to be equal.
+  
+  <span class="bullet"></span> (a) $\psi_1$. Note the kink in the upper layer streamlines at the boundary of the pool (*plus signs*).
+  
+  <span class="bullet"></span> (b) $\psi_2$. The motion is a swirling recirculation limited to the pool. An implied return flow through the western boundary current must take place in both layers.
+  Credit: Pedlosky 1996. Ocean Circulation Theory.)
+</div>
+
+
+
+
+
+
+<p><strong>Next</strong>: <a href="Lecture7.html">Lecture 7 – Ocean Shadow Zone</a></p>
 <div class="footer">
   Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>
   It is very much a work in progress! Have you spotted a mistake or an error on this page? 
   Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
   &copy; 2025 TeamOcean | NBI/KU
 </div>
+</div>
+
 
 <script>
   function copyToClipboard(btn) {

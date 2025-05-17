@@ -3,13 +3,14 @@
     margin: 0;
     padding: 0;
     transform: none;
+    overflow: hidden; /* Prevent scrolling on the body */
   }
   
   body {
     font-family: 'Noto Sans JP', sans-serif;
     display: block;                 /* <- IMPORTANT */
     flex-direction: column;        /* vertical layout */
-    min-height: 110vh;             /* full height of screen */
+    min-height: 100vh;             /* full height of screen */
     background-color: #001a33;
     color: #7DCDF4;
     min-width: 100vw;              /* keep if horizontal scroll needed */
@@ -26,29 +27,29 @@
 
   .container {
     display: flex;
-    min-height: 100vh;  /* Make it take full vertical height */
+    height: 100vh; /* Ensures fixed full-screen layout */
     align-items: stretch; /* Ensures both columns align vertically */
+    overflow: hidden; /* Contain scrolling */
   }
-  
   
 
   .sidebar {
-    flex: 0 0 249px; /* Prevent shrinking */
-    width: 250px;
-    background-color: transparent;
-    border-right: 4px solid #3c5c78;
-    padding-right: 1em;
+    width: 260px;
+    flex-shrink: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    background-color: transparent;
+    /*border-right: 3px solid #3c5c78;*/
+    padding-right: 0em;
+    overflow-y: auto;     /* enable vertical scroll */
+    overflow-x: hidden;   /* disable horizontal scroll */
   }
-
-  
   
   .sidebar img {
     width: 110%;
     height: auto;
-    padding-top: 1em;
+    padding-top: 0.5em;
     object-fit: contain;  /* Ensure it doesn't stretch */
 
   }
@@ -57,19 +58,31 @@
   .sidebar nav {
     padding: 1em;
   }
+
   .sidebar nav a {
     display: block;
     margin: 0.5em 0;
     color: #66aaff;
     text-decoration: none;
   }
+
   .main-content {
     padding-top: 1em;
-    padding: 1em 2em 2em 2em;  /* top, right, bottom, left */
+    height: 100vh;
+    overflow-y: auto; /* Enable vertical scroll */
+    padding: 1em 2em 1em 2em;  /* top, right, bottom, left */
     background-color: #001a33;
     color: #d6ebff;
     flex-grow: 1;
   }
+
+  .main-scroll-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1em 2em 0 2em;  /* Add padding inside scrollable region */
+  }
+  
+
   
   .main-content h1 {
     font-size: 1.8em;
@@ -78,13 +91,15 @@
   .main-content a {
     color: #66aaff;
   }
+
   .footer {
-    margin-left: 250px;
-    padding: 1em 2em;
+    padding: 2em 0em;
     font-size: 0.6em;
     color: #aaccee;
     background-color: #001a33;
   }
+  
+
   .code-block {
     position: relative;
     background: #003366;
@@ -376,5 +391,28 @@ body::-webkit-scrollbar-thumb:hover {
   color: #7DCDF4;
   }
 
-  
-  
+/* WebKit (Chrome, Safari, Edge) - Ultra-thin scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 3px; /* even thinner */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(125, 205, 244, 0.4); /* match your theme */
+  border-radius: 2px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(102, 170, 255, 0.5);
+}
+
+/* Firefox - Ultra-thin scrollbar */
+.sidebar {
+  scrollbar-width: thin; /* 'thin' is the thinnest supported */
+  scrollbar-color: rgba(125, 205, 244, 0.4) transparent;
+}
