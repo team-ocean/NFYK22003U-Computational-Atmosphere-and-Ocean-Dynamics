@@ -253,7 +253,7 @@ $$
 \frac{v_2 - v_1}{\Delta z_2} = \frac{g}{f_0 \rho_0} \frac{\rho_2 - \rho_1}{\Delta x}
 $$
 
-For simplicity’s sake, assume* $v_2 = 0$. Then there is no pressure gradient in the second layer, and the pressure gradient induced by the surface elevation is balanced by the sloping isopycnal. It also means:
+For simplicity’s sake, assume $v_2 = 0$. Then there is no pressure gradient in the second layer, and the pressure gradient induced by the surface elevation is balanced by the sloping isopycnal. It also means:
 
 $$
 \Longrightarrow \quad v_1 = \frac{-g}{f_0 \rho_0} \Delta \rho \frac{\Delta z_2}{\Delta x}
@@ -279,10 +279,18 @@ Or, after cancelling $\Delta x$ and shrinking $\Delta$:
   \frac{d}{dt} z_2 = \frac{f_0}{\gamma_1} (d\Psi_2 - d\Psi_1)}!
 \]
 
+so that for our 2-layer ocean:
+
+$$
+\frac{d}{dt}(\nabla^2 \Psi_1 + \beta y - \frac{f_0^2}{H_1 \gamma_1} (\Psi_2 - \Psi_1)) = \frac{f_0}{H_1} w_E
+$$
+
+$$
+\frac{d}{dt}(\nabla^2 \Psi_2 + \beta y - \frac{f_0^2}{H_2 \gamma_1} ( \Psi_1 - \Psi_2)) = 0
+$$
 
 
-
-
+<img src="Figures/Lecture6_StructureBaroclinicPlanetaryWave.png" alt="StructureBaroclinicPlanetaryWave" style="margin-top: 1.5em; max-width: 100%; display: block;">    
 
 
 
