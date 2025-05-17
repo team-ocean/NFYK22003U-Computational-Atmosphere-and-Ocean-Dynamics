@@ -85,13 +85,47 @@
     <div class="figure-caption">(A prime example of carbonate chemistry at an (air/water) interface: the ocean surface. The ocean is the largest sink for the greenhouse gas, carbon dioxide ($\mathrm{CO_2}$). Atmospheric carbon dioxide combines with water to form carbonic acid ($\mathrm{H_2CO_3}$), which then forms carbonate ($\mathrm{CO_3^{2-}}$) and bicarbonate ($\mathrm{HCO_3^-}$) ions. From there, carbonate ions can react with dissolved calcium or magnesium ions to form limestone or other minerals, where carbon can become sequestered. 
       Credit: <a href="https://www.pmel.noaa.gov/co2/">NOAA Pacific Marine Environmental Laboratory (PMEL) Carbon Program</a>.)</div>
       
+      Carbon dioxide dissolves in seawater and the aqueous form, $\text{CO}_2^{\text{aq}}$, reacts with water to form carbonic acid, $\text{H}_2\text{CO}_3$. These species,
 
+      $$
+      [\text{CO}_2^*] = [\text{CO}_2^{\text{aq}}] + [\text{H}_2\text{CO}_3]
+      $$
+      
+      are referred to as dissolved CO$_2$, where square brackets denote concentrations in seawater in terms of the amount per unit mass (µmol kg$^{-1}$).
+      
+      Molecules of CO$_2$ continually pass across the air–sea interface and there is a flux of the gas (mol cm$^{-2}$ s$^{-1}$) both into and out of the water. When the flux in each direction is of identical magnitude, the air and water reservoirs of CO$_2$ are in equilibrium.
 
 
     
 
 
     <h2>Solubility of Carbon Dioxide</h2>
+    Definitions for soluble gases $c$: 
+    <ul>
+
+<li>The <strong>mixing ratio</strong> of a gas in air, $X_c$, is the number of moles of the gas per mole of air. This ratio is dimensionless and, for carbon dioxide, often expressed as parts per million by volume (ppmv).</li>
+
+<li>The <strong>concentration</strong> of the gas in air can be defined either as the number of moles per unit volume, $\{c_a\}$ (mol m$^{-3}$) or the number of moles per unit mass, $[c_a]$ (mol kg$^{-1}$), where $\{c_a\} = [c_a] \rho_a$ and $\rho_a$ is the density of air at local temperature and pressure. The concentration is related to the mixing ratio by
+
+  $
+  \{c_a\} = \frac{X_c p_a}{M_a},
+  $
+
+  where $M_a$ is the mean molecular mass per unit mole of air (kg mol$^{-1}$)</li>
+
+<li>The <strong>partial pressure</strong>, $p_c^{\text{at}}$, of the gas in air is the contribution of that gas constituent to the total atmospheric pressure, $p$, given by $p_c = X_c p$, and, for carbon dioxide, is often expressed in terms of micro-atmospheres (µatm).</li>
+
+<li>The <strong>fugacity</strong>, $f_c^{\text{at}}$ (µatm), is an effective partial pressure, corrected to account for the non-ideal nature of real gases; for carbon dioxide the correction is typically $< 1\%$.</li>
+
+<li>The <strong>concentration</strong> of the dissolved gas in water is either expressed per unit volume, $\{c\}$ (mol m$^{-3}$), or unit mass, $[c]$ (mol kg$^{-1}$), where $\{c\} = [c] \rho_w$ and $\rho_w$ is the density of water at the given pressure, temperature and salinity.</li>
+
+<li>The <strong>solubility</strong>, $K_0$, quantifies the ratio of the concentration of the dissolved gas in seawater and the partial pressure in the air when they are in equilibrium:
+
+  $$
+  K_0^c \equiv \frac{[c]}{p_c}
+  $$</li>
+</ul>
+
     To understand solubility in a simple system, consider the air–water exchange of a soluble gas in a closed vessel containing seawater and an airspace above. Molecules of a soluble gas, $c$, continually pass in each direction across the air–water interface. The concentration in water is $[c]$ (µmol kg$^{-1}$), and the partial pressure in the airspace is $p_c$ (µatm). The flux of molecules into the water is proportional to the partial pressure, $p_c$, in the airspace.
     <img src="Figures/Lecture5_SeawaterAirspace.png" alt="SeawaterAirspace" style="margin-top: 1.5em; max-width: 100%; display: block;">
     <div class="figure-caption">(Schematic view of a simple closed vessel which contains seawater and an airspace above. Molecules of all soluble gases (filled and open circles), continually pass across the air–water interface in both directions. Filled circles represent a soluble gas, $c$, which has concentration in water $[c]$ ($\mu \text{mol} \, \text{kg}^{-1}$) and a partial pressure in the airspace $p_c$ ($\mu \text{atm}$). 
@@ -118,8 +152,25 @@
       where $K_0^c$ (mol kg$^{-1}$ atm$^{-1}$) is the solubility for a general gas $c$; we will use $K_0$ to denote the solubility of CO$_2$. The solubility reflects the relative efficiency with which molecules pass into and out of the water, and varies with environmental factors, including temperature and salinity.
 
       <ul><li>The kinetic energy of molecules in solution increases at higher temperatures and, thus, dissolved gas molecules are more likely to have sufficient energy to cross the air–sea interface. Hence, the solubility of a dissolved gas decreases with increasing temperature.</li></ul>
+      The abundance of carbon dioxide in the surface atmosphere is measured in terms of a partial pressure, $p\mathrm{CO}_2^{\text{at}}$ (µatm), the pressure imparted by that gas at the Earth’s surface.
+      There is an effective partial pressure of carbon dioxide, $p\mathrm{CO}_2$ (µatm), in seawater: <span class="bullet"></span>the partial pressure that the gas would have in the overlying atmosphere if an equilibrium is reached with the concentration of dissolved carbon dioxide, $[ \mathrm{CO}_2^* ]$, in surface water. 
+      <span class="bullet"></span>It is empirically calculated, essentially a function of temperature, chemical composition and concentration.
 
+      The ratio between $[ \mathrm{CO}_2^* ]$ and the effective partial pressure, $p\mathrm{CO}_2$, is described by the solubility, $K_0$ (mol kg$^{-1}$ atm$^{-1}$), defined as
 
+$$
+\frac{[ \mathrm{CO}_2^* ]}{p\mathrm{CO}_2} = K_0
+$$
+      <img src="Figures/Lecture5_CO2DifferencesOceanLowAtomosphere.png" alt="CO2DifferencesOceanLowAtomosphere" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+      <div class="figure-caption">(<strong>a.</strong> The annual-mean difference in surface ocean and lower-atmosphere partial pressure of carbon dioxide,
+
+        $
+        \Delta p\mathrm{CO}_2 = p\mathrm{CO}_2 - p\mathrm{CO}_2^{\text{at}} \quad (\mu \text{atm})
+        $
+        . There is ocean uptake of CO$_2$ (light shading) over parts of the high latitudes where the partial pressure in the atmosphere is greater than in the ocean. Conversely, there is ocean outgassing (dark shading) in the tropics and possibly over parts of the Southern Ocean. This climatology represents a large compilation of surface ocean observations normalized to reference year 1995 (non-El Niño conditions) and mapped onto a grid of $4^\circ \times 5^\circ$; white regions around continents are areas with no ocean data due to the coarse-grained gridding.
+        
+        <strong>b.</strong> Observed changes in surface ocean (0–20 m) $p\mathrm{CO}_2$ at the Hawaii Ocean Time-Series station and atmospheric $p\mathrm{CO}_2$ observed at Mauna Loa, Hawaii. Surface ocean $p\mathrm{CO}_2$ follows the rise in atmospheric $p\mathrm{CO}_2$ due to air–sea exchange. For this region, surface ocean $p\mathrm{CO}_2$ is always lower than in the atmosphere, driven away from a local equilibrium by ocean circulation and biological activity, and so there is a local ocean uptake of CO$_2$ (ocean data from Dore, 2009; atmospheric data from NOAA/ESRL). 
+        Credit: Williams RG, Follows MJ 2011. <i>Ocean Dynamics and the Carbon Cycle: Principles and Mechanisms</i>.)</div>
 
 
     <h2>The Buffer Effect</h2>
