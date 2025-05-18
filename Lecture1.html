@@ -243,6 +243,16 @@ print("Saved as transparent tracer_evolution.gif!")</code></pre>
     </div>
     <img src="Figures/Lecture1_TracerFieldEvolution.gif" alt="TracerFieldEvolution" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
+    <h2>Dissolved Inorganic carbonate</h2>
+    The total concentration of carbon in dissolved inorganic form in seawater, referred to as dissolved inorganic carbon (DIC), is defined as the sum of the concentrations of the three carbonate species:
+    $$
+    \text{DIC} = [\mathrm{CO}_2^*] + [\mathrm{HCO}_3^-] + [\mathrm{CO}_3^{2-}]
+    $$
+    Surface observations reveal comparable values of DIC, varying from less than 2000 $\mu\text{mol kg}^{-1}$ in the tropics to more than 2100 $\mu\text{mol kg}^{-1}$ in the high latitudes.
+     Most of the surface DIC is accounted for by $[\text{HCO}_3^-]$, followed by $[\text{CO}_3^{2-}]$, while $[\text{CO}_2^*]$ accounts for less than 1%. 
+    The patterns of DIC and its carbon components are not identical over the globe: there is a general increase in DIC, $[\text{HCO}_3^-]$ and $[\text{CO}_2^*]$ with latitude, but an opposing decrease in $[\text{CO}_3^{2-}]$.
+
+
     <h2>Autocorrelation</h2>
     <p>Many climate data contain autocorrelation, we often can’t avoid it.</p>
 
@@ -285,8 +295,6 @@ print("Saved as transparent tracer_evolution.gif!")</code></pre>
         \quad \forall\ \tau \in [0, N - 1]\)<br>
         \(\because\) The total length is \(t_N - t_1 + 1\), \( t + \tau \leq t_N \Rightarrow t \leq t_N - \tau\)<br>
         \(\therefore \boxed{\gamma(\tau) = \frac{1}{(t_N - \tau) - t_1} \sum_{t = t_1}^{t_N - \tau} x'(t) \cdot x'(t + \tau)}\) 
-
-    
     
     </p>
     <div class="code-block">
@@ -349,7 +357,6 @@ print("Saved as transparent tracer_evolution.gif!")</code></pre>
         <pre><code class="language-python">x = series - np.mean(series)</code></pre>
 </div>
 </p>
-
 
 
     <h3>Example: Autocorrelation in El Niño-Southern Oscillation (ENSO) Data</h3>
