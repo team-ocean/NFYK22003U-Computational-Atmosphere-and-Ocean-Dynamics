@@ -142,6 +142,107 @@ $$
 $$
 
 <h2>Switch to Pressure Coordinates</h2>
+The hydrostatic equation (which is an excellent approximation in large-scale atmospheric flow) states:
+
+$$
+\underbrace{dp}_{\substack{\text{change in} \\ \text{pressure (Pa)}}}
+=
+-\, \underbrace{\rho}_{\substack{\text{air density} \\ \text{(kg/m$^3$)}}} \,
+\underbrace{g}_{\substack{\text{gravitational acceleration}}}\,
+\underbrace{dz}_{\substack{\text{change in height (m)}}}
+$$
+
+A derivative with respect to height is proportional to a negative derivative with respect to pressure.
+This can also be written in differential form as:
+
+$$
+dp = -\rho g \, dz
+$$
+
+The goal is to express $\frac{\partial}{\partial z}$ in terms of $\frac{\partial}{\partial p}$
+
+We want to rewrite vertical derivatives like $\frac{\partial \overline{w}}{\partial z}$ in terms of $\frac{\partial}{\partial p}$, using the relationship $dp = -\rho g \, dz$.
+
+First, solve for $dz$:
+
+$$
+dz = -\frac{1}{\rho g} \, dp
+$$
+
+Apply the chain rule to change derivatives from $z$ to $p$:
+
+$$
+\frac{\partial}{\partial z} = \frac{dp}{dz} \cdot \frac{\partial}{\partial p} = -\rho g \cdot \frac{\partial}{\partial p}
+$$
+
+$$
+\therefore \boxed{
+\frac{\partial}{\partial z} = -\rho g \, \frac{\partial}{\partial p}
+}
+$$
+
+Then, the vertical velocity in pressure coordinates is defined as:
+
+$$
+\omega = \frac{dp}{dt} \quad \text{(units: Pa/s)}
+$$
+
+In height coordinates, vertical velocity is:
+
+$$
+w = \frac{dz}{dt} \quad \text{(units: m/s)}
+$$
+
+
+Differentiate both sides of:
+
+$$
+dp = -\rho g \, dz
+$$
+
+with respect to time $t$:
+
+$$
+\frac{dp}{dt} = -\rho g \cdot \frac{dz}{dt}
+$$
+
+Now rearrange:
+
+$$
+\frac{dz}{dt} = -\frac{1}{\rho g} \cdot \frac{dp}{dt}
+\Rightarrow
+w = -\frac{\omega}{\rho g}
+$$
+
+Thus:
+
+$$
+\boxed{
+w = \frac{dz}{dt} = -\frac{\omega}{\rho g}
+} \tag{3}
+$$
+
+The continuity equation in pressure coordinates becomes:
+
+$$
+\frac{1}{a \cos \varphi} \frac{\partial \left( \left[ \overline{v} \right] \cos \varphi \right)}{\partial \varphi} + \frac{\partial \left[ \overline{\omega} \right]}{\partial p} = 0
+$$
+
+<h2>Define the Streamfunction $\Psi(\varphi, p)$</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <p><strong>Next</strong>: <a href="#">To be continued</a></p>
