@@ -80,6 +80,77 @@
 
   <div class="main-content">
 <h1>Project 5 – Hadley Cell</h1>
+<div style="border: 2px solid #17a2b8; background-color: #d1ecf1; padding: 20px; border-radius: 5px;">
+  <h1 style="color: blue;">Homework 5: Testing Hadley Cell Width Theory in an Atmospheric Climate Model</h1>
+  <hr style="border: 1px solid #17a2b8;">     
+  <p style="font-size: 20px; color: #FF69B4;">
+    This week we will test the theory of Hadley Cell Width in the Speedy Aquaplanet Model
+  </p>
+  <hr style="border: 1px solid #17a2b8;">
+</div>
+
+The model we are using is called pySPEEDY, the documentation can be found at: <a href="https://pyspeedy.readthedocs.io/en/latest/user_guide.html">pySPEEDY user guide</a><br>
+
+<strong>Note:</strong> You need to install pySPEEDY-aqua each time we use an erda session, or if you manage to run it locally on your laptop or home computer, then only once.<br>
+
+<strong>In terminal:</strong><br>
+<span class="bullet"></span>1. Create the environment with Python 3.9 and core tools<br>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">conda create -n pyspeedy python=3.9 pip numpy=1.23 setuptools=59.5 -y</code></pre>
+    </div>
+
+<span class="bullet"></span>2. Activate the environment<br>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">conda activate pyspeedy</code></pre>
+    </div>
+
+<span class="bullet"></span>3. Install dependencies<br>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">pip install jinja2 ipykernel</code></pre>
+    </div>
+
+<span class="bullet"></span>4. Install pySPEEDY-aqua from GitHub<br>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">pip install git+https://github.com/guidov/pySPEEDY-aqua.git</code></pre>
+    </div>
+
+<span class="bullet"></span>5. Register the Jupyter kernel<br>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">python -m ipykernel install --user --name pyspeedy --display-name "Python (pyspeedy)"</code></pre>
+    </div>
+
+  Now you can start your notebook with <code>Python (pyspeedy)</code> kernal (you may need to wait a few minutes)<br>
+
+  <h2>Load modules that we will use for this project:</h2>
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">!which python
+!python -V
+
+import pyspeedyaqua</code></pre>
+    </div>
+    <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+/opt/conda/bin/python
+Python 3.12.7
+</pre>
+
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">import pyspeedyaqua
+
+print("pyspeedyaqua imported successfully!")
+print(dir(pyspeedyaqua))  # Show available submodules/functions</code></pre>
+    </div>
+
+          <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">pip show pyspeedyaqua</code></pre>
+    </div>
 
 <img src="Figures/Project5_AtmosphericCirculation.png" alt="AtmosphericCirculation" style="margin-top: 1.5em; max-width: 100%; display: block;">      
     <div class="figure-caption">(Schematic illustration of dynamical processes occurring on a generic terrestrial exoplanet. These include baroclinic eddies, Rossby waves, and eddy-driven jet streams in the extratropics, and Hadley circulations, large-scale Kelvin
@@ -92,7 +163,7 @@ and—on synchronously rotating planets—in regions of ascent on the dayside.
 
 <p>Let’s start from the general continuity equation for incompressible flow, and work step-by-step to arrive at the zonal mean continuity equation in pressure coordinates and finally the streamfunction used for meridional overturning circulation in the atmosphere.</p>
 
-<h2>General Continuity Equation for Incompressible Flow</h2>
+<h3>General Continuity Equation for Incompressible Flow</h3>
 $$
 \nabla \cdot \mathbf{u} = 
 \underbrace{\frac{\partial u}{\partial x}}_{\text{$u$: zonal (east-west) velocity}} +
@@ -100,7 +171,7 @@ $$
 \underbrace{\frac{\partial w}{\partial z}}_{\text{$w$: vertical velocity (in height coordinates $z$)}} = 0
 $$
 
-<h2>Zonal Averaging</h2>
+<h3>Zonal Averaging</h3>
 We average over the longitude (x) to get the zonal-mean equation.
 
 $$
@@ -121,7 +192,7 @@ $$
 
 This is the mass continuity equation in the meridional plane (y-z)
 
-<h2>Transform to Spherical Coordinates</h2>
+<h3>Transform to Spherical Coordinates</h3>
 Let’s now switch to spherical coordinates:<br>
 
  $\varphi$: latitude <br>
@@ -141,7 +212,7 @@ $$
 \frac{1}{a \cos \varphi} \frac{\partial \left( \left[ v \right] \cos \varphi \right)}{\partial \varphi} + \frac{\partial \left[ w \right]}{\partial z} = 0
 $$
 
-<h2>Switch to Pressure Coordinates</h2>
+<h3>Switch to Pressure Coordinates</h3>
 The hydrostatic equation (which is an excellent approximation in large-scale atmospheric flow) states:
 
 $$
@@ -219,7 +290,7 @@ Thus:
 $$
 \boxed{
 w = \frac{dz}{dt} = -\frac{\omega}{\rho g}
-} \tag{3}
+}
 $$
 
 The continuity equation in pressure coordinates becomes:
@@ -228,7 +299,7 @@ $$
 \frac{1}{a \cos \varphi} \frac{\partial \left( \left[ \overline{v} \right] \cos \varphi \right)}{\partial \varphi} + \frac{\partial \left[ \overline{\omega} \right]}{\partial p} = 0
 $$
 
-<h2>Define the Streamfunction $\Psi(\varphi, p)$</h2>
+<h3>Define the Streamfunction $\Psi(\varphi, p)$</h3>
 For 2D incompressible flow in Cartesian coordinates $(y, z)$, the continuity equation is:
 
 $$
@@ -269,6 +340,57 @@ $$
 \left[ \overline{\omega} \right] = -\frac{g}{2\pi a^2 \cos \varphi} \frac{\partial \Psi}{\partial \varphi}
 \quad \text{(vertical pressure velocity)}
 $$
+
+
+<h3>Compute $\Psi(\varphi, p)$ from \([\overline{v}]\)</h3>
+Given:
+
+$$
+\boxed{
+\overline{v} = \frac{g}{2\pi a \cos\varphi} \frac{\partial \Psi}{\partial p}
+}
+$$
+
+This means that $\overline{v}$ is the partial derivative of $\Psi$ with respect to $p$, up to a known constant.
+
+Multiply both sides by $\frac{2\pi a \cos\varphi}{g}$:
+
+$$
+\frac{\partial \Psi}{\partial p} = \frac{2\pi a \cos\varphi}{g} \cdot \overline{v}(\varphi, p) 
+$$
+
+Now integrate from a reference pressure level $p_{\text{top}}$ to a level $p$:
+
+$$
+\int_{p_{\text{top}}}^{p} \frac{\partial \Psi}{\partial p'} \, dp'
+=
+\int_{p_{\text{top}}}^{p} \frac{2\pi a \cos\varphi}{g} \cdot \overline{v}(\varphi, p') \, dp'
+$$
+
+The left-hand side is just $\Psi(\varphi, p) - \Psi(\varphi, p_{\text{top}})$. So:
+
+$$
+\Psi(\varphi, p) - \Psi(\varphi, p_{\text{top}})
+= \frac{2\pi a \cos\varphi}{g} \int_{p_{\text{top}}}^{p} \overline{v}(\varphi, p') \, dp' 
+$$
+
+
+It’s conventional to set the streamfunction to zero at the top of the atmosphere:
+
+$$
+\Psi(\varphi, p_{\text{top}}) = 0
+$$
+
+Then $\Psi(\varphi, p) - \Psi(\varphi, p_{\text{top}})
+= \frac{2\pi a \cos\varphi}{g} \int_{p_{\text{top}}}^{p} \overline{v}(\varphi, p') \, dp'$ becomes:
+
+$$
+\boxed{
+\Psi(\varphi, p) = \frac{2\pi a \cos\varphi}{g} \int_{p_{\text{top}}}^{p} \overline{v}(\varphi, p') \, dp'
+} 
+$$
+
+
 
 
 
