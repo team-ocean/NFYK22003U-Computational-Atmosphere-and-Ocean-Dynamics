@@ -146,10 +146,99 @@ Python 3.12.7
 print("pyspeedyaqua imported successfully!")
 print(dir(pyspeedyaqua))  # Show available submodules/functions</code></pre>
     </div>
+<pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+pyspeedyaqua imported successfully!
+['DEFAULT_OUTPUT_VARS', 'MODEL_STATE_DEF', 'PACKAGE_DATA_DIR', 'Path', 'Speedy', 'SpeedyEns', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', '_speedy', 'callbacks', 'error_codes', 'example_bc_file', 'example_sst_anomaly_file', 'speedy', 'speedy_driver']
+</pre>
+
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">pip show pyspeedyaqua</code></pre>
+    </div>
+    <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+Name: pyspeedyaqua
+Version: 0.2.0
+Summary: Python interface for the SPEEDY model (Using aquaplanet boundary conditions).
+Home-page: https://github.com/guidov/pySPEEDY-aqua
+Author: Andrés Pérez Hortal, Sam Hatfield, Fred Kucharski, Franco Molteni
+Author-email: 
+License: UNKNOWN
+Location: /opt/conda/envs/pyspeedy/lib/python3.9/site-packages
+Requires: netCDF4, numpy, xarray
+Required-by: 
+Note: you may need to restart the kernel to use updated packages.
+</pre>
 
           <div class="code-block">
       <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-      <pre><code class="language-python">pip show pyspeedyaqua</code></pre>
+      <pre><code class="language-python">pip install numpy xarray scipy matplotlib cartopy</code></pre>
+    </div>
+
+          <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python"># Standard modules
+import numpy as np
+import xarray as xr
+from datetime import datetime
+
+# Numerical integration using trapezoidal rule (scipy >=1.10.0 includes cumtrapz here)
+from scipy.integrate import cumtrapz
+
+# Plotting
+import matplotlib
+import matplotlib.pyplot as plt
+
+# Map projections for geospatial data
+import cartopy.crs as ccrs
+from cartopy.feature import OCEAN
+from cartopy.util import add_cyclic_point
+
+# The Speedy Aquaplanet Model
+from pyspeedyaqua import Speedy, SpeedyEns
+from pyspeedyaqua.callbacks import DiagnosticCheck, ModelCheckpoint, XarrayExporter</code></pre>
+    </div>
+
+    <h2>Helper Functions for the Assignment</h2>
+          <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">def pres2alt(pressure):
+    '''
+    Determine altitude from site pressure.
+
+    Parameters
+    ----------
+    pressure : numeric
+        Atmospheric pressure. [Pa]
+
+    Returns
+    -------
+    altitude : numeric
+        Altitude above sea level. [m]
+
+    Notes
+    ------
+    The following assumptions are made
+
+    ============================   ================
+    Parameter                      Value
+    ============================   ================
+    Base pressure                  101325 Pa
+    Temperature at zero altitude   288.15 K
+    Gravitational acceleration     9.80665 m/s^2
+    Lapse rate                     -6.5E-3 K/m
+    Gas constant for air           287.053 J/(kg K)
+    Relative Humidity              0%
+    ============================   ================
+
+    References
+    -----------
+    .. [1] "A Quick Derivation relating altitude to air pressure" from
+       Portland State Aerospace Society, Version 1.03, 12/22/2004.
+    '''
+
+    alt = 44331.5 - 4946.62 * pressure ** (0.190263)
+
+    return alt</code></pre>
     </div>
 
 <img src="Figures/Project5_AtmosphericCirculation.png" alt="AtmosphericCirculation" style="margin-top: 1.5em; max-width: 100%; display: block;">      
@@ -390,11 +479,284 @@ $$
 } 
 $$
 
+          <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">def streamfunc(zmodvvel, zmodplev, zmodlat, axis_to_integrate = 0):
+    """
+    Calculate the streamfunction from v velocity.
+    
+    Args:
+    zmodvvel: An xarray or numpy array containing v velocity data (levels, latitudes).
+    zmodplev: An xarray or numpy array containing pressure level data (levels, latitudes).
+    zmodlat: An xarray or numpy array containing latitude data .
+    axis_to_integrate: Axis over which to integrate. If the dimensions are time, lev, lat, 
+                       set axis_to_integrate=2. Defaults to 0.
+    
+    Returns:
+    psi: Streamfunction calculated from v velocity, converted to Sverdrups.
+    """
+    
+    # Integrate v velocity over pressure levels along the specified axis.
+    integral = cumtrapz(zmodvvel, zmodplev, axis=axis_to_integrate, initial=0)  
+    
+    # Create a new array by multiplying v velocity by 0 and adding the integral.
+    psi = zmodvvel * 0.0 + integral # there are better ways to initialize a new array.
+    
+    # Calculate the factor using latitude information.
+    a = 6371000.0 # radius of the earth in (m)
+    g = 9.81 # gravity (m/s^2)
+    fac = 2.0 * np.pi * a * np.cos(np.deg2rad(zmodlat)) / 9.81
+    
+    # Update the streamfunction with the factor.
+    psi = psi * fac
+    
+    # Convert the streamfunction to Sverdrups (Sv).
+    psi = psi / 1e9  
+    
+    return psi</code></pre>
+    </div>
+    
+    The <code>pres2alt</code> function will help with plotting pressure vertical axis in height coordinates
+              <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">pres_profile = np.linspace(10000,100000,11) # needs to be in Pascals
+height_profile = pres2alt(pres_profile)
+height_profile # in meters</code></pre>
+    </div>
+    <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+array([15797.63848758, 12091.35061355,  9622.81359054,  7732.57631275,
+        6184.63587745,  4865.40331671,  3710.85926943,  2681.12207669,
+        1749.55309629,   897.41854125,   111.01015569])
+</pre>
+This is some real model data to show how the streamfunction is calculated and ploted to save time on the assignment.
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">lat_test = np.array([-87.216515 , -83.50514  , -79.79381  , -76.08247  , -72.37113  , -68.6598   , -64.94845  , -61.23711  ,
+       -57.525764 , -53.81443  , -50.10309  , -46.39175  , -42.680412 , -38.969067 , -35.25773  , -31.546385 ,
+       -27.835052 , -24.123709 , -20.412367 , -16.70103  , -12.989685 ,  -9.278345 ,  -5.5670047,  -1.8556641,
+         1.8556641,   5.5670047,   9.278345 ,  12.989685 ,  16.70103  ,  20.412367 ,  24.123709 ,  27.835052 ,
+        31.546385 ,  35.25773  ,  38.969067 ,  42.680412 ,  46.39175  ,  50.10309  ,  53.81443  ,  57.525764 ,
+        61.23711  ,  64.94845  ,  68.6598   ,  72.37113  ,  76.08247  ,  79.79381  ,  83.50514  ,  87.216515 ]);</code></pre>
+    </div>
+
+          <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">vvel_test = np.array([[ 2.47668382e-02,  4.95643802e-02,  5.81577532e-02,  1.45298801e-02, -5.47213182e-02, -5.54912686e-02, -2.28482913e-02, -1.73636395e-02,
+         1.92252267e-02,  4.10654880e-02, -1.63202025e-02, -3.81199531e-02, -5.91488592e-02, -1.00754462e-01,  1.93029478e-01,  6.15718424e-01,
+         2.95161575e-01, -4.22568738e-01, -3.22495759e-01,  4.39862192e-01,  1.47769558e+00,  3.42451143e+00,  4.84887934e+00,  2.52999949e+00,
+        -2.40655589e+00, -4.84191799e+00, -3.44501996e+00, -1.43028796e+00, -4.08730924e-01,  2.55904853e-01,  3.50775450e-01, -2.49875486e-01,
+        -4.84227270e-01, -1.07368112e-01,  8.26763213e-02,  7.75755849e-03,  2.67568901e-02,  2.23145131e-02, -5.39287478e-02, -2.34681573e-02,
+         3.06858793e-02,  5.71325235e-03,  2.64523830e-03,  1.67699866e-02, -2.31886897e-02, -5.34676425e-02, -2.95492653e-02, -3.86544620e-03],
+       [ 3.21759284e-02,  4.79086861e-02,  3.54018137e-02,  1.33776257e-03, -4.77374047e-02, -7.19113126e-02, -5.00482172e-02, -6.93723233e-03,
+         2.21501272e-02,  5.45633677e-03, -3.03077325e-02, -3.51979025e-02, -6.34879693e-02, -8.65347907e-02,  1.01391278e-01,  3.38728964e-01,
+         1.33172348e-01, -3.02221090e-01, -2.11046755e-01,  3.47246677e-01,  7.72506535e-01,  1.08101547e+00,  1.25689733e+00,  6.78657651e-01,
+        -5.15561640e-01, -1.21178019e+00, -1.09059918e+00, -7.44892955e-01, -3.28666419e-01,  1.61027968e-01,  2.52193362e-01, -8.97630975e-02,
+        -2.28771523e-01, -2.83681341e-02,  8.02518129e-02,  2.77745202e-02,  1.96578875e-02,  2.64327582e-02, -1.12856664e-02, -1.42565928e-02,
+         2.09424738e-02,  3.36006843e-02,  2.90304460e-02,  1.90617349e-02, -4.07511834e-03, -2.28064768e-02, -2.23195720e-02, -1.07543617e-02],
+       [ 4.08578105e-02,  5.08911125e-02,  2.14360710e-02, -4.62792069e-03, -3.47508937e-02, -7.34576210e-02, -6.40365779e-02, -3.92054161e-03,
+         1.74511373e-02, -9.54462867e-03, -1.31327128e-02, -2.46767160e-02, -8.57761204e-02, -6.49095625e-02,  1.04931630e-01,  1.85094565e-01,
+        -6.96900766e-03, -1.64345890e-01,  1.43073291e-01,  6.16226733e-01,  2.69068599e-01, -1.12210274e+00, -2.08794332e+00, -1.11411309e+00,
+         1.02317774e+00,  2.02158952e+00,  1.09677577e+00, -2.59467959e-01, -5.98596513e-01, -1.35966912e-01,  1.69875816e-01,  2.64109094e-02,
+        -1.55401751e-01, -7.96462819e-02,  7.66693503e-02,  7.87851140e-02,  9.05052992e-04, -7.48119596e-03,  1.26761170e-02,  1.09525397e-04,
+         6.59125950e-03,  4.02439684e-02,  3.79218198e-02,  7.45266443e-03, -2.29987944e-03, -5.64920995e-03, -2.34503504e-02, -2.29640808e-02],
+       [ 5.36413752e-02,  4.56045121e-02,  7.99892005e-03,  3.03166709e-03, -3.24745215e-02, -7.39846304e-02, -4.45297398e-02, -6.14352943e-03,
+         3.84857552e-03,  3.29606794e-02,  5.79470163e-03, -9.50671136e-02, -5.99682480e-02,  6.64733350e-02, -6.03738204e-02, -2.63424039e-01,
+         3.07071134e-02,  5.64011753e-01,  4.73874927e-01,  1.59969926e-02,  5.12425780e-01,  2.09003115e+00,  2.90985107e+00,  1.46758878e+00,
+        -1.24367440e+00, -2.76623034e+00, -2.06249762e+00, -5.36225975e-01,  1.86163019e-02, -3.66442233e-01, -4.75754678e-01, -2.51063183e-02,
+         2.23736465e-01,  4.43845578e-02, -4.82201427e-02,  6.65973425e-02,  6.71259388e-02, -3.13568860e-02, -2.53002346e-02,  9.78699047e-03,
+        -6.88947039e-03,  1.42202675e-02,  4.27718014e-02,  2.15905905e-03, -2.20489521e-02, -6.45630481e-03, -3.65139879e-02, -4.99644019e-02],
+       [ 7.08381981e-02,  3.32167372e-02, -1.97286569e-02,  2.10164208e-02,  5.21147018e-03, -4.70140986e-02, -8.04680772e-03,  2.54031066e-02,
+         1.57610103e-02,  4.22815569e-02, -5.39658475e-04, -9.89987478e-02, -1.33479228e-02,  1.03691779e-01, -6.22826442e-02, -1.92842349e-01,
+         8.92123729e-02,  3.83671165e-01,  1.65473193e-01, -6.56588852e-01, -2.17112565e+00, -4.00496626e+00, -4.46716547e+00, -2.06871152e+00,
+         1.94847512e+00,  4.44210625e+00,  4.01075602e+00,  2.15670919e+00,  6.95127249e-01, -7.40031749e-02, -3.83023292e-01, -2.33007774e-01,
+         3.86397392e-02,  1.50030162e-02, -8.23867694e-02,  1.48943244e-02,  6.68991357e-02, -2.82239802e-02, -5.89096881e-02, -4.19966094e-02,
+        -6.06044605e-02, -1.27466200e-02,  3.92298140e-02, -2.31199637e-02, -5.35820648e-02, -1.80128869e-02, -7.11762905e-02, -9.45502594e-02],
+       [-1.54572323e-01, -5.92616759e-02,  5.85394502e-02, -3.45130488e-02,  9.75878723e-03,  1.18414290e-01,  3.91986109e-02,  2.65560690e-02,
+         1.01833768e-01,  2.36105733e-02, -1.49186915e-02,  4.19062637e-02, -4.01958153e-02, -5.21921776e-02,  1.04486831e-01,  8.43731835e-02,
+        -2.08271760e-02, -1.44156978e-01, -6.24697924e-01, -8.34239006e-01, -6.23250566e-02,  4.60815817e-01, -1.17077701e-01, -3.39870512e-01,
+         2.33964100e-01,  1.17374875e-01, -4.35570776e-01,  2.89400406e-02,  8.25466037e-01,  7.14669168e-01,  2.40603626e-01,  8.26313812e-03,
+        -1.83551833e-01, -1.87991813e-01,  3.58236916e-02,  5.92348650e-02, -4.63583209e-02, -3.87438089e-02, -1.10848173e-01, -1.87413216e-01,
+        -6.75022677e-02, -1.34460460e-02, -6.37425557e-02,  3.68361222e-03, -2.60860212e-02, -1.75094739e-01, -6.77202269e-02,  8.08281153e-02],
+       [-6.69614449e-02, -1.01910211e-01, -7.51956999e-02, -1.70211457e-02,  6.21995814e-02,  1.27038375e-01,  1.32545903e-01,  9.82311219e-02,
+         7.47217983e-02,  7.34559298e-02,  7.38578290e-02,  4.54660691e-02, -2.63552144e-02, -9.95290056e-02, -1.17117837e-01, -9.83527526e-02,
+        -1.12036198e-01, -1.67105496e-01, -1.97994187e-01, -1.64326742e-01, -1.17842317e-01, -1.24418050e-01, -1.46908462e-01, -9.27182809e-02,
+         4.16911766e-02,  1.68930128e-01,  2.22241834e-01,  2.10309401e-01,  2.04996556e-01,  2.60494262e-01,  3.08622569e-01,  2.38499328e-01,
+         8.99132416e-02,  4.90555353e-03,  1.67079754e-02,  4.00602557e-02,  1.14102021e-03, -1.03793867e-01, -1.95595756e-01, -1.82459503e-01,
+        -9.35480818e-02, -2.87652314e-02, -6.40385691e-03, -1.10839643e-02, -6.25808612e-02, -1.17750838e-01, -9.86953676e-02, -3.64413038e-02],
+       [ 1.56761501e-02,  1.90396775e-02, -1.29919490e-02, -7.57989511e-02, -1.36177257e-01, -1.56091422e-01, -1.27766728e-01, -8.64436850e-02,
+        -9.82407779e-02, -2.09691226e-01, -3.71645182e-01, -4.55421001e-01, -3.89974207e-01, -2.30874285e-01, -8.66982788e-02, -5.42048030e-02,
+        -1.71732470e-01, -3.31149936e-01, -3.39432061e-01, -1.68168098e-01, -1.23349030e-03,  3.11501231e-02, -1.23661058e-03,  8.17033742e-03,
+         4.23675440e-02,  2.10224707e-02, -3.78881656e-02,  3.80060612e-03,  1.93916693e-01,  3.47208291e-01,  2.86456466e-01,  1.23377219e-01,
+         8.20060819e-02,  1.73726618e-01,  2.62418061e-01,  2.97235072e-01,  2.98196912e-01,  2.57753253e-01,  1.81972280e-01,  1.20243169e-01,
+         1.00634299e-01,  1.05495997e-01,  1.09625228e-01,  1.01057850e-01,  8.22830573e-02,  6.51914179e-02,  5.12244627e-02,  2.70697717e-02]])
+
+print(vvel_test.shape)</code></pre>
+    </div>
+
+        <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+(8, 48)
+</pre>
+
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python"># tile the pressure levels so that they are same dimensions as the velocity (levels, latituudes)
+# this is necessary for the vertical integration of the velocity
+plevs2D_test = np.tile(plevs_test, (lat_test.shape[0], 1)).T
+plevs2D_test.shape</code></pre>
+    </div>
+
+      <pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+(8, 48)
+</pre>
+
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">from scipy.integrate import cumulative_trapezoid
+# Need to be updated on Absalon # 
+# scipy.integrate.cumtrapz in the previous code is now deprecated and will be removed in SciPy 1.14.
+# Replace it with from scipy.integrate import cumulative_trapezoid
+# Then something like integral = cumulative_trapezoid(vvel, plevs, axis=axis_to_integrate, initial=0)</code></pre>
+    </div>
+
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">import numpy as np
+from scipy.integrate import cumulative_trapezoid
+
+def streamfunc(vvel, plevs, lats, axis_to_integrate=0):
+    """
+    Compute the meridional mass streamfunction Ψ from zonal-mean meridional wind [v].
+    
+    Parameters:
+    -----------
+    vvel : np.ndarray
+        Zonal-mean meridional wind field, shape (levels, latitudes)
+    plevs : np.ndarray
+        Pressure levels in Pa, shape must match vvel along vertical
+    lats : np.ndarray
+        Latitudes in degrees, 1D array matching vvel shape
+    axis_to_integrate : int
+        Axis along which pressure varies (default 0)
+    
+    Returns:
+    --------
+    psi : np.ndarray
+        Streamfunction in units of Sverdrup (1 Sv = 1e9 kg/s)
+    """
+    # Ensure inputs are arrays
+    vvel = np.asarray(vvel)
+    plevs = np.asarray(plevs)
+    lats = np.asarray(lats)
+
+    # Perform vertical integration of vvel over pressure using trapezoidal rule
+    integral = cumulative_trapezoid(vvel, plevs, axis=axis_to_integrate, initial=0)
+
+    # Constants
+    a = 6.371e6     # Earth's radius in meters
+    g = 9.81        # Gravity in m/s^2
+
+    # Compute cosine of latitudes (broadcasted to shape of integral)
+    cosphi = np.cos(np.deg2rad(lats))
+    fac = 2 * np.pi * a * cosphi / g  # shape: (lat,)
+
+    # Broadcast factor to match integral shape
+    psi = integral * fac[np.newaxis, :]
+
+    # Convert to Sverdrup (1 Sv = 1e9 kg/s)
+    psi /= 1e9
+
+    return psi</code></pre>
+    </div>
+
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">def plot_streamfunc(
+    ax, 
+    lats, 
+    plev, 
+    sf, 
+    clevels=np.linspace(-200,200,21), 
+    colormap=plt.cm.bwr, 
+    colorbar=True):
+    """
+    This function plots the stream function. 
+    It takes in various parameters, including axis, latitudes, pressure level, 
+    stream function, color levels, colormap, and a boolean to decide 
+    whether to show the color bar.
+
+    :param ax: matplotlib axes to plot on.
+    :param lats: Latitude coordinates.
+    :param plev: Pressure level.
+    :param sf: Stream function values.
+    :param clevels: Color levels for the contour plot. Default is np.linspace(-200,200,21).
+    :param colormap: Color map for the contour plot. Default is plt.cm.bwr.
+    :param colorbar: Boolean to decide if the color bar is shown. Default is True.
+    :return: Returns the axes of the plot.
+    """
+    
+    axr = ax.twinx()
+
+    # No conversion required; latitudes already in degrees.
+    latdeg = lats
+
+    # Change pressure units from Pa to millibar.
+    pressures = plev / 100.
+
+    # Create contour plot.
+    pl = ax.contourf(latdeg, pressures, sf, levels=clevels, cmap=colormap, extend='both')
+
+    # Contour the zero level.
+    ax.contour(latdeg, pressures, sf, levels=[0], colors='k', linewidths=0.5)
+
+    # Invert the y-axis for correct pressure plot.
+    ax.invert_yaxis()
+
+    # Specify the pressure ticks for y-axis.
+    press_ticks = [1000.0, 850.0, 700.0, 500.0, 200.0, 100.0]
+    ax.set_yticks(press_ticks)
+
+    # Set the latitude range to plot.
+    ax.set_xlim(-40,40)
+
+    # Height labels on the right.
+    axr.set_yticks(press_ticks)
+    axr.set_yticklabels(np.round(pres2alt(np.array(press_ticks)*100.)/1000.,1))
+    axr.invert_yaxis()
+
+    # Set labels for the axes.
+    ax.set_xlabel('Latitude ($\degree$)')
+    ax.set_ylabel('Pressure (mb)')
+    axr.set_ylabel('Height (km)')
+
+    # Plot the colorbar if the colorbar parameter is True.
+    if colorbar:
+        cb = plt.colorbar(pl, orientation="vertical", pad=0.12)
+        varlab = "Streamfunction"
+        units = "[Sv]"
+        cb.set_label(label=varlab + ' ' + units, size='large', weight='bold')
+        cb.ax.tick_params(labelsize='large')
+        ax.set_title("")
+
+    return ax, axr</code></pre>
+    </div>
 
 
 
 
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">sf_test =  streamfunc(vvel_test, plevs2D_test, lat_test, axis_to_integrate=0)</code></pre>
+    </div>
 
+
+          <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">fig = plt.figure(figsize=(8,4))
+# define a subplot 
+ax0 = plt.subplot(111)
+# call the streamplot function
+ax0, ax0r = plot_streamfunc(ax0, lat_test, plevs_test, sf_test)</code></pre>
+    </div>
 
 
 
