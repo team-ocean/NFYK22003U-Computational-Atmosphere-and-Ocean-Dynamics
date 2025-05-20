@@ -81,10 +81,67 @@
   <div class="main-content">
 <h1>Project 5 – Hadley Cell</h1>
 
+<img src="Figures/Project5_AtmosphericCirculation.png" alt="AtmosphericCirculation" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+    <div class="figure-caption">(Schematic illustration of dynamical processes occurring on a generic terrestrial exoplanet. These include baroclinic eddies, Rossby waves, and eddy-driven jet streams in the extratropics, and Hadley circulations, large-scale Kelvin
+and Rossby waves, and (in some cases) equatorial superrotation in the tropics. The “X” at the equator marks the substellar
+point, which will be fixed in longitude on synchronously rotating planets. Cloud formation, while complex, will likely
+be preferred in regions of mean ascent, including the rising branch of the Hadley circulation, within baroclinic eddies,
+and—on synchronously rotating planets—in regions of ascent on the dayside.
+      Credit: Showman, Adam P., Robin D. Wordsworth, Timothy M. Merlis, and Yohai Kaspi. 2013.
+"Atmospheric Circulation of Terrestrial Exoplanets." Pre-print.)</div>     
 
+<p>Let’s start from the general continuity equation for incompressible flow, and work step-by-step to arrive at the zonal mean continuity equation in pressure coordinates and finally the streamfunction used for meridional overturning circulation in the atmosphere.</p>
 
+<h2>General Continuity Equation for Incompressible Flow</h2>
+$$
+\nabla \cdot \mathbf{u} = 
+\underbrace{\frac{\partial u}{\partial x}}_{\text{$u$: zonal (east-west) velocity}} +
+\underbrace{\frac{\partial v}{\partial y}}_{\text{$v$: meridional (north-south) velocity}} +
+\underbrace{\frac{\partial w}{\partial z}}_{\text{$w$: vertical velocity (in height coordinates $z$)}} = 0
+$$
 
+<h2>Zonal Averaging</h2>
+We average over the longitude (x) to get the zonal-mean equation.
 
+$$
+\left[ \frac{\partial u}{\partial x} \right] + \frac{\partial \left[ v \right]}{\partial y} + \frac{\partial \left[ w \right]}{\partial z} = 0
+$$
+
+But by definition of the zonal average:
+
+$$
+\left[ \frac{\partial u}{\partial x} \right] = \frac{\partial \left[ u \right]}{\partial x} = 0 \quad \text{(since } [u] \text{ is zonally averaged)}
+$$
+
+So the zonal mean continuity equation becomes:
+
+$$
+\frac{\partial \left[ v \right]}{\partial y} + \frac{\partial \left[ w \right]}{\partial z} = 0
+$$
+
+This is the mass continuity equation in the meridional plane (y-z)
+
+<h2>Transform to Spherical Coordinates</h2>
+Let’s now switch to spherical coordinates:<br>
+
+ $\varphi$: latitude <br>
+ $a$: Earth radius<br>
+ $y = a \varphi \Rightarrow \partial y = a \, d\varphi$
+<img src="Figures/Project5_SphericalCoordinates.png" alt="SphericalCoordinates" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+
+Then, the horizontal divergence becomes:
+
+$$
+\frac{\partial \left[ v \right]}{\partial y} \to \frac{1}{a \cos \varphi} \frac{\partial \left( \left[ v \right] \cos \varphi \right)}{\partial \varphi}
+$$
+
+So the spherical form of the zonal-mean continuity equation in height coordinates is:
+
+$$
+\frac{1}{a \cos \varphi} \frac{\partial \left( \left[ v \right] \cos \varphi \right)}{\partial \varphi} + \frac{\partial \left[ w \right]}{\partial z} = 0
+$$
+
+<h2>Switch to Pressure Coordinates</h2>
 
 
 <p><strong>Next</strong>: <a href="#">To be continued</a></p>
