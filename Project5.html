@@ -760,9 +760,33 @@ ax0, ax0r = plot_streamfunc(ax0, lat_test, plevs_test, sf_test)</code></pre>
 
   <img src="Figures/Project5_MassStreamFunctionExample.png" alt="MassStreamFunctionExample" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
+  <p>You can use an axes grid like this to plot out all your streamfunctions together later if you need to</p>
+<pre style="font-family: 'Courier New', Courier, monospace; color: #aaccee; background: transparent; border: none; padding: 1em 0; margin: 0;">
+fig, ax = plt.subplots(4, 3, figsize=(16, 12))
 
+for i in range(4):
+    for j in range(3):
+      call your plotting function with 'ax' as an input</pre>
 
+<h2>Running a Forecast</h2>
+This example shows how to run forecasts using the <code>SpeedyEns</code> class. 
 
+For this example, we will execute these steps:
+<ul>
+<li>Create models starting from a reference atmosphere. The same boundary conditions are used
+  for each member</li>
+<li>Perturb the initial temperature field with an uncorrelated gaussian noise with a  0.1$^\circ$K standard deviation.
+  They are only used to display how to use the <code>SpeedyEns</code> class.</li>
+<li>Run the forecast for 2 months (we can also specify a "spinup" period, "sp", where the results from the first "sp" months are discarded).
+  This has to be determined so we will just use no spinup period.</li>
+</ul>
+Let's get started. <br><br>
+
+<strong>Run the forecast (This is a template of how to run the model and change an initial condition or boundary condition)</strong><br>
+
+Let's run the forecast, keeping the output once a day (except during the spinup period).
+To store the forecast in memory, we will use the <code>ModelCheckpoint</code> callback function.
+We can use the <code>%%time</code> magic to get an idea how fast the model runs.
 
 
 
