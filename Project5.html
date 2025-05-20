@@ -229,8 +229,46 @@ $$
 $$
 
 <h2>Define the Streamfunction $\Psi(\varphi, p)$</h2>
+For 2D incompressible flow in Cartesian coordinates $(y, z)$, the continuity equation is:
+
+$$
+\frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0
+$$
+
+We can define a streamfunction $\psi(y, z)$ such that this equation is automatically satisfied by:
+
+$$
+v = \frac{\partial \psi}{\partial z}, \quad
+w = -\frac{\partial \psi}{\partial y}
+$$
+
+Why does this work?
+
+Plug these into the continuity equation:
+
+$$
+\frac{\partial v}{\partial y} + \frac{\partial w}{\partial z}
+= \frac{\partial^2 \psi}{\partial y \partial z}
+- \frac{\partial^2 \psi}{\partial z \partial y} = 0
+$$
+
+These definitions automatically conserve mass.
+
+We now convert to spherical coordinates (latitude and pressure):<br>
+
+$y \rightarrow \varphi$ (latitude), using $y = a \varphi$<br>
+$z \rightarrow p$ (pressure, via hydrostatic relation)<br>
 
 
+$$
+\left[ \overline{v} \right] = \frac{g}{2\pi a \cos \varphi} \frac{\partial \Psi}{\partial p}
+\quad \text{(meridional velocity)}
+$$
+
+$$
+\left[ \overline{\omega} \right] = -\frac{g}{2\pi a^2 \cos \varphi} \frac{\partial \Psi}{\partial \varphi}
+\quad \text{(vertical pressure velocity)}
+$$
 
 
 
