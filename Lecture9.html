@@ -70,7 +70,7 @@
           <li><a href="Lecture8.html">Lecture 8</a></li>
           <li><a href="Lecture9.html">Lecture 9</a></li>
           <ul class="sub-menu">
-            <li><a href="Project5.html">Project 5 – Hadley Cell</a></li>
+            <li><a href="Project5.html">Project 5 – Hadley Cells</a></li>
           </ul>
           <li><a href="References.html">References</a></li>
         </li>
@@ -81,12 +81,98 @@
   <div class="main-content">
 <h1>Lecture 9 – Atmospheric Thermodynamics</h1>
 
+<h2>Hadley Cells</h2>
+Because of the differential heating over the globe, Hadley already knew in 1735 that some kind of energy transport must occur from the equator to the poles. He described a circulation cell that would extend all the way to the poles as shown below:
+<img src="Figures/Lecture9_HadleyCells.png" alt="HadleyCells" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Hadley cells could extend all the way to the poles. Credit: Lyndon State College Atmospheric Sciences.)</div>
+With very simple arguments of momentum conservation (Held and Hou, 1980) we are going to show that Hadley's vision is not physically reasonable.
+The angular momentum of the air parcel is given by:
+\[
+M = \Omega r^2 + u r
+\]
 
+Since \( r = a \cos \varphi \), the moment arm is:
+\[
+r_{\bot} = a \cos(\varphi)
+\]
 
+Substituting into the equation for \( M \):
+\[
+M = \Omega a^2 \cos^2 \varphi + u a \cos \varphi
+\]
 
+If the parcel is not moving at the equator, then \( u = 0 \), and the angular momentum at the equator is:
+\[
+M_{\text{Eq}} = \Omega a^2
+\]
 
+Conservation of angular momentum implies:
+\[
+M = M_{\text{Eq}} = \Omega a^2 = \Omega a^2 \cos^2 \varphi + u a \cos \varphi
+\]
 
+Solving for \( u(\varphi) \), using the identity \( \sin^2 \varphi = 1 - \cos^2 \varphi \), we get:
+\[
+u(\varphi) = \Omega a \frac{\sin^2 \varphi }{\cos \varphi }
+\]
 
+You can see how this is related to the classical definition of angular momentum
+
+$$ L = I \omega$$
+
+The moment of inertia per unit mass is in units of meters$^2$
+
+The classical angular momentum for a rotating object is:
+
+$$
+\underbrace{L}_{\text{angular momentum}} = \underbrace{I}_{\text{moment of inertia}} \cdot \underbrace{\omega}_{\text{angular velocity}}
+$$
+
+For an air parcel of unit mass at latitude $\varphi$, its **absolute angular momentum** about the Earth's rotation axis is:
+
+$$
+M = 
+\underbrace{\Omega}_{\text{rotation}} \cdot 
+\underbrace{r^2}_{\text{moment of inertia}} + 
+\underbrace{u}_{\text{zonal velocity}} \cdot 
+\underbrace{r}_{\substack{\text{moment arm} \\ r = \underbrace{a}_{\text{Earth's radius}} \cos \varphi}}
+$$
+
+So:
+
+$$
+M = \underbrace{\Omega}_{\text{planetary rotation}} \cdot \underbrace{a^2 \cos^2 \varphi}_{r^2} + \underbrace{u}_{\text{relative velocity}} \cdot \underbrace{a \cos \varphi}_{r}
+$$
+
+If we treat the air parcel as a point mass $m = 1$, then:
+
+$$
+I = m r^2 = \underbrace{a^2 \cos^2 \varphi}_{\text{moment of inertia per unit mass}}
+$$
+
+The total angular velocity is the sum of Earth's rotation and the parcel’s relative motion:
+
+$$
+\omega = \underbrace{\Omega}_{\text{planetary rotation}} + \underbrace{\frac{u}{r}}_{\text{relative contribution}} = \Omega + \frac{u}{a \cos \varphi}
+$$
+
+So the total angular momentum becomes:
+
+$$
+L = I \omega = \underbrace{a^2 \cos^2 \varphi}_{I} \left( \underbrace{\Omega}_{\text{rotation}} + \underbrace{\frac{u}{a \cos \varphi}}_{\text{relative motion}} \right)
+$$
+
+$$
+L = \Omega a^2 \cos^2 \varphi + u a \cos \varphi = M
+$$
+
+This shows that the atmospheric expression for angular momentum,
+
+$$
+M = \Omega a^2 \cos^2 \varphi + u a \cos \varphi
+$$
+
+is equivalent to the classical expression $L = I \omega$, when the moment of inertia and angular velocity are appropriately defined for a rotating air parcel
 
 <p><strong>Next</strong>: <a href="Project5.html">Project 5 – Hadley Cell</a></p>
 
