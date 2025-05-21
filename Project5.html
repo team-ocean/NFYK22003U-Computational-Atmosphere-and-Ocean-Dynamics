@@ -1150,6 +1150,47 @@ Note: We need to know which axes we need to do the vertical integral on, dependi
 # Plotting</code></pre>
     </div>
 
+<h2>Plotting Time Series of the Meridional Mass Streamfunction (Ψ)</h2>
+Visualize the temporal evolution of the meridional mass streamfunction from Speedy model output.
+<ul>
+<li>Selecting the meridional wind <code>v</code> field from the model checkpoint data.</li>
+<li>Converting sigma levels to pressure (Pa) and selecting relevant latitude and pressure targets.</li>
+<li>Looping over each time step, computing the zonal mean of <code>v</code>, and evaluating the streamfunction using a helper function.</li>
+<li>Recording two key time series:
+  <ul>
+   <li>The maximum absolute streamfunction at each time step (<code>max |Ψ|</code>), representing the peak overturning strength.</li>
+   <li>The streamfunction value at 500 hPa and 10°N, to track localized overturning behavior in the Hadley cell region.</li>
+  </ul>
+</li>
+</ul>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python"># To be answered by you</code></pre>
+    </div>
+
+<h2>Questions</h2>
+It has been suggested that global warming will lead to a poleward extension of the Hadley Cells. Use our Speedy atmosphere model, run it, and then:
+<ul>
+  <li>1. Double the absorption in the CO₂ band</li>
+  <ul>
+    <li>Related variables can be found from <a href="https://pyspeedy.readthedocs.io/en/latest/model_state_def.html">pySPEEDY model state</a>, this question can be done by modify scaler constant <code>ablco2_ref</code> and <code>air_absortivity_co2</code></li>
+      <img src="Figures/Project5_AtmosphericRadiation.png" alt="AtmosphericRadiation" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+<div class="figure-caption">(Details of Earth's energy balance.
+      Credit: Trenberth, K. E., J. T. Fasullo, and J. Kiehl, 2009.)</div>     
+  </ul>
+  <li>2. As in Question 1, plus increase the SST by 2°C
+   <i>(Pay attention to the units; SST increase must be applied in Kelvin)</i></li>
+</ul>
+For each of the 3 simulations, compute the streamfunction (ie Hadley Cell), plot it (pressure-latitude plane), and determine after what time it comes into equilibrium. Pay attention to how long you should do the simulations? 1 month? 1 year? 2 years? Others?
+<span class="bullet"></span>Can you find support for the idea of a Hadey Cell extension, and how do you explain it with the Held and Hou theory from class?
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python"># To be answered by you</code></pre>
+    </div>
+      <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python"># To be answered by you</code></pre>
+    </div>
 
 
 
