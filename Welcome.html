@@ -112,74 +112,62 @@
               Freeman Dyson in "A meeting with Enrico Fermi" in
               Nature 427 (22 January 2004) p. 297 
         """
-        
-        import matplotlib, time
-        # Explicitly choose normal TkAgg Backend, in case your python installation
-        #       does not already have a suitable choice in your matplotlibrc file.
-        #       This line may be deleted if the script runds without it. See
-        # http://matplotlib.sourceforge.net/faq/installing_faq.html#what-is-a-backend.
-        matplotlib.use('TKAgg')        
-        
-        from matplotlib import pyplot
-        from numpy import append, cos,  linspace, pi, sin, zeros
-        
-        # elephant parameters
-        p = [ 50 - 30j,
-              18 +  8j,
-              12 - 10j,
-             -14 - 60j, 
-              40 + 20j ] # Set p[4].real=0 to stop trunk wiggling
-        
-        def fourier(t, C):
-            f = zeros(t.shape) # initialize fourier values to zero
-            for k in range(len(C)):
-                f += C.real[k]*cos(k*t) + C.imag[k]*sin(k*t)
-            return f
-        
-        def elephant(t, p):
-            npar = 6
-            Cx = zeros((npar,), dtype='complex')
-            Cy = zeros((npar,), dtype='complex')
-        
-            Cx[1] = p[0].real*1j
-            Cy[1] = p[3].imag + p[0].imag*1j
-        
-            Cx[2] = p[1].real*1j
-            Cy[2] = p[1].imag*1j
-        
-            Cx[3] = p[2].real
-            Cy[3] = p[2].imag*1j
-        
-            Cx[5] = p[3].real
-        
-        
-            x =  append(fourier(t,Cy), [p[4].imag])
-            y = -append(fourier(t,Cx), [-p[4].imag])
-        
-            return x,y
-        
-        fig = pyplot.figure()
-        plt = fig.add_subplot(111)
-        
-        def LivePlot():
-            trunk, = plt.plot([],[])    # initialize trunk
-            # draw the body of the elephant
-            x, y = elephant(linspace(0.4+1.3*pi,2*pi+0.9*pi,1000), p)
-            body = plt.plot(x,y,'r.')
-            # wiggle trunk
-            for i in range(0,10000):
-                # create trunk
-                x, y = elephant(linspace(2*pi+0.9*pi,0.4+3.3*pi,1000), p)
-                # move trunk to new position (but don't move eye stored at end or array)
-                for ii in range(len(y)-1):
-                    y[ii] -= sin(((x[ii]-x[0])*pi/len(y)))*sin(float(i))*p[4].real
-                plt.lines.remove(trunk) # remove old trunk before drawing at new position
-                trunk, = plt.plot(x,y,"r.")
-                fig.canvas.draw()
-                time.sleep(0.1) # wait a bit so the trunk doesn't wiggle too fast
-        
-        fig.canvas.manager.window.after(100,LivePlot) # After 100ms, call animate
-        pyplot.show()</code></pre>
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
+
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+
+# Elephant parameters
+p = [50 - 30j, 18 + 8j, 12 - 10j, -14 - 60j, 40 + 20j]
+
+def fourier(t, C):
+    f = np.zeros(t.shape)
+    for k in range(len(C)):
+        f += C.real[k]*np.cos(k*t) + C.imag[k]*np.sin(k*t)
+    return f
+
+def elephant(t, p):
+    npar = 6
+    Cx = np.zeros((npar,), dtype='complex')
+    Cy = np.zeros((npar,), dtype='complex')
+    Cx[1] = p[0].real * 1j
+    Cy[1] = p[3].imag + p[0].imag * 1j
+    Cx[2] = p[1].real * 1j
+    Cy[2] = p[1].imag * 1j
+    Cx[3] = p[2].real
+    Cy[3] = p[2].imag * 1j
+    Cx[5] = p[3].real
+    x = np.append(fourier(t, Cy), [p[4].imag])
+    y = -np.append(fourier(t, Cx), [-p[4].imag])
+    return x, y
+
+# Create output directory
+os.makedirs("frames", exist_ok=True)
+
+# Plot and save 10 frames of the wiggling trunk
+for i in range(10):
+    t_body = np.linspace(0.4 + 1.3*np.pi, 2*np.pi + 0.9*np.pi, 1000)
+    x_body, y_body = elephant(t_body, p)
+
+    t_trunk = np.linspace(2*np.pi + 0.9*np.pi, 0.4 + 3.3*np.pi, 1000)
+    x_trunk, y_trunk = elephant(t_trunk, p)
+
+    for ii in range(len(y_trunk) - 1):
+        y_trunk[ii] -= np.sin((x_trunk[ii] - x_trunk[0]) * np.pi / len(y_trunk)) * np.sin(i) * p[4].real
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.plot(x_body, y_body, 'r.', label='Body')
+    ax.plot(x_trunk, y_trunk, 'r.', label='Trunk')
+    ax.set_aspect('equal')
+    ax.axis('off')
+    plt.tight_layout()
+    plt.savefig(f"frames/elephant_frame_{i:03d}.png", dpi=150)
+    plt.close()
+
+print("Saved 10 frames in ./frames")
+</code></pre>
     </div>
   
   <div class="footer">
