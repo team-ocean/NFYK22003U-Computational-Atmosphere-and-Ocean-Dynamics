@@ -82,6 +82,39 @@
     <h1>Lecture 6 – Quasi-Geostrophy</h1>
     <img src="Figures/Lecture6_PedloskyHistory.png" alt="PedloskyHistory" style="margin-top: 1.5em; max-width: 100%; display: block;">        
 
+    <h2>Geostrophy</h2>
+Large-scale flow in the ocean and the atmosphere is characterized by an approximate
+balance in the vertical direction between the pressure gradient and gravity (hydrostatic balance), and in the horizontal direction between the pressure gradient and the Coriolis force
+(geostrophic balance).
+    The Coriolis force in the 
+    momentum equations leads to the possibility of new balances, in
+    particular, a balance between the Coriolis force and the pressure
+    gradient force (geostrophic balance).
+There is an acceleration from high to low pressure, as would happen without any influence of rotation.<br>
+
+<strong>acceleration = pressure gradient force</strong>
+
+$$
+\frac{\partial u}{\partial t} = -\frac{1}{\rho_0} \frac{\partial p}{\partial x}
+$$
+
+Over time, as the velocity $u$ increases, the Coriolis force becomes important. If the pressure gradient persists over a time longer than the inertial period, $T = \frac{2\pi}{f}$, the water parcel will be deflected (to the right in the Northern Hemisphere), until the Coriolis force exactly balances the pressure gradient force. The parcel will then experience no further accelerations (at least in our rotating reference frame). Remember that:
+
+$$
+f = 2\Omega \sin \theta \quad \text{where} \quad \Omega = \frac{2\pi}{24 \text{ hours}} = 7.292 \times 10^{-5} \, \text{s}^{-1}
+$$
+
+and $\theta$ is latitude. Then we have <i>Geostrophy</i>:
+
+$$
+\boxed{fu = -\frac{1}{\rho_0} \frac{\partial p}{\partial y}} \quad \left( F_c = -F_p \right)
+$$
+
+Geostrophy also holds for the other velocity component $v$:
+
+$$
+\boxed{fv = \frac{1}{\rho_0} \frac{\partial p}{\partial x}}
+$$
 
     <h2>Vertical Structure: Baroclinic Quasi-Geostrophic Models</h2>
     The simultaneous explanation of the vertical and horizontal structures of the density field and renders the physics very difficult. It has been possible to effect great simplifications in the theoretical treatment of the problem by employing quasi-geostrophic models of the stratified, wind-driven ocean circulation.
