@@ -81,7 +81,7 @@
   <div class="main-content">
 <h1>Lecture 8 – Waves</h1>
 
-<h2>Inertial Waves</h2>
+<h2>Internal Gravity Waves</h2>
 Rotation effects will only be important for long waves with low frequencies – so we can
 assume outright that these are <i>shallow water waves</i>, even in the open ocean. These waves have the same dynamics as shallow-water surface gravity waves, with the addition of the Coriolis force:
 
@@ -93,6 +93,17 @@ $$
 \frac{\partial v}{\partial t} + fu = -g \frac{\partial \eta}{\partial y}
 $$
 Rotating surface gravity waves are called <strong>Poincare waves</strong> or <strong>inertia-gravity waves</strong>. Away from land boundaries, the tide propagates as an inertia-gravity wave.
+<img src="Figures/Lecture8_ShallowLayerFluidRotating.png" alt="ShallowLayerFluidRotating" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+<div class="figure-caption">(A shallow layer of fluid rotating and of constant density.
+  Credit: Pedlosky, 2003.)</div>
+Take \(x\) to be in the direction of propagation of the wave (which is not changed by
+rotation) and \(y\) in the horizontal direction perpendicular to the direction of propagation.
+The sea surface elevation has the same cosine function as for non-rotating waves, but
+water parcel motions are modified by rotation. Again, we are working on very large horizontal scales (in order for rotation to be
+important), so vertical velocity is negligible. Water parcel motions are nearly horizontal.
+<img src="Figures/Lecture8_ModifiedShallowLayerFluidRotating.png" alt="ModifiedShallowLayerFluidRotating" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+
+
 <div class="code-block">
 <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
 <pre><code class="language-python">import numpy as np
@@ -249,17 +260,66 @@ for iframe in range(nframe + 1):
 # Save the infinite replaying GIF
 imageio.mimsave(os.path.join(mydir, 'InertialOscillations.gif'), images, loop=0)</code></pre>
 </div>
-<img src="Figures/Lecture8_InertialOscillations.gif" alt="InertialOscillations" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+<img src="Figures/Lecture8_InertialOscillations.gif" alt="InertialOscillations" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+<h2>Dispersion Relation</h2>
 
 
-<h2>Baroclinic Instability - Eady Model</h2>
+<h2>Internal Waves in Continuous Stratification</h2>
+The <strong>dispersion relation</strong> for internal waves in a continuously stratified ocean is:
+
+$$
+\omega^2 = N^2 \cos^2 \varphi
+$$
+
+One immediate consequence of this expression is that internal waves have frequencies less than $N$. Let’s look at two extreme limits of this dispersion relationship.
+<ul>
+  <li>Let the wave number vector be horizontal:
+
+$$
+\lim_{\phi \to 0^\circ} \omega^2 = N^2 \cos^2 \phi = N^2
+$$
+
+This corresponds to nearly vertical oscillations of water parcels, where internal waves resemble buoyancy oscillations.</li>
+<li>
+  Let the wave number vector be nearly vertical:
+
+$$
+\lim_{\phi \to 90^\circ} \omega^2 = N^2 \cos^2 \phi = 0
+$$
+
+The restoring
+force on purely horizontal water parcel displacements is the <i>Coriolis force</i> alone and
+internal waves in this limit approach <strong>inertial oscillations</strong>. In this limit, the frequency of internal waves approaches the <strong>inertial frequency $f$</strong>, due to the Coriolis force dominating the restoring mechanism:
+
+$$
+\omega \to f
+$$
+</li>
+</ul>
+In a stratified fluid, an energy source at a fixed frequency will produce different responses depending on the frequency.
+<ul>
+<li>For low frequency, the response will be in beams that extend at a low angle
+away from the source with respect to the horizontal</li>
+<li>For higher frequencies, the
+beams of energy point more and more vertically</li>
+</ul>
+<img src="Figures/Lecture8_InternalGravityWaveEnergySource.png" alt="InternalGravityWaveEnergySource" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(Phase configurations of internal gravity waves.
+Source is at centre and rays spread out in X-formation with (a) $\omega/N = 0.318$, (b) $\omega/N = 0.900$. Full lines represent troughs and dashed lines represent crests with propagation across the rays; (c) shows the relations between group velocity $\mathbf{C}_g$ and phase velocity direction $\mathbf{k}$.
+  Credit: Pond, S. and Pickard, G.L. (1983) Introductory Dynamical Oceanography.)</div>
+
+This can be understood in terms of the
+direction of energy propagation relative to the frequency. Note that in the limit that the
+source oscillates at very high frequency (higher than N), the response would not
+propagate.
+
+
+<h2>Baroclinic Instability and the Eady Model</h2>
 Baroclinic instability generates eddies/waves from a geostrophically balanced, vertically sheared flow. Because of the thermal wind relationship, 
 the shear flow has horizontal buoyancy gradients, meaning that the height of isentropes varies from place to place. 
 Thus potential energy is stored in the field and can be released by allowing these deviations to relax, lowering some of the dense fluid that's been raised and raising some of the lighter fluid that's been pushed down. 
 We shall analyze this using the Boussinesq, quasi-geostrophic equations.
-
-<h2></h2>
-
 
 
 
