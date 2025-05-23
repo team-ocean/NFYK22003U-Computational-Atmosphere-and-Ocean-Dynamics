@@ -82,8 +82,19 @@
     <h1>Lecture 2 – The Dynamics of Rotating Planets</h1>
 
     <h2>The Coriolis Force</h2>
-    Coriolis Parameter: \[ f = 2\Omega \sin(\phi) \]
+The Coriolis parameter $f$ is defined according to latitude $\varphi$:
 
+$$
+f(\varphi) = 2\Omega \sin(\varphi)
+$$
+
+with the rotation rate $\Omega$, set to
+
+$$
+\frac{2\pi}{86164} \ \text{s}^{-1}
+$$
+
+(i.e., corresponding to the standard Earth rotation rate).
     <h2>Beta-Plane Approximation</h2>
     \[ f(y) \approx f_0 + \beta y \]
 
@@ -111,6 +122,12 @@
     \underbrace{S}_{\text{salinity}}, \underbrace{P}_{\text{pressure}},  \underbrace{M}_{\text{Moisture}}) 
     \]
 
+    <h2>Barotropic and Baroclinic</h2>
+    A fluid in which the density depends only on the pressure, $\rho = \rho(p)$, 
+    is called a <strong>barotropic</strong> fluid. 
+    A fluid in which the density depends on both temperature and pressure, 
+    $\rho = \rho(p, T)$, is called a <strong>baroclinic</strong> fluid.
+
     <h2>Linear Approximation</h2>
     \[\rho = f(T,S,p) \approx \rho_0(1- \alpha T + \beta S)\]
 
@@ -127,7 +144,6 @@
       then the equations would be complete; the simplest case of all is a constant density fluid for which the equation of state is just \(\rho = \text{constant}\). 
       A fluid for which the density is a function of pressure alone is called a barotropic fluid or a homentropic fluid; otherwise, it is a baroclinic fluid. 
       Equations of state of the form $p = C\rho^\gamma$, where $\gamma$ is a constant, are called polytropic</p>
-
 
     
     <h2>Steady State Assumption</h2>
@@ -201,6 +217,104 @@ for spine in ax.spines.values():
 plt.show()</code></pre>
 </div>
     <img src="Figures/Lecture2_IncompressibleNS.png" alt="IncompressibleNS" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
+<div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Set domain size and grid
+nx, ny = 50, 50
+dx, dy = 1.0, 1.0
+nt = 500
+rho = 1.0
+mu = 0.1
+dt = 0.1
+
+# Initialization
+u = np.zeros((nx, ny))
+v = np.zeros((nx, ny))
+p = np.zeros((nx, ny))
+
+u[24:27, 24:27] = 1.0 # Initial condition: bump in u
+
+def laplacian(f, dx, dy):
+    return (
+        (f[2:, 1:-1] - 2*f[1:-1, 1:-1] + f[:-2, 1:-1]) / dx**2 +
+        (f[1:-1, 2:] - 2*f[1:-1, 1:-1] + f[1:-1, :-2]) / dy**2
+    )
+
+def pressure_poisson(p, u, v, dx, dy, rho, dt):
+    b = rho * ((u[2:,1:-1] - u[:-2,1:-1]) / (2*dx) +
+               (v[1:-1,2:] - v[1:-1,:-2]) / (2*dy)) / dt
+    for _ in range(50):  # Iterative solver
+        p[1:-1, 1:-1] = 0.25 * (
+            p[2:, 1:-1] + p[:-2, 1:-1] +
+            p[1:-1, 2:] + p[1:-1, :-2] -
+            b * dx**2
+        )
+    return p
+
+def solve_coupled(u, v, p, mu, dx, dy, dt, rho, nt):
+    for _ in range(nt):
+        u_old = u.copy()
+        v_old = v.copy()
+
+        # Pressure Poisson solve (right-hand side: velocity divergence)
+        p = pressure_poisson(p, u_old, v_old, dx, dy, rho, dt)
+
+        # Update u using pressure gradient and diffusion
+        u[1:-1, 1:-1] = u_old[1:-1, 1:-1] - dt / rho * (p[2:, 1:-1] - p[:-2, 1:-1]) / (2 * dx) + \
+                        mu * dt * laplacian(u_old, dx, dy)
+
+        # Update v using pressure gradient and diffusion
+        v[1:-1, 1:-1] = v_old[1:-1, 1:-1] - dt / rho * (p[1:-1, 2:] - p[1:-1, :-2]) / (2 * dy) + \
+                        mu * dt * laplacian(v_old, dx, dy)
+
+    return u, v, p
+
+# Solve the equations
+u, v, p = solve_coupled(u, v, p, mu, dx, dy, dt, rho, nt)
+
+plt.figure(figsize=(15, 5), dpi=300)
+
+plt.subplot(1, 3, 1)
+plt.title('Velocity field (u)', color='#d6ebff')
+plt.imshow(u.T, origin='lower', cmap='coolwarm')
+plt.colorbar(label='u')
+plt.axis('off')
+
+plt.subplot(1, 3, 2)
+plt.title('Velocity field (v)', color='#d6ebff')
+plt.imshow(v.T, origin='lower', cmap='coolwarm')
+plt.colorbar(label='v')
+plt.axis('off')
+
+plt.subplot(1, 3, 3)
+plt.title('Pressure field', color='#d6ebff')
+plt.imshow(p.T, origin='lower', cmap='coolwarm')
+plt.colorbar(label='p')
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()</code></pre>
+</div>
+
+<img src="Figures/Lecture2_NSFields.png" alt="NSFields" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <h2>Ekman Transport</h2>
     <div class="sketchfab-embed-wrapper"> <iframe title="Ekman Spiral" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="896" height="672" src="https://sketchfab.com/models/6f14e1007fe44437a7623bde11dfddfb/embed?autostart=1&preload=1&transparent=1&ui_hint=2&ui_theme=dark&dnt=1"> </iframe> </div>
