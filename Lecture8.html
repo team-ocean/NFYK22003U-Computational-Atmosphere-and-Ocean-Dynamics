@@ -81,12 +81,184 @@
   <div class="main-content">
 <h1>Lecture 8 – Waves</h1>
 
+<h2>Inertial Waves</h2>
+Rotation effects will only be important for long waves with low frequencies – so we can
+assume outright that these are <i>shallow water waves</i>, even in the open ocean. These waves have the same dynamics as shallow-water surface gravity waves, with the addition of the Coriolis force:
+
+$$
+\frac{\partial u}{\partial t} - fv = -g \frac{\partial \eta}{\partial x}
+$$
+
+$$
+\frac{\partial v}{\partial t} + fu = -g \frac{\partial \eta}{\partial y}
+$$
+Rotating surface gravity waves are called <strong>Poincare waves</strong> or <strong>inertia-gravity waves</strong>. Away from land boundaries, the tide propagates as an inertia-gravity wave.
+<div class="code-block">
+<button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+import imageio
+import os
+
+style_color = '#d6ebff'
+plt.rcParams.update({
+    'text.color': style_color,
+    'axes.labelcolor': style_color,
+    'xtick.color': style_color,
+    'ytick.color': style_color,
+    'axes.edgecolor': style_color,
+    'axes.facecolor': 'none',
+    'savefig.transparent': True,
+})
+
+nt = 60 * 24 * 3
+dt = 60
+lon0 = 288.9
+lat0 = 42.4
+u0 = 20
+v0 = 0
+
+d2r = np.pi / 180
+omega = 7.292E-5
+re = 6.371E6
+
+xold = yold = 0.0
+uold = u0
+vold = v0
+lonold = lon0
+latold = lat0
+
+x_all = np.zeros(nt + 1)
+y_all = np.zeros(nt + 1)
+lon_all = np.zeros(nt + 1)
+lat_all = np.zeros(nt + 1)
+u_all = np.zeros(nt + 1)
+v_all = np.zeros(nt + 1)
+
+x_all[0], y_all[0], lon_all[0], lat_all[0], u_all[0], v_all[0] = xold, yold, lonold, latold, uold, vold
+
+# Analytic solution
+t_all = np.arange(0, nt * dt, dt)
+f0 = 2 * omega * np.sin(lat0 * d2r)
+x_lytic_all = u0 * np.sin(f0 * t_all) / f0 - v0 * np.cos(f0 * t_all) / f0 + v0 / f0
+y_lytic_all = v0 * np.sin(f0 * t_all) / f0 + u0 * np.cos(f0 * t_all) / f0 - u0 / f0
+lon_lytic_all = lon0 + x_lytic_all * np.cos(lat0 * d2r) * 360 / (2 * np.pi * re)
+lat_lytic_all = lat0 + y_lytic_all * 360 / (2 * np.pi * re)
+
+# First time step
+x = xold + dt * uold
+y = yold + dt * vold
+f = 2 * omega * np.sin(latold * d2r)
+u = uold + dt * f * vold
+v = vold - dt * f * uold
+lat = latold + (y - yold) * 360 / (2 * np.pi * re)
+lon = lonold + (x - xold) * np.cos(lat * d2r) * 360 / (2 * np.pi * re)
+x_all[1], y_all[1], lon_all[1], lat_all[1], u_all[1], v_all[1] = x, y, lon, lat, u, v
+
+for it in range(2, nt + 1):
+    xnew = xold + 2 * dt * u
+    ynew = yold + 2 * dt * v
+    f = 2 * omega * np.sin(lat * d2r)
+    unew = uold + 2 * dt * f * v
+    vnew = vold - 2 * dt * f * u
+    lonnew = lonold + (xnew - xold) * np.cos(lat * d2r) * 360 / (2 * np.pi * re)
+    latnew = latold + (ynew - yold) * 360 / (2 * np.pi * re)
+    xold, yold, uold, vold, lonold, latold = x, y, u, v, lon, lat
+    x, y, u, v, lon, lat = xnew, ynew, unew, vnew, lonnew, latnew
+    x_all[it], y_all[it], lon_all[it], lat_all[it], u_all[it], v_all[it] = x, y, lon, lat, u, v
+
+# Map extents
+fudge = 1E-2
+lon1 = int(lon0) - 5
+lon2 = int(lon0) + 5
+lat1 = int(lat0) - 5
+lat2 = int(lat0) + 5
+dlon = (lon2 - lon1) / 5
+dlat = (lat2 - lat1) / 5
+
+def custom_gridlines(ax):
+    gl = ax.gridlines(draw_labels=True, color=style_color, linestyle='--')
+    gl.xlabels_top = gl.ylabels_right = False
+    gl.xformatter = LONGITUDE_FORMATTER
+    gl.yformatter = LATITUDE_FORMATTER
+    gl.xlocator = mticker.FixedLocator(np.arange(lon1-360, lon2+dlon-360, dlon))
+    gl.ylocator = mticker.FixedLocator(np.arange(lat1, lat2 + dlat, dlat))
+    return gl
+
+# Trajectory Plot
+plt.figure(1)
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([lon1 - fudge, lon2 + fudge, lat1 - fudge, lat2 + fudge])
+ax.coastlines('50m', color=style_color, linewidth=0.8)
+ax.add_feature(cfeature.BORDERS, linewidth=0.5, edgecolor=style_color)
+custom_gridlines(ax)
+plt.plot(lon_all, lat_all, '-', transform=ccrs.PlateCarree(), color=style_color)
+plt.plot(lon_all[-1], lat_all[-1], 'o', color=style_color, transform=ccrs.PlateCarree())
+plt.title('Trajectory', color=style_color)
+
+# Static Kinetic Energy
+plt.figure(2, facecolor='none')
+plt.ylim([199.75, 200.25])
+plt.plot((u_all**2 + v_all**2) / 2, color=style_color)
+plt.title('Kinetic Energy', color=style_color)
+
+plt.figure(3)
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([lon1 - fudge, lon2 + fudge, lat1 - fudge, lat2 + fudge])
+ax.coastlines('50m', color=style_color, linewidth=0.8)
+ax.add_feature(cfeature.BORDERS, linewidth=0.5, edgecolor=style_color)
+custom_gridlines(ax)
+plt.plot(lon_lytic_all, lat_lytic_all, '-', color='red', transform=ccrs.PlateCarree())
+plt.plot(lon_all, lat_all, '-', color=style_color, transform=ccrs.PlateCarree())
+plt.plot(lon_all[-1], lat_all[-1], 'o', color=style_color, transform=ccrs.PlateCarree())
+plt.title('Trajectory (Comparison)', color=style_color)
+
+# Animation
+images = []
+filenames = []
+nframe = 90
+mydir = '.'
+
+for iframe in range(nframe + 1):
+    it = int(iframe * (nt - 1) / nframe) + 1
+    plt.figure(figsize=plt.figaspect(0.5), facecolor='none')
+    ax = plt.axes(projection=ccrs.PlateCarree())
+    ax.set_extent([lon1 - fudge, lon2 + fudge, lat1 - fudge, lat2 + fudge])
+    ax.coastlines('50m', color=style_color, linewidth=0.8)
+    ax.add_feature(cfeature.BORDERS, linewidth=0.5, edgecolor=style_color)
+    custom_gridlines(ax)
+
+    # Highlight analytic solution
+    plt.plot(lon_lytic_all, lat_lytic_all, '-', color='midnightblue', transform=ccrs.PlateCarree())
+
+    # Actual trajectory up to current step
+    plt.plot(lon_all[0:it], lat_all[0:it], '-', color=style_color, transform=ccrs.PlateCarree())
+    plt.plot(lon_all[it], lat_all[it], 'o', color=style_color, transform=ccrs.PlateCarree())
+    plt.title('Trajectory', color=style_color)
+
+    filename = os.path.join(mydir, f'temp{iframe:04d}.png')
+    plt.savefig(filename, bbox_inches='tight', dpi=300, transparent=True)
+    images.append(imageio.imread(filename))
+    filenames.append(filename)
+    plt.close()
+
+# Save the infinite replaying GIF
+imageio.mimsave(os.path.join(mydir, 'InertialOscillations.gif'), images, loop=0)</code></pre>
+</div>
+<img src="Figures/Lecture8_InertialOscillations.gif" alt="InertialOscillations" style="margin-top: 1.5em; max-width: 100%; display: block;">      
+
+
 <h2>Baroclinic Instability - Eady Model</h2>
 Baroclinic instability generates eddies/waves from a geostrophically balanced, vertically sheared flow. Because of the thermal wind relationship, 
 the shear flow has horizontal buoyancy gradients, meaning that the height of isentropes varies from place to place. 
 Thus potential energy is stored in the field and can be released by allowing these deviations to relax, lowering some of the dense fluid that's been raised and raising some of the lighter fluid that's been pushed down. 
 We shall analyze this using the Boussinesq, quasi-geostrophic equations.
 
+<h2></h2>
 
 
 
