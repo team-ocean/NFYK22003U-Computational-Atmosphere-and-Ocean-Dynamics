@@ -80,6 +80,43 @@
 
   <div class="main-content">
     <h1>Lecture 4 – The Gulfstream</h1>
+    <h2>Geostrophy</h2>
+Large-scale flow in the ocean and the atmosphere is characterized by an approximate
+balance in the vertical direction between the pressure gradient and gravity (hydrostatic balance), and in the horizontal direction between the pressure gradient and the Coriolis force
+(geostrophic balance).
+    The Coriolis force in the 
+    momentum equations leads to the possibility of new balances, in
+    particular, a balance between the Coriolis force and the pressure
+    gradient force (geostrophic balance).
+There is an acceleration from high to low pressure, as would happen without any influence of rotation.<br>
+
+<strong>acceleration = pressure gradient force</strong>
+
+$$
+\frac{\partial u}{\partial t} = -\frac{1}{\rho_0} \frac{\partial p}{\partial x}
+$$
+
+Over time, as the velocity $u$ increases, the Coriolis force becomes important. If the pressure gradient persists over a time longer than the inertial period, $T = \frac{2\pi}{f}$, the water parcel will be deflected (to the right in the Northern Hemisphere), until the Coriolis force exactly balances the pressure gradient force. The parcel will then experience no further accelerations (at least in our rotating reference frame). Remember that:
+
+$$
+f = 2\Omega \sin \theta \quad \text{where} \quad \Omega = \frac{2\pi}{24 \text{ hours}} = 7.292 \times 10^{-5} \, \text{s}^{-1}
+$$
+
+and $\theta$ is latitude. Then we have <i>Geostrophy</i>:
+
+$$
+\boxed{fu = -\frac{1}{\rho_0} \frac{\partial p}{\partial y}} \quad \left( F_c = -F_p \right)
+$$
+
+Geostrophy also holds for the other velocity component $v$:
+
+$$
+\boxed{fv = \frac{1}{\rho_0} \frac{\partial p}{\partial x}}
+$$
+
+The signs for the component equations $fu = -\frac{1}{\rho_0} \frac{\partial p}{\partial y}$ and $fv = \frac{1}{\rho_0} \frac{\partial p}{\partial x}$ are because of the high pressure is on the right
+when looking downstream in the northern hemisphere (and on the left in the southern
+hemisphere, where $f$ is negative).
 
     <h2>Western Boundary Currents</h2>
     \(
