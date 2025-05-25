@@ -186,6 +186,14 @@ Integration done
 Writing restart file global_4deg_3600.restart.h5</pre>
 
     <p>It should be noted that Veros cannot overwrite an existing file by default, so if you want to re-run the same script, do something like :</p>
+        <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">rm -rf global_4deg
+veros copy-setup global_4deg
+cd global_4deg
+</code></pre>
+    </div>
+
     <div class="code-block">
       <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
       <pre><code class="language-python">rm global_4deg.*.nc global_4deg_*.restart.h5</code></pre>
