@@ -199,6 +199,13 @@ cd global_4deg
       <pre><code class="language-python">rm global_4deg.*.nc global_4deg_*.restart.h5</code></pre>
     </div>
 
+To generate new output filenames (e.g., <code>global_4deg_modified.averages.nc</code>, etc.), change the runtime <code>settings.identifier</code> string in your setup file such as <code>modify_global_4deg.py</code> to something like:
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+      <pre><code class="language-python">settings.identifier = "global_4deg_modified"</code></pre>
+    </div>
+
+
     <p>After a successful run, Veros writes NetCDF files in the current folder <code>~/vs-setups/global_4deg/</code>.
         You will find files like:
         <code>global_4deg.snapshot.nc</code>,

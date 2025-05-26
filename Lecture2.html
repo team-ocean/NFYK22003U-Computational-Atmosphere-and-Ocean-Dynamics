@@ -96,8 +96,26 @@ $$
 
 (i.e., corresponding to the standard Earth rotation rate).
     <h2>Beta-Plane Approximation</h2>
-    \[ f(y) \approx f_0 + \beta y \]
+    The Coriolis parameter $f = 2\Omega \sin\theta$, where $\Omega$ is the angular rotation rate of the Earth and $\theta$ is the latitude. Expand $f$ around $\theta = \theta_o$ using a Taylor series:
 
+$$
+f = f_o + \left. \frac{\partial f}{\partial \theta} \right|_{\theta_o} \Delta \theta + \left. \frac{\partial^2 f}{\partial \theta^2} \right|_{\theta_o} \frac{\Delta \theta^2}{2} + \dots 
+$$
+
+$$
+= 2\Omega \sin \theta_o + 2\Omega \cos \theta_o (\theta - \theta_o) + \mathcal{O}(\Delta \theta^2) 
+$$
+
+$$
+= \boxed{f_o + \beta y}
+$$
+
+where $f_o = 2\Omega \sin \theta_o$ and $\beta = \frac{2\Omega \cos \theta_o}{a}$, as $y = a\Delta \theta$, where $a$ is the radius of the Earth.
+<ul>
+<li>The <strong>β-plane</strong> approximates $f$ as the first two terms of the Taylor Series. The Coriolis parameter changes linearly with latitude.</li>
+
+<li>The <strong>f-plane</strong> approximates $f$ as the first term of the Taylor Series; $f$ is taken as a constant.</li>
+</ul>
     <h2>Hydrostatic Approximation</h2>
     \[0 = - \frac{1}{\rho} p_z + g\]
     <p>The sum of the pressure gradient and the gravitational force per unit volume must be zero</p>

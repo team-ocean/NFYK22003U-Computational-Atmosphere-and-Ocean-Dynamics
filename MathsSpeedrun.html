@@ -118,7 +118,17 @@ Euler’s formula expressing exponential functions in terms of trigonometric fun
 
 2. Given that $e^{i\theta} e^{-i\theta} = 1$, what trigonometric identity can be derived by expanding the exponentials in terms of trigonometric functions?<br>
 
-<strong>[Sol]</strong>
+<strong>[Sol]</strong> 1.\(\quad e^{-i\theta} 
+= e^{i(-\theta)} 
+= \cos(-\theta) + i \sin(-\theta) 
+= \underbrace{\cos(\theta)}_{\text{cos is even}} - \underbrace{i \sin(\theta)}_{\text{sin is odd}} \\
+\Rightarrow \boxed{e^{-i\theta} = \cos(\theta) - i \sin(\theta)}\)<br>
+
+2. \(\quad e^{i\theta} e^{-i\theta} 
+= (\cos\theta + i\sin\theta)(\cos\theta - i\sin\theta) \\
+= \cos^2\theta  \cancel{- i\cos\theta\sin\theta} + \cancel{i\cos\theta\sin\theta} - i^2 \sin^2\theta \\
+= \cos^2\theta + \sin^2\theta \quad (\because i^2 = -1 \text{ and } - i\cos\theta\sin\theta + i\cos\theta\sin\theta = 0) \\
+\Rightarrow \boxed{1 = \cos^2\theta + \sin^2\theta}\)
 
 
   <p><strong>Next</strong>: <a href="Lecture1.html">Lecture 1 – Introduction and Transport Processes</a></p>
