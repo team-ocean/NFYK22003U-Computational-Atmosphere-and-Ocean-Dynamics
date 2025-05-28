@@ -84,6 +84,17 @@
 
   <div class="main-content">
     <h1>Project 6 – Southern Ocean Winds and Overturning</h1>
+    What controls the Atlantic Meridional Overturning Circulation (AMOC)?
+    <ul>
+      <li>read Toggweiler & Samuels 1995</li>
+      <li>re-revaluate their claims (ie AMOC ~ SO winds) with a model that uses
+isopycnal diffusion (Veros) instead of horizontal diffusion</li>
+        <ul>
+          <li>hint: doubling taux south of 12S is done by:
+<code>vs.surface_taux[:, vs.yt < -12] *= 2</code></li>
+        </ul>
+      <li>is the SO dependence of the AMOC stronger or weaker in Veros?</li>
+    </ul>
 
 
 
