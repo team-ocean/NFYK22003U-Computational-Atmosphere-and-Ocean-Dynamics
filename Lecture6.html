@@ -437,6 +437,8 @@ The following figure shows a solution for this 2 layer system for an idealized s
   Credit: Pedlosky 1996. Ocean Circulation Theory.)
 </div>
 
+
+<h2>Quasi-Geostrophic Single-Layer Models</h2>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
         <pre><code class="language-python">import numpy as np
@@ -650,7 +652,258 @@ plt.close()</code></pre>
 </div>
 <img src="Figures/Lecture6_SingleLayerQG.png" alt="SingleLayerQG" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 <video controls style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
-<source src="Figures/Lecture6_VorticityEvolution.mp4" type="video/mp4">
+<source src="Figures/Lecture6_VorticityEvolution.mp4" type="video/mp4"></video>
+
+<h2>Quasi-Geostrophic Two-Layer Models</h2>
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.fft import fft2, ifft2, fftfreq
+from time import time
+from tqdm import tqdm
+import matplotlib.animation as animation
+
+style_color = '#d6ebff'
+plt.rcParams.update({
+    'text.color': style_color,
+    'axes.labelcolor': style_color,
+    'xtick.color': style_color,
+    'ytick.color': style_color,
+    'axes.edgecolor': style_color,
+    'axes.facecolor': '#001a33',
+    #'savefig.transparent': True,
+    'figure.facecolor': '#001a33',
+})
+
+# Parameters
+n = 128
+L = 2 * np.pi
+dt = 2.5e-3
+nsteps = 20000
+nsubs = 50
+mu = 5e-2
+beta = 5
+f0 = 1.0
+H1, H2 = 0.2, 0.8
+b1, b2 = -1.0, -1.2
+U1, U2 = 1.0, 0.0
+F1 = f0**2 / (H2 * (b1 - b2))
+F2 = f0**2 / (H1 * (b1 - b2))
+
+# Grid 
+x = np.linspace(-L/2, L/2, n, endpoint=False)
+y = np.linspace(-L/2, L/2, n, endpoint=False)
+dx = x[1] - x[0]
+dy = y[1] - y[0]
+X, Y = np.meshgrid(x, y, indexing='ij')
+kx = fftfreq(n, d=dx/(2*np.pi))
+ky = fftfreq(n, d=dy/(2*np.pi))
+KX, KY = np.meshgrid(kx, ky, indexing='ij')
+K2 = KX**2 + KY**2
+K2[0, 0] = 1e-6  # avoid division by zero
+
+# Spectral Filter
+def spectral_filter(K2, cutoff_ratio=0.65):
+    k_cut = np.max(np.sqrt(K2)) * cutoff_ratio
+    filt = np.exp(-36 * (np.sqrt(K2) / k_cut)**20)
+    filt[K2 == 0] = 0.0
+    return filt
+
+filter_mask = spectral_filter(K2)
+
+# Initial Condition
+np.random.seed(1234)
+q1 = 1e-2 * np.random.randn(n, n)
+q2 = 1e-2 * np.random.randn(n, n)
+
+# Utility Functions 
+def q_to_psi(q1, q2):
+    q1h, q2h = fft2(q1), fft2(q2)
+    q1h *= filter_mask
+    q2h *= filter_mask
+    A = K2 + F1 + F2
+    psi1h = (q1h * (F2 + K2) + q2h * F1) / (K2 * A)
+    psi2h = (q2h * (F1 + K2) + q1h * F2) / (K2 * A)
+    return np.real(ifft2(psi1h)), np.real(ifft2(psi2h))
+
+def jacobian(a, b):
+    ax, ay = np.gradient(a, dx, dy, edge_order=2)
+    bx, by = np.gradient(b, dx, dy, edge_order=2)
+    return ax * by - ay * bx
+
+def laplacian(a):
+    return np.gradient(np.gradient(a, dx, axis=0), dx, axis=0) + \
+           np.gradient(np.gradient(a, dy, axis=1), dy, axis=1)
+
+def rhs(q1, q2, psi1, psi2):
+    dq1 = -jacobian(psi1, q1) - (U1 * np.gradient(q1, dx, axis=0) + beta * np.gradient(psi1, dx, axis=0)) - mu * laplacian(psi1)
+    dq2 = -jacobian(psi2, q2) - (U2 * np.gradient(q2, dx, axis=0) + beta * np.gradient(psi2, dx, axis=0)) - mu * laplacian(psi2)
+    return dq1, dq2
+
+def rk4_step(q1, q2):
+    psi1, psi2 = q_to_psi(q1, q2)
+    k1q1, k1q2 = rhs(q1, q2, psi1, psi2)
+
+    q1a = q1 + 0.5 * dt * k1q1
+    q2a = q2 + 0.5 * dt * k1q2
+    psi1, psi2 = q_to_psi(q1a, q2a)
+    k2q1, k2q2 = rhs(q1a, q2a, psi1, psi2)
+
+    q1b = q1 + 0.5 * dt * k2q1
+    q2b = q2 + 0.5 * dt * k2q2
+    psi1, psi2 = q_to_psi(q1b, q2b)
+    k3q1, k3q2 = rhs(q1b, q2b, psi1, psi2)
+
+    q1c = q1 + dt * k3q1
+    q2c = q2 + dt * k3q2
+    psi1, psi2 = q_to_psi(q1c, q2c)
+    k4q1, k4q2 = rhs(q1c, q2c, psi1, psi2)
+
+    q1_new = q1 + (dt / 6) * (k1q1 + 2 * k2q1 + 2 * k3q1 + k4q1)
+    q2_new = q2 + (dt / 6) * (k1q2 + 2 * k2q2 + 2 * k3q2 + k4q2)
+
+    q1_new = np.real(ifft2(fft2(q1_new) * filter_mask))
+    q2_new = np.real(ifft2(fft2(q2_new) * filter_mask))
+
+    return q1_new, q2_new
+
+def compute_energy(psi1, psi2):
+    KE1 = 0.5 * H1 * np.mean(np.square(np.gradient(psi1, dx, axis=0)) + np.square(np.gradient(psi1, dy, axis=1)))
+    KE2 = 0.5 * H2 * np.mean(np.square(np.gradient(psi2, dx, axis=0)) + np.square(np.gradient(psi2, dy, axis=1)))
+    PE = 0.5 * f0**2 * (H1 * H2) / (H1 + H2) * np.mean((psi1 - psi2) ** 2)
+    return KE1, KE2, PE
+
+# Simulation Loop
+KE1_list, KE2_list, PE_list, times = [], [], [], []
+q1_vals, q2_vals, psi1_vals, psi2_vals, t_vals = [], [], [], [], []
+start = time()
+
+for step in tqdm(range(nsteps), desc="Running simulation"):
+    q1, q2 = rk4_step(q1, q2)
+    if step % (nsteps // nsubs) == 0:
+        psi1, psi2 = q_to_psi(q1, q2)
+        KE1, KE2, PE = compute_energy(psi1, psi2)
+        t_mu = mu * step * dt
+        KE1_list.append(KE1 + KE2)
+        PE_list.append(PE)
+        times.append(t_mu)
+
+        q1_vals.append(q1.copy())
+        q2_vals.append(q2.copy())
+        psi1_vals.append(psi1.copy())
+        psi2_vals.append(psi2.copy())
+        t_vals.append(step * dt)
+
+q1_vals = np.array(q1_vals)
+q2_vals = np.array(q2_vals)
+psi1_vals = np.array(psi1_vals)
+psi2_vals = np.array(psi2_vals)
+t_vals = np.array(t_vals)
+
+# Determine global min/max for psi colorbars
+psi1_min, psi1_max = np.min(psi1_vals), np.max(psi1_vals)
+psi2_min, psi2_max = np.min(psi2_vals), np.max(psi2_vals)
+
+from matplotlib.colors import TwoSlopeNorm
+
+# Subtract spatial mean to highlight flow structures
+psi1_vals -= np.mean(psi1_vals, axis=(1, 2), keepdims=True)
+psi2_vals -= np.mean(psi2_vals, axis=(1, 2), keepdims=True)
+
+# Compute contrast-enhanced limits using percentiles
+psi1_min, psi1_max = np.percentile(psi1_vals, [1, 99])
+psi2_min, psi2_max = np.percentile(psi2_vals, [1, 99])
+
+# Use diverging normalization centered at zero
+psi1_norm = TwoSlopeNorm(vcenter=0, vmin=psi1_min, vmax=psi1_max)
+psi2_norm = TwoSlopeNorm(vcenter=0, vmin=psi2_min, vmax=psi2_max)
+
+fig, axes = plt.subplots(2, 3, figsize=(12, 6))
+plt.subplots_adjust(hspace=0.4, wspace=0.3)
+title = fig.suptitle("", fontsize=16)
+
+q1_plot = axes[0, 0].imshow(q1_vals[0], extent=(-L/2, L/2, -L/2, L/2), origin='lower', cmap='coolwarm')
+axes[0, 0].set_title("q1")
+cbar_q1 = plt.colorbar(q1_plot, ax=axes[0, 0])
+cbar_q1.ax.yaxis.set_tick_params(color=style_color)
+plt.setp(cbar_q1.ax.yaxis.get_ticklabels(), color=style_color)
+cbar_q1.outline.set_edgecolor(style_color)
+
+
+q2_plot = axes[0, 1].imshow(q2_vals[0], extent=(-L/2, L/2, -L/2, L/2), origin='lower', cmap='coolwarm')
+axes[0, 1].set_title("q2")
+cbar_q2 = plt.colorbar(q2_plot, ax=axes[0, 1])
+cbar_q2.ax.yaxis.set_tick_params(color=style_color)
+plt.setp(cbar_q2.ax.yaxis.get_ticklabels(), color=style_color)
+cbar_q2.outline.set_edgecolor(style_color)
+
+psi1_plot = axes[1, 0].imshow(psi1_vals[0], extent=(-L/2, L/2, -L/2, L/2),
+                              origin='lower', cmap='Blues', norm=psi1_norm)
+axes[1, 0].set_title("psi1")
+cbar1 = plt.colorbar(psi1_plot, ax=axes[1, 0])
+cbar1.ax.yaxis.set_tick_params(color=style_color)
+plt.setp(cbar1.ax.yaxis.get_ticklabels(), color=style_color)
+cbar1.outline.set_edgecolor(style_color)
+
+psi2_plot = axes[1, 1].imshow(psi2_vals[0], extent=(-L/2, L/2, -L/2, L/2),
+                              origin='lower', cmap='Blues', norm=psi2_norm)
+axes[1, 1].set_title("psi2")
+cbar2 = plt.colorbar(psi2_plot, ax=axes[1, 1])
+cbar2.ax.yaxis.set_tick_params(color=style_color)
+plt.setp(cbar2.ax.yaxis.get_ticklabels(), color=style_color)
+cbar2.outline.set_edgecolor(style_color)
+
+axes[0, 2].set_title("Kinetic Energy")
+axes[0, 2].set_xlabel("μt")
+axes[0, 2].set_ylabel("KE")
+axes[0, 2].set_yscale("log")
+ke_line, = axes[0, 2].plot([], [], lw=2)
+
+axes[1, 2].set_title("Potential Energy")
+axes[1, 2].set_xlabel("μt")
+axes[1, 2].set_ylabel("PE")
+axes[1, 2].set_yscale("log")
+pe_line, = axes[1, 2].plot([], [], lw=2)
+
+KE_hist, PE_hist, t_hist = [], [], []
+
+def update(frame):
+    q1_plot.set_data(q1_vals[frame])
+    q2_plot.set_data(q2_vals[frame])
+    psi1_plot.set_data(psi1_vals[frame])
+    psi2_plot.set_data(psi2_vals[frame])
+
+    KE_hist.append(KE1_list[frame])
+    PE_hist.append(PE_list[frame])
+    t_hist.append(mu * t_vals[frame])
+
+    ke_line.set_data(t_hist, KE_hist)
+    pe_line.set_data(t_hist, PE_hist)
+
+    axes[0, 2].relim()
+    axes[0, 2].autoscale_view()
+    axes[1, 2].relim()
+    axes[1, 2].autoscale_view()
+
+    title.set_text(f"μt = {mu * t_vals[frame]:.2f}, Step = {frame}")
+    return [q1_plot, q2_plot, psi1_plot, psi2_plot, ke_line, pe_line, title]
+
+ani = animation.FuncAnimation(fig, update, frames=len(t_vals), interval=600)
+ani.save("qg_2layer_simulation.mp4", dpi=300, fps=5) 
+
+plt.close(fig)
+print("Animation saved as qg_2layer_simulation.mp4")</code></pre>
+</div>
+<img src="Figures/Lecture6_QG2layerSnapshot.png" alt="QG2layerSnapshot" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+<video controls style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+<source src="Figures/Lecture6_QG2LayerSimulation.mp4" type="video/mp4"></video>
+
+
+
+
 
 
 
