@@ -101,19 +101,40 @@ $$
 \int_a^b f(x) \, dx
 $$
 is defined informally to be the signed area of the region in the $xy$-plane bounded by the graph of $f$, the $x$-axis, and the vertical lines $x = a$ and $x = b$, such that area above the $x$-axis adds to the total, and that below the $x$-axis subtracts from the total.
-<img src="Figures/MathsSpeedrun_IntergralSign.png" alt="IntergralSign" style="margin-top: 1.5em; max-width: 100%; display: block;">
-    <div class="figure-caption">(The definite integral of a function is the signed area of the region bounded by its graph.)</div>
 <ul>
   <li>$\int$ is the integral sign</li>
   <li>$f(x)$ is the integrand</li>
   <li>$[a, b]$ is the range of the integration</li>
   <li>$a(b)$ is the lower (upper) limit of the integration</li>
 </ul>
+<img src="Figures/MathsSpeedrun_IntergralSign.png" alt="IntergralSign" style="margin-top: 1.5em; max-width: 100%; display: block;">
+    <div class="figure-caption">(The definite integral of a function is the signed area of the region bounded by its graph.)</div>
 
 <img src="Figures/MathsSpeedrun_RiemannSumIntergral.png" alt="RiemannSumIntergral" style="margin-top: 1.5em; max-width: 100%; display: block;">
 <div class="figure-caption">(A Riemann sum of a function $f$ with respect to a tagged partition.)</div>
+The Riemann integral of a function $f$ over the interval $[a, b]$
+is equal to $S$ if:
+
+$\forall \epsilon > 0, \exists \delta > 0$, such that for any tagged partition of $[a, b]$ with mesh $ m < \delta$, we have
 
 
+$$
+\left| \sum_{k=1}^{n} f(\zeta_k) \Delta x_k - S \right| < \epsilon.
+$$
+
+In such a case, we say that $f$ is <strong>Riemannian integrable</strong>
+or integrable on $[a, b]$, and denote
+
+$$
+\int_a^b f(x)\, dx = S.
+$$
+In summary, one may simply write
+
+$$
+\boxed{
+\int_a^b f(x)\, dx = \lim_{\lambda \to 0} \sum_{k=1}^{n} f(\zeta_k) \Delta x_k
+}
+$$
 
 <h2>The Taylor Formula</h2>
 <strong>Taylor Formula with Peano Remainder:</strong> Suppose that $f(x)$ is defined in a neighborhood
@@ -203,8 +224,7 @@ $r_{2n+2}(x) = o(x^{2n+2})$, or $r_{2n+2}(x) = \frac{x^{2n+3}}{(2n+3)!} \sin\lef
 &= -\frac{1}{12}
 \end{align*}
 
-
-
+<h2>Areas and Volumes</h2>
 
 
 
@@ -229,6 +249,46 @@ $r_{2n+2}(x) = o(x^{2n+2})$, or $r_{2n+2}(x) = \frac{x^{2n+3}}{(2n+3)!} \sin\lef
 <h2>Fourier Series</h2>
 
 <h2>The Fourier Transform</h2>
+
+$$
+F(j\omega) = \int_{-\infty}^{\infty} f(t) e^{-j\omega t} \, dt
+$$
+
+$F(j\omega)$ is called the <strong>Fourier transform</strong> of $f(t)$.
+
+$F(j\omega)$ is generally a <strong>complex function</strong>, expressed as:
+
+$$
+F(j\omega) = |F(j\omega)| e^{j\varphi(\omega)}
+$$
+
+<ul>
+  <li>$|F(j\omega)| \sim \omega$ — this is the amplitude spectrum, and is an even function of frequency $\omega$.</li>
+  <li>$\varphi(\omega) \sim \omega$ — this is the phase spectrum, and it is an odd function of frequency $\omega$. </li>
+</ul>
+<strong>Inverse Fourier Transform:</strong> According to the Fourier series
+
+$
+f(t) = \sum_{n=-\infty}^{\infty} F_n e^{j n \Omega t}
+= \sum_{n=-\infty}^{\infty} F_n T \cdot e^{j n \Omega t} \cdot \frac{1}{T}
+$<br>
+
+When $T \to \infty$:
+<ul>
+<li>$\Omega \to d\omega$  (differential element)</li>
+<li>$n\Omega \to \omega$  (discrete $\to$ continuous)</li>
+<li>$\lim_{T \to \infty} F_n T \to F(j\omega)$</li>
+<li>$\frac{1}{T} = \frac{\Omega}{2\pi} \to \frac{d\omega}{2\pi}$</li>
+<li>$\sum \to \int$</li>
+</ul>
+
+Therefore
+
+$$
+f(t) = \sum_{n=-\infty}^{\infty} F_n e^{j n \Omega t}
+= \sum_{n=-\infty}^{\infty} F_n T \cdot e^{j n \Omega t} \cdot \frac{1}{T} \quad \Rightarrow \boxed{f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) e^{j\omega t} \, d\omega}
+$$
+
 
 <h2>Time-Domain and Frequency-Domain</h2>
 
