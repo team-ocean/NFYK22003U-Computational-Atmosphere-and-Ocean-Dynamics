@@ -76,6 +76,11 @@
           <ul class="sub-menu">
             <li><a href="Project6.html">Project 6 – Southern Ocean Winds and Overturning</a></li>
           </ul>
+          <li><a href="Lecture11.html">Lecture 11</a></li>
+          <li><a href="Lecture12.html">Lecture 12</a></li>
+          <ul class="sub-menu">
+            <li><a href="Project7.html">Project 7 – Oscillations</a></li>
+          </ul>
           <li><a href="References.html">References</a></li>
         </li>
       </ul>
@@ -90,7 +95,98 @@
 
 <h2>Integration</h2>
 
-<h2>Taylor's Series</h2>
+<h2>The Taylor Formula</h2>
+<strong>Taylor Formula with Peano Remainder:</strong> Suppose that $f(x)$ is defined in a neighborhood
+$(x_0 - \delta, x_0 + \delta) \text{ of } x_0, \text{ and for some } n \in \mathbb{N},$
+$f \in D^{(n-1)}(x_0 - \delta, x_0 + \delta), \text{ and } f^{(n)}(x_0) \text{ exists. Then we have}$
+
+$$
+\begin{aligned}
+f(x) &= f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2} f''(x_0)(x - x_0)^2 \\
+&\quad + \cdots + \frac{1}{n!} f^{(n)}(x_0)(x - x_0)^n + r_n(x),
+\end{aligned}
+$$
+
+where the remainder $r_n(x) \in o((x - x_0)^n)$, as $x \to x_0$.<br>
+
+The polynomial
+
+$$
+p_n(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2} f''(x_0)(x - x_0)^2 + \cdots + \frac{1}{n!} f^{(n)}(x_0)(x - x_0)^n
+$$
+
+is called the Taylor polynomial of degree $n$. It can be seen as an approximation of the original function $f$ near $x_0$.<br>
+<strong>Taylor Formula with Lagrange Remainder:</strong>
+Let $f(x)$ be a function defined on $(a, b)$.
+If $f \in D^{n+1}(a, b)$, then for any $x$ and $x_0 \in (a, b)$, we have
+
+$$
+\begin{aligned}
+f(x) &= f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2} f''(x_0)(x - x_0)^2 \\
+&\quad + \cdots + \frac{1}{n!} f^{(n)}(x_0)(x - x_0)^n + r_n(x),
+\end{aligned}
+$$
+
+where the remainder
+
+$
+r_n(x) = \frac{f^{(n+1)}(\zeta)}{(n+1)!} (x - x_0)^{n+1},
+$
+
+and $\zeta$ is some number between $x$ and $x_0$ (i.e., $\zeta \in (x, x_0)$ or $(x_0, x)$).<br>
+<br>
+
+<strong>[Q]</strong> Consider $f(x) = e^x$. Find its Taylor formula near $x_0 = 0$.<br>
+<strong>[Sol]</strong> We have
+
+$$
+f(x) = f'(x) = f''(x) = \cdots = f^{(n)}(x) = e^x,
+$$
+
+and
+
+$$
+f(0) = f'(0) = f''(0) = \cdots = f^{(n)}(0) = 1.
+$$
+
+$$
+\Rightarrow e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} + r_n(x),
+$$
+
+where
+
+$
+r_n(x) = o(x^n),$ or $r_n(x) = \frac{e^{\eta x}}{(n+1)!} x^{n+1}, $ for some $ \eta \in (0,1)$.<br>
+
+<strong>[Q]</strong> Consider $f(x) = \sin(x)$. Find its Taylor formula near $x_0 = 0$. <br>
+<strong>[Sol]</strong>
+
+$$
+\because f^{(k)}(x) = \sin\left(x + \frac{k}{2} \pi\right).
+$$
+
+
+$$
+\therefore \sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} + \cdots + (-1)^n \frac{x^{2n+1}}{(2n+1)!} + r_{2n+2}(x),
+$$
+
+where
+
+$r_{2n+2}(x) = o(x^{2n+2})$, or $r_{2n+2}(x) = \frac{x^{2n+3}}{(2n+3)!} \sin\left(\eta x + \frac{2n+3}{2} \pi\right)$, for some $\eta \in (0, 1)$.<br>
+
+<strong>[Q]</strong> Find $\lim_{x \to 0} \frac{\cos(x) - e^{-\frac{x^2}{2}}}{x^4} = \boxed{?}$<br>
+<strong>[Sol]</strong> 
+\begin{align*}
+\lim_{x \to 0} \frac{\cos(x) - e^{-\frac{x^2}{2}}}{x^4}
+&= \lim_{x \to 0} \frac{\left[1 - \frac{x^2}{2!} + \frac{x^4}{4!} + o(x^4)\right] - \left[1 + \left(-\frac{x^2}{2}\right) + \frac{1}{2!} \left(-\frac{x^2}{2}\right)^2 + o(x^4)\right]}{x^4} \\
+&= \lim_{x \to 0} \frac{-\frac{1}{12}x^4 + o(x^4)}{x^4} \\
+&= -\frac{1}{12}
+\end{align*}
+
+
+
+
+
 
 <h2>Ordinary Differential Equation</h2>
 
