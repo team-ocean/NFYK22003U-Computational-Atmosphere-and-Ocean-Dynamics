@@ -230,6 +230,64 @@ $r_{2n+2}(x) = o(x^{2n+2})$, or $r_{2n+2}(x) = \frac{x^{2n+3}}{(2n+3)!} \sin\lef
 
 <h2>Ordinary Differential Equation</h2>
 
+<h2>Euler Equations</h2>
+Differential Equation
+$$
+x^n y^{(n)} + p_1 x^{n-1} y^{(n-1)} + \cdots + p_{n-1} x y' + p_n y = f(x)
+$$
+where $p_1, p_2, \dots, p_n$ are constants. This is called an Euler equation, and its solution method is <br>
+Let $x = e^t$, i.e., $t = \ln x$, then:
+
+$$
+\frac{dy}{dx} = \frac{dy}{dt} \cdot \frac{dt}{dx} = \frac{1}{x} \frac{dy}{dt}
+$$
+
+$$
+\frac{d^2 y}{dx^2} = \frac{d}{dx} \left( \frac{1}{x} \frac{dy}{dt} \right) = \frac{1}{x^2} \left( \frac{d^2 y}{dt^2} - \frac{dy}{dt} \right)
+$$
+
+$$
+\frac{d^3 y}{dx^3} = \frac{1}{x^3} \left( \frac{d^3 y}{dt^3} - 3 \frac{d^2 y}{dt^2} + 2 \frac{dy}{dt} \right), \dots
+$$
+
+Substituting into the original equation transforms the Euler equation into a linear differential equation with constant coefficients.<br>
+<br>
+<strong>[Q]</strong>The general solution of the Euler equation
+
+$
+x^2 \frac{d^2 y}{dx^2} + 4x \frac{dy}{dx} + 2y = 0 (x > 0)
+$
+
+is $  \boxed{   ?  }$<br>
+<strong>[Sol]</strong> Let $x = e^t$, then
+
+$$
+\frac{dy}{dx} = \frac{1}{x} \frac{dy}{dt} = e^{-t} \frac{dy}{dt}
+\quad \Rightarrow \quad \frac{dy}{dt} = x \frac{dy}{dx},
+$$
+
+$$
+\frac{d^2y}{dx^2} = \frac{1}{x^2} \left( \frac{d^2y}{dt^2} - \frac{dy}{dt} \right)
+= \frac{1}{x^2} \left( x^2 \frac{d^2y}{dx^2} + x \frac{dy}{dx} - x \frac{dy}{dx} \right),
+$$
+
+Substitute into the original equation and simplify get
+
+$
+\frac{d^2y}{dt^2} + 3\frac{dy}{dt} + 2y = 0
+$, solve this equation, the general solution is
+
+$$
+y = C_1 e^{-t} + C_2 e^{-2t} = \frac{C_1}{x} + \frac{C_2}{x^2}
+$$
+
+\(\therefore\) the answer is
+
+$$
+\boxed{y = \frac{C_1}{x} + \frac{C_2}{x^2}}
+$$
+
+
 <h2>Partial Differential Equation</h2>
 
 <h2>Chain Rule</h2>
@@ -288,6 +346,54 @@ $$
 f(t) = \sum_{n=-\infty}^{\infty} F_n e^{j n \Omega t}
 = \sum_{n=-\infty}^{\infty} F_n T \cdot e^{j n \Omega t} \cdot \frac{1}{T} \quad \Rightarrow \boxed{f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) e^{j\omega t} \, d\omega}
 $$
+
+<strong>Fourier Transform Pairs:</strong>
+$$
+F(j\omega) = \int_{-\infty}^{\infty} f(t) e^{-j\omega t} \, dt
+\qquad \text{(Fourier Transform uses “−”)}
+$$
+
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) e^{j\omega t} \, d\omega
+\qquad \text{(Inverse Fourier Transform uses "+")}
+$$
+
+Simply written as:
+
+$$
+F(j\omega) = \mathscr{F}[f(t)]
+$$
+
+$$
+f(t) = \mathscr{F}^{-1}[F(j\omega)]
+$$
+
+Or just:
+
+$$
+f(t) \leftrightarrow F(j\omega)
+$$
+
+<ul>
+  <li>A <string>sufficient condition</string> for the existence of the Fourier transform of a function $f(t)$ is:
+
+$$
+\int_{-\infty}^{\infty} |f(t)| \, dt < \infty
+$$
+
+<i>(Note: All energy signals satisfy this condition.)</i>
+
+<li>
+The following relationships are also useful for conveniently calculating some integrals:
+
+$$
+F(0) = \int_{-\infty}^{\infty} f(t) \, dt
+$$
+
+$$
+f(0) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) \, d\omega
+$$</li>
+</ul>
 
 
 <h2>Time-Domain and Frequency-Domain</h2>
