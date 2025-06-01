@@ -237,7 +237,7 @@ where $\alpha$ is the albedo of the Earth and $S(\vartheta)$ is the incoming sol
 (b) The temperatures associated with these fluxes, calculated using $T = \left( \frac{R}{\sigma} \right)^{1/4}$,
 
 where $R$ is the solar flux for the radiative equilibrium temperature and $R$ is the infrared flux for the effective emitting temperature.
-Thus, the solid line is an approximate radiative equilibrium temperature.Credit: G. Vallis, 2017.)</div>
+Thus, the solid line is an approximate radiative equilibrium temperature. Credit: G. Vallis, 2017.)</div>
 
 <h2>Potential Temperature</h2>
 Potential temperature is defined as the temperature that a parcel of air would have if it were expanded or compressed adiabatically (without exchange of heat or matter with the surroundings) from its current pressure to a standard reference pressure, typically 1000 hPa (or 1 bar). 
@@ -256,15 +256,6 @@ $$
 </ul>
 
 <h2>Adiabatic Flow</h2>
-<ul>
-  <li>Adiabatic flow is the one that does not involve heat transfer, i.e., there is no heat added or taken away from the flow</li>
-  <li>Entropy should increase along an adiabatic flow
-$$
-ds \geq \frac{\delta q}{T} = 0
-
-\Rightarrow ds \geq 0
-$$</li>
-</ul>
 $$
 \frac{D}{Dt} \log \left[ \frac{T}{T_0} \left( \frac{p_0}{p} \right)^{R/c_p} \right] = \frac{J}{c_p T}
 $$
@@ -285,21 +276,120 @@ $$
 \Rightarrow \frac{D\theta}{Dt} = 0 \quad \text{(potential temperature is conserved under adiabatic flow)}
 $$
 
+Typically $p_0$ represents sea-level pressure ($10^5$ Pa = 1000 hPa). In this case, potential temperature is defined as the temperature an air parcel (with temperature $T$ and pressure $p$) would have if it was adiabatically brought to sea-level pressure.<br>
+Potential temperature is closely associated with <i>entropy</i> (constant potential temperature is the same as constant entropy).
+
+<ul>
+  <li>Adiabatic flow is the one that does not involve heat transfer, i.e., there is no heat added or taken away from the flow</li>
+  <li>Entropy should increase along an adiabatic flow
+$$
+ds \geq \frac{\delta q}{T} = 0
+
+\Rightarrow ds \geq 0
+$$</li>
+</ul>
+
+<h2>Ideal Gas Law</h2>
+The ideal gas law is an equation which relates pressure, density and temperature and applies for many fluids where intermolecular attractions are negligible.
+Atmosphere is composed of air, which is a mixture of gases (treated as an ideal gas). Below an altitude of 100 km, the atmosphere behaves as a fluid (under the <i>continuum hypothesis</i>).
+
+$$
+\Rightarrow \quad p = \rho R_d T
+$$
+<ul>
+<li>$p$: Pressure (Pa)</li>
+<li>$\rho$: Density (kg/m³)</li>
+<li>$R_d$: Ideal gas constant for dry air</li>
+<li>$T$: Temperature (Kelvin)</li>
+</ul>
+For dry air:
+$$
+R_d = 287.0 \ \text{J K}^{-1} \text{kg}^{-1}
+$$
+
+<h2>Horizontal Momentum</h2>
+$$
+\underbrace{\frac{D\mathbf{u}}{Dt}}_{\text{Acceleration (change in momentum)}}
+=
+\overbrace{
+\underbrace{-\frac{1}{\rho} \nabla p}_{\text{Pressure Gradient Force: Initiates motion}}
++
+\underbrace{\nu \nabla^2 \mathbf{u}}_{\text{Friction / Viscosity: Opposes motion}}
+}^{\text{Surface}}
++
+\overbrace{
+\underbrace{-g\mathbf{k}}_{\text{Gravity: Stratification / buoyancy}}
+}^{\text{Body}}
++
+\overbrace{
+\underbrace{f v \mathbf{i} - f u \mathbf{j}}_{\text{Coriolis: Modifies motion}}
+}^{\text{Apparent}}
+$$
+For an atmosphere in hydrostatic balance, pressure corresponds to the total mass of the atmosphere above that point.
+Consequently, pressure must decrease monotonically with height.
+This makes pressure a good choice as a vertical coordinate.
+The use of pressure as a vertical coordinate greatly simplifies the equations of motion, the pressure gradient force simply reduces to the gradient of the geopotential on constant pressure surfaces!<br>
+
+Horizontal momentum equations, <strong>height coordinate</strong>, no viscosity:
+$$
+\frac{Du}{Dt} = -\frac{1}{\rho} \left( \frac{\partial p}{\partial x} \right)_z + fv
+$$
+
+$$
+\frac{Dv}{Dt} = -\frac{1}{\rho} \left( \frac{\partial p}{\partial y} \right)_z - fu
+$$
+
+$$
+\boxed{ \frac{D\mathbf{u}}{Dt} + f \mathbf{k} \times \mathbf{u} = -\frac{1}{\rho} \nabla_z p }
+$$
+
+Horizontal momentum equations, <strong>pressure coordinate</strong>, no viscosity:
+
+$$
+\frac{Du}{Dt} = - \left( \frac{\partial \Phi}{\partial x} \right)_p + fv
+$$
+
+$$
+\frac{Dv}{Dt} = - \left( \frac{\partial \Phi}{\partial y} \right)_p - fu
+$$
+
+$$
+\boxed{ \frac{D\mathbf{u}}{Dt} + f \mathbf{k} \times \mathbf{u} = -\nabla_p \Phi }
+$$
+Observe density no longer explicitly present.<br>
+
+Air is compressible, altitude difficult to measure, and air cools as it expands.
+Thus, atmospheric scientists typically describe the atmosphere in terms of
+potential temperature (to remove the adiabatic effect of expansion which affects
+regular temperature), and pressure instead of depth.
+
+<h2>The Overturning Circulation</h2>
+<img src="Figures/Lecture9_HadleyCellOverturning.png" alt="HadleyCellOverturning" style="margin-top: 1.5em; max-width: 100%; display: block;">    
+<div class="figure-caption">(A simple model of the Hadley
+Cell. Rising air near the equator moves
+poleward near the tropopause, descending in the subtropics and returning.
+The poleward moving air conserves its angular momentum, leading to a shear of
+the zonal wind that increases away from
+the equator. By thermal wind the temperature of the air falls as it moves poleward,
+and to satisfy the thermodynamic budget
+it sinks in the subtropics. 
+  Credit: G. Vallis, 2017.)</div>
+Hadley Cell (Assumptions):
+<ul>
+  <li>1. The circulation is steady</li>
+  <li>2. The polewards moving air conserves its angular momentum</li>
+  <li>3. The equatorwards moving flow is frictionally retarded and weak</li>
+  <li>4. The circulation is in thermal wind balance</li>
+  <li>5. There is solar heating from above, symmetric about the equator</li>
+  <li>6. The flow is symmetric about the equator</li>
+  <li>7. Potential temperature is conserved</li>
+  <li>8. The zonal velocity is zero at the equator (rising motion)</li>
+</ul>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-<h2>The Held-Hou Model</h2>
+<h2>The Held-Hou Model of the Hadley Circulation</h2>
 <ul>
   <li>Uses thermodynamic constraints to predict the width and strength of the Hadley Cell</li>
   <li>Angular Momentum is conserved</li>
