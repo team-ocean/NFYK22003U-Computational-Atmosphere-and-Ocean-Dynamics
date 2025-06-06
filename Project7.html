@@ -89,6 +89,18 @@
 
   <div class="main-content">
     <h1>Project 7 – Oscillations</h1>
+    How does one shut down the Atlantic Meridional Overturning Circulation (AMOC)?<br>
+    <br>
+    There are two projects this time, the latter was suggested by Marc. Both use the global 4 degree setup:
+    <ul>
+      <li>Systematically reduce the salinity restoring north of 50°N, and find out at what level the AMOC is shut down, and how long it takes. Then repeat the same experiment with the winds over the ACC increased by 20%. Does that stabilize the AMOC?</li>
+      <li>increase the salinity restoring in the tropical Atlantic (20°S-20°N) and find out at which level the AMOC shuts down, and at which level it reverses direction.</li>
+    </ul>
+
+    Hint: doubling taux south of 12S is done by: <code>vs.surface_taux[:, vs.yt < -12] *= 2</code>
+
+
+
 
 
 
