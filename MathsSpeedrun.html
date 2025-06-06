@@ -305,6 +305,40 @@ $$
 <h2>Laplace's Equation</h2>
 
 <h2>Fourier Series</h2>
+<strong>Fourier Series in Trigonometric Form for Periodic Signals:</strong>
+Trigonometric function set
+
+$$
+\left\{ 1, \cos(n\Omega t), \sin(n\Omega t), \quad n = 1, 2, \ldots \right\}
+$$
+
+Let the periodic signal be $f(t)$, with period $T$, and angular frequency
+
+$$
+\Omega = \frac{2\pi}{T}
+$$
+
+When the Dirichlet conditions are satisfied, the signal can be expanded as a <i>Fourier series in trigonometric form</i>:
+
+$$
+f(t) =
+\underbrace{\frac{a_0}{2}}_{\substack{\text{Direct Current} \\ \text{(DC component)}}}
+ +
+\underbrace{\sum_{n=1}^{\infty} a_n \cos(n\Omega t)}_{\text{n-th cosine harmonic}} +
+\underbrace{\sum_{n=1}^{\infty} b_n \sin(n\Omega t)}_{\text{n-th sine harmonic}}
+$$
+The coefficients $a_n$ and $b_n$ are called <i>Fourier coefficients</i>.
+<ul>
+  <li>DC component:   $
+  \frac{a_0}{2} = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \, dt
+  $</li>
+  <li>Cosine Harmonic Coefficients:  $
+  a_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos(n\Omega t) \, dt
+  $</li>
+  <li>Sine Harmonic Coefficients:  $
+  b_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin(n\Omega t) \, dt
+  $</li>
+</ul>
 
 <h2>The Fourier Transform</h2>
 
