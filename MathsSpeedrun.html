@@ -281,7 +281,7 @@ $$
 y = C_1 e^{-t} + C_2 e^{-2t} = \frac{C_1}{x} + \frac{C_2}{x^2}
 $$
 
-\(\therefore\) the answer is
+\(\therefore\) The answer is
 
 $$
 \boxed{y = \frac{C_1}{x} + \frac{C_2}{x^2}}
@@ -338,6 +338,20 @@ The coefficients $a_n$ and $b_n$ are called <i>Fourier coefficients</i>.
   <li>Sine Harmonic Coefficients:  $
   b_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin(n\Omega t) \, dt
   $</li>
+</ul>
+
+<strong>Dirichlet Conditions:</strong><ul>
+  <li>Condition 1: Within one period, the function is either continuous or has only a finite number of first-kind discontinuities (i.e., jump discontinuities).
+    <img src="Figures/MathsSpeedrun_DirichletCondition1.png" alt="DirichletCondition1" style="margin-top: 1.5em; max-width: 100%; display: block;">
+        <div class="figure-caption">(Counterexample)</div>
+
+  </li>
+  <li>Condition 2: Within one period, the function must have only a finite number of maxima and minima
+      <img src="Figures/MathsSpeedrun_DirichletCondition2.png" alt="DirichletCondition2" style="margin-top: 1.5em; max-width: 100%; display: block;">
+        <div class="figure-caption">(Counterexample)</div></li>
+  <li>Condition 3: Within one period, the function must be absolutely integrable.
+          <img src="Figures/MathsSpeedrun_DirichletCondition3.png" alt="DirichletCondition3" style="margin-top: 1.5em; max-width: 100%; display: block;">
+        <div class="figure-caption">(Counterexample)</div></li>
 </ul>
 
 <h2>The Fourier Transform</h2>
