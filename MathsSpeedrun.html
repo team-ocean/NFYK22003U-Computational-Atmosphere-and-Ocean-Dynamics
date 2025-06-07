@@ -287,7 +287,6 @@ $$
 \boxed{y = \frac{C_1}{x} + \frac{C_2}{x^2}}
 $$
 
-
 <h2>Partial Differential Equation</h2>
 
 <h2>Chain Rule</h2>
@@ -406,9 +405,76 @@ $$
 
 Considering that $\Omega = \frac{2\pi}{T}$, obtain:
 
+$
+\boxed{a_n = 0}
+$<br>
+
+To compute the sine coefficients:
+
 $$
-a_n = 0
+b_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin(n\Omega t)\,dt 
+= \frac{2}{T} \int_{-\frac{T}{2}}^{0} (-1)\sin(n\Omega t)\,dt 
++ \frac{2}{T} \int_{0}^{\frac{T}{2}} 1 \cdot \sin(n\Omega t)\,dt
 $$
+
+$$
+= \frac{2}{T} \cdot \frac{1}{n\Omega} \left[ -\cos(n\Omega t) \right]_{-\frac{T}{2}}^{0}
++ \frac{2}{T} \cdot \frac{1}{n\Omega} \left[ -\cos(n\Omega t) \right]_{0}^{\frac{T}{2}}
+$$
+
+$$
+= \frac{2}{T} \cdot \frac{1}{n\Omega} \left( [1 - \cos(n\Omega T/2)] + [1 - \cos(n\Omega T/2)] \right)
+$$
+
+$$
+= \frac{2}{T} \cdot \frac{1}{n\Omega} \cdot 2[1 - \cos(n\pi)] = \frac{4}{nT\Omega}[1 - \cos(n\pi)]
+$$
+
+Since $\Omega = \frac{2\pi}{T}$, we get:
+
+$$
+b_n = \frac{2}{n\pi}[1 - \cos(n\pi)] = 
+\begin{cases}
+0, & n = 2, 4, 6, \dots \\
+\frac{4}{n\pi}, & n = 1, 3, 5, \dots
+\end{cases}
+$$
+
+The Fourier series expansion of the signal is:
+
+$$
+f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(n\Omega t) + \sum_{n=1}^{\infty} b_n \sin(n\Omega t)
+$$
+$$
+= \underbrace{0}_{\text{DC}} 
++ \underbrace{\frac{4}{\pi} \sin(\Omega t)}_{\text{Fundamental}} 
++ \underbrace{\frac{4}{3\pi} \sin(3\Omega t)}_{\text{3rd harmonic}} 
++ \cdots 
++ \underbrace{\frac{4}{n\pi} \sin(n\Omega t)}_{\text{n-th harmonic}}, \quad n = 1, 3, 5, \dots
+$$
+
+<strong>Exponential Form of Fourier Series</strong><br>
+The trigonometric form of the Fourier series is conceptually clear but computationally inconvenient, so we often use the exponential form of the Fourier series.
+
+\begin{align*}
+f(t) &= \frac{A_0}{2} + \underbrace{\sum_{n=1}^{\infty} A_n \cos(n\Omega t + \varphi_n)}_{\text{Trigonometric form of the Fourier series}} \\
+     &= \frac{A_0}{2} + \underbrace{\sum_{n=1}^{\infty} \frac{A_n}{2} \left[ e^{j(n\Omega t + \varphi_n)} + e^{-j(n\Omega t + \varphi_n)} \right]}_{\text{Using Euler's formula}} \\
+     &= \frac{A_0}{2} + \frac{1}{2} \sum_{n=1}^{\infty} A_n e^{j\varphi_n} e^{jn\Omega t}
+     \boxed{- \underbrace{\frac{1}{2} \sum_{n=1}^{\infty} A_n e^{-j\varphi_n} e^{-jn\Omega t}}_{
+     \begin{aligned}
+     &\begin{cases}
+     -n \rightarrow n \\
+     A_{-n} = A_n \\
+     \varphi_{-n} = -\varphi_n
+     \end{cases}
+     \end{aligned}
+     }} \\
+     &= \frac{A_0}{2} + \frac{1}{2} \sum_{n=1}^{\infty} A_n e^{j\varphi_n} e^{jn\Omega t} 
+     \boxed{+ \frac{1}{2} \sum_{n=-1}^{-\infty} A_n e^{j\varphi_n} e^{jn\Omega t}} \\
+\end{align*}
+
+
+
 
 
 <h2>The Fourier Transform</h2>
