@@ -473,8 +473,39 @@ f(t) &= \frac{A_0}{2} + \underbrace{\sum_{n=1}^{\infty} A_n \cos(n\Omega t + \va
      \boxed{+ \frac{1}{2} \sum_{n=-1}^{-\infty} A_n e^{j\varphi_n} e^{jn\Omega t}} \\
 \end{align*}
 
+Let the complex number
 
+$$
+\frac{1}{2} A_n e^{j\varphi_n} = |F_n| e^{j\varphi_n} = F_n
+$$
 
+be called the <u>complex Fourier coefficient</u>, or simply the <u>Fourier coefficient</u>.
+
+$$
+F_n = \frac{1}{2} A_n e^{j\varphi_n} = \frac{1}{2} (A_n \cos\varphi_n + j A_n \sin\varphi_n) = \frac{1}{2} (a_n - j b_n)
+$$
+
+$$
+= \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos(n\Omega t) \, \mathrm{d}t - j \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin(n\Omega t) \, \mathrm{d}t
+$$
+
+<strong>[Q]</strong>Find the exponential form of the Fourier series for the periodic signal shown in the figure.<br>
+<strong>[Sol]</strong>Given that $f(t)$ has a period $T = 3$, and $\Omega = \frac{2\pi}{T} = \frac{2\pi}{3}$, it is a periodic signal with period 3. The exponential Fourier coefficient is:
+$$
+\begin{aligned}
+F_n &= \frac{1}{T} \int_0^T f(t)e^{-jn\Omega t} \, dt \\
+    &= \frac{1}{3} \left[ \int_0^2 2e^{-jn\Omega t} \, dt - \int_2^3 e^{-jn\Omega t} \, dt \right] \\
+    &= \frac{2}{j3n\Omega} \left[1 - e^{-j2n\Omega}\right] + \frac{1}{j3n\Omega} \left[e^{-j3n\Omega} - e^{-j2n\Omega} \right] \\
+    &= \frac{2 - 3e^{-j2n\Omega} + e^{-j3n\Omega}}{j3n\Omega} \\
+    &= \frac{2 - 3e^{-j\frac{4\pi}{3}n} + e^{-j2\pi n}}{j2\pi n} \\
+    &= \frac{3}{j2\pi n} \left(1 - e^{-j\frac{4\pi}{3}n}\right)
+\end{aligned}
+$$
+
+\(\therefore\) The exponential form of the Fourier series is:
+$$
+f(t) = \sum_{n=-\infty}^{\infty} F_n e^{jn\Omega t} = \sum_{n=-\infty}^{\infty} \frac{3}{j2\pi n} \left(1 - e^{-j\frac{4\pi}{3}n}\right) e^{jn\Omega t}
+$$
 
 
 <h2>The Fourier Transform</h2>
