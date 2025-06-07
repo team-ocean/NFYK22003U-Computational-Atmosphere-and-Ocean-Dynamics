@@ -508,6 +508,38 @@ f(t) = \sum_{n=-\infty}^{\infty} F_n e^{jn\Omega t} = \sum_{n=-\infty}^{\infty} 
 $$
 
 
+<table style="width: 100%; border-collapse: collapse; font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
+  <thead>
+    <tr style="border-bottom: 2px solid #3c5c78;">
+      <th style="text-align: left; padding: 10px; border-right: 1px solid #3c5c78;">Expression</th>
+      <th style="text-align: left; padding: 10px;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border-right: 1px solid #3c5c78;">
+        \( f(t) = \sum_{n=-\infty}^{\infty} F_n e^{jn\Omega t} \)
+      </td>
+      <td style="padding: 8px;">
+        Exponential Form Fourier Series
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border-right: 1px solid #3c5c78;">
+        \( F_n = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-jn\Omega t} \, dt \)
+      </td>
+      <td style="padding: 8px;">
+        Complex Fourier Coefficient
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Note: Any periodic signal $f(t)$ can be decomposed into a sum of <u>complex exponential signals</u> with different frequencies.
+$F_n$ is the coefficient of the component with frequency $n\Omega$, and $F_0 = A_0 / 2$ is the DC component.
+
+
+
 <h2>The Fourier Transform</h2>
 
 $$
