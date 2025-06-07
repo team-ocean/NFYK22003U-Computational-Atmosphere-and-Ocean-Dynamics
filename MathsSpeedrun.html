@@ -354,6 +354,63 @@ The coefficients $a_n$ and $b_n$ are called <i>Fourier coefficients</i>.
         <div class="figure-caption">(Counterexample)</div></li>
 </ul>
 
+<strong>Cosine Form of Fourier Series</strong>
+$$
+\boxed{f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos(n\Omega t) + b_n \sin(n\Omega t) \right]}
+$$
+Combine the $n^\text{th}$ harmonic terms:
+$$
+\boxed{f(t) = \frac{A_0}{2} + \sum_{n=1}^{\infty} A_n \cos(n\Omega t + \varphi_n)}
+$$
+
+$$
+\left\{
+\begin{aligned}
+A_n &= \sqrt{a_n^2 + b_n^2} \\
+\varphi_n &= -\arctan\left(\frac{b_n}{a_n}\right)
+\end{aligned}
+\quad
+\begin{aligned}
+a_n &= A_n \cos \varphi_n \\
+b_n &= -A_n \sin \varphi_n
+\end{aligned}
+\right.
+$$
+Meaning:
+A periodic signal can be decomposed into a direct current (DC) component and multiple harmonic components.
+<ul>
+  <li>$\frac{A_0}{2}$: DC component</li>
+  <li>$A_1 \cos(\Omega t + \varphi_1)$: Called the <i>fundamental wave</i> or <i>first harmonic</i>, its angular frequency is the same as the original signal.</li>
+  <li>$A_2 \cos(2\Omega t + \varphi_2)$: Called the <i>second harmonic</i></li>
+  <li>⋯</li>
+  <li>$A_n \cos(n\Omega t + \varphi_n)$: Called the <i>n-th harmonic</i></li>
+</ul>
+<br>
+<strong>[Q]</strong> Expand the square wave signal $f(t)$ shown in the figure as a Fourier series.<br>
+<img src="Figures/MathsSpeedrun_CosFourier.png" alt="CosFourier" style="margin-top: 1.5em; max-width: 100%; display: block;">
+
+<strong>[Sol]</strong> To calculate the cosine coefficients:
+$$
+a_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos(n\Omega t)\,dt
+$$
+
+Break the integral over two intervals:
+
+$$
+= \frac{2}{T} \int_{-\frac{T}{2}}^{0} (-1) \cdot \cos(n\Omega t)\,dt + \frac{2}{T} \int_{0}^{\frac{T}{2}} 1 \cdot \cos(n\Omega t)\,dt
+$$
+
+$$
+= \frac{2}{T} \cdot \frac{1}{n\Omega} \left[ -\sin(n\Omega t) \right]_{-\frac{T}{2}}^{0} + \frac{2}{T} \cdot \frac{1}{n\Omega} \left[ \sin(n\Omega t) \right]_{0}^{\frac{T}{2}}
+$$
+
+Considering that $\Omega = \frac{2\pi}{T}$, obtain:
+
+$$
+a_n = 0
+$$
+
+
 <h2>The Fourier Transform</h2>
 
 $$
@@ -442,6 +499,8 @@ $$
 f(0) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(j\omega) \, d\omega
 $$</li>
 </ul>
+
+
 
 
 <h2>Time-Domain and Frequency-Domain</h2>
