@@ -386,7 +386,7 @@ A periodic signal can be decomposed into a direct current (DC) component and mul
 </ul>
 <br>
 <strong>[Q]</strong> Expand the square wave signal $f(t)$ shown in the figure as a Fourier series.<br>
-<img src="Figures/MathsSpeedrun_CosFourier.png" alt="CosFourier" style="margin-top: 1.5em; max-width: 100%; display: block;">
+<img src="Figures/MathsSpeedrun_ExponentialFourier.png" alt="ExponentialFourier" style="margin-top: 1.5em; max-width: 100%; display: block;">
 
 <strong>[Sol]</strong> To calculate the cosine coefficients:
 $$
@@ -490,6 +490,7 @@ $$
 $$
 
 <strong>[Q]</strong>Find the exponential form of the Fourier series for the periodic signal shown in the figure.<br>
+
 <strong>[Sol]</strong>Given that $f(t)$ has a period $T = 3$, and $\Omega = \frac{2\pi}{T} = \frac{2\pi}{3}$, it is a periodic signal with period 3. The exponential Fourier coefficient is:
 $$
 \begin{aligned}
@@ -536,7 +537,44 @@ $$
 </table>
 
 Note: Any periodic signal $f(t)$ can be decomposed into a sum of <u>complex exponential signals</u> with different frequencies.
-$F_n$ is the coefficient of the component with frequency $n\Omega$, and $F_0 = A_0 / 2$ is the DC component.
+$F_n$ is the coefficient of the component with frequency $n\Omega$, and $F_0 = A_0 / 2$ is the DC component.<br>
+
+<strong>Relationship Between Two Fourier Series Forms</strong>
+
+<table style="width: 100%; border-collapse: collapse; font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
+  <thead>
+    <tr style="border-bottom: 2px solid #3c5c78;">
+      <th style="text-align: left; padding: 10px; border-right: 1px solid #3c5c78;">Expression</th>
+      <th style="text-align: left; padding: 10px;">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border-right: 1px solid #3c5c78;">
+        \( f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(n\Omega t) + \sum_{n=1}^{\infty} b_n \sin(n\Omega t) \)
+      </td>
+      <td style="padding: 8px;">Trigonometric Form Fourier Series</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border-right: 1px solid #3c5c78;">
+        \( = \frac{A_0}{2} + \sum_{n=1}^{\infty} A_n \cos(n\Omega t + \varphi_n) \)
+      </td>
+      <td style="padding: 8px;"></td>
+    </tr>
+    <tr style="border-top: 2px solid #3c5c78;">
+      <td style="padding: 8px; border-right: 1px solid #3c5c78;">
+        \( f(t) = \sum_{n=-\infty}^{\infty} F_n e^{jn\Omega t} \)
+      </td>
+      <td style="padding: 8px;">Exponential Form Fourier Series</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border-right: 1px solid #3c5c78;">
+        \( F_n = |F_n| e^{j\varphi_n} = \frac{1}{2} A_n e^{j\varphi_n} = \frac{1}{2}(a_n - jb_n) \)
+      </td>
+      <td style="padding: 8px;"></td>
+    </tr>
+  </tbody>
+</table>
 
 
 
@@ -633,6 +671,10 @@ $$</li>
 
 
 <h2>Time-Domain and Frequency-Domain</h2>
+<img src="Figures/MathsSpeedrun_FourierTimeAndFrequencyDomains.gif" alt="FourierTimeAndFrequencyDomains" style="margin-top: 1.5em; max-width: 100%; display: block;">
+          <div class="figure-caption">(The Fourier transform links a function's time domain (in red) with its frequency domain (in blue). The red waveform is composed of several blue sine waves of different frequencies. The red represents the time domain (showing how the amplitude changes over time), while the resulting blue represents the frequency domain (independent of time, showing the distribution of frequencies).
+  Credit: Lucas V. Barbosa)</div> 
+
 
 <h2>Euler’s Formula and Trigonometry</h2>
 Euler’s formula expressing exponential functions in terms of trigonometric functions.<br>
