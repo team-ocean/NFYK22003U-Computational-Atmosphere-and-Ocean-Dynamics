@@ -123,6 +123,55 @@ $
 if $g(x) \neq 0$ everywhere.</li>
 </ul>
 
+<strong>Derivatives of Inverse Functions:</strong> If $y = f(x)$, and $x = f^{-1}(y)$; then $dy/dx$ and $dx/dy$ are related by
+
+  $$
+  \frac{dy}{dx} = \frac{1}{\frac{dx}{dy}}
+  $$
+
+<strong>Derivatives of Parameterized Functions:</strong>If $x = f(t)$ and $y = g(t)$, and $y = y(x)$, then
+
+  $$
+  \frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{g'(t)}{f'(t)},
+  $$
+
+  provided that $f'(t) \neq 0$.<br>
+
+<strong>[Ex]</strong> Product Rule
+
+$$
+\frac{d}{dx} \{ x \sin x \} = x \frac{d}{dx} \sin x + \sin x \frac{d}{dx} x
+$$
+
+$$
+= x \cos x + \sin x
+$$
+
+<strong>[Ex]</strong> Quotient Rule
+$$
+\frac{d}{dx} \tan x = \frac{d}{dx} \left\{ \frac{\sin x}{\cos x} \right\}
+$$
+
+$$
+= \frac{\cos x \frac{d}{dx} \sin x - \sin x \frac{d}{dx} \cos x}{(\cos x)^2}
+$$
+
+$$
+= \frac{1}{(\cos x)^2}
+$$
+
+<strong>[Q]</strong>$
+\frac{d}{dx} \arcsin x = \boxed{?}
+$<br>
+<strong>[Sol]</strong> (Let $y = \arcsin x$)
+
+$$
+\frac{d}{dx} \arcsin x = \frac{dy}{d \sin y} = \frac{1}{\frac{d \sin y}{dy}}
+$$
+
+$$
+= \frac{1}{\cos y} = \frac{1}{\sqrt{1 - \sin^2 y}} = \frac{1}{\sqrt{1 - x^2}}
+$$
 
 <h2>Chain Rule</h2>
 <ul>
@@ -146,6 +195,22 @@ $$
 
 $$
 \frac{dy}{dx} \equiv \frac{d}{dx} \sin x^3 = \cos x^3 \cdot 3x^2
+$$
+
+<strong>[Ex]</strong> $$
+y = \sin z, \quad z = at, \quad x = e^t, \quad \text{then}
+$$
+
+$$
+\frac{dy}{dx} = \frac{dy/dt}{dx/dt}
+$$
+
+$$
+= \frac{1}{e^t} \cdot \left[ \frac{dy}{dz} \cdot \frac{dz}{dt} \right]
+$$
+
+$$
+= \frac{1}{e^t} \cdot \cos z \cdot a = \frac{a \cos(at)}{e^t}
 $$
 
 
