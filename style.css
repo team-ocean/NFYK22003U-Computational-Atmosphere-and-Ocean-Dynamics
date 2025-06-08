@@ -433,3 +433,8 @@ body::-webkit-scrollbar-thumb:hover {
   scrollbar-width: thin; /* 'thin' is the thinnest supported */
   scrollbar-color: rgba(125, 205, 244, 0.4) transparent;
 }
+
+.doubleUnderline {
+    text-decoration:underline;
+    border-bottom: 1px solid #aaccee;
+}

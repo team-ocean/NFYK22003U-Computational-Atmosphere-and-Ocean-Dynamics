@@ -565,6 +565,182 @@ $$
 
 
 <h2>Ordinary Differential Equation</h2>
+Ordinary Differential Equations (ODEs) has two parts:<ul>
+  <li>Initial Value Problem
+       $$
+   \frac{d\vec{x}}{dt} = \vec{f}(t, \vec{x})
+   $$
+
+   $$
+   \vec{x}(t_0) = \vec{x}_0
+   $$
+   \(\longleftrightarrow\) Important examples in <span class="doubleUnderline">Dynamical Systems</span>
+  </li>
+
+  <li>Boundary Value Problem</li>
+</ul>
+
+$$
+\begin{array}{rl}
+\left.
+\begin{array}{l}
+\text{ODE} \\
+\text{PDE}
+\end{array}
+\right\} \text{DE}
+& 
+\begin{array}{l}
+\text{Study some important (specific) problems} \\
+\text{arising from physics,} \\
+\text{biology, engineering, ...,} \\
+\text{chemistry.}
+\end{array}
+\end{array}
+$$
+
+Periodic linear system:$$
+\frac{d\mathbf{x}}{dt} = A(t)\mathbf{x}
+$$
+
+$$
+A(t + \omega) = A(t)
+$$
+
+$$
+\text{is periodic}
+$$
+Nonlinear Systems:$$
+\left\{
+\begin{aligned}
+\frac{d\vec{x}}{dt} &= \vec{f}(\vec{x}) \\
+\vec{x}(t_0) &= \vec{x}_0
+\end{aligned}
+\right.
+$$
+
+Goal: Given a system of
+Nonlinear equations, we want to <span class="doubleUnderline">predict</span>
+the behavior of solutions<br>
+Analytic \(\longleftrightarrow\) Numerical Computational Method<br>
+
+Review of Baby ODE:
+1st order <span class="doubleUnderline">scalar</span> differential equation<br>
+
+I.V.P. (Initial Value Problem)
+
+$$
+\left\{
+\begin{aligned}
+\frac{dx}{dt} &= f(t, x) \\
+x(t_0) &= x_0
+\end{aligned}
+\right.
+\quad \text{where } f : \mathbb{R} \times \mathbb{R} \to \mathbb{R}
+$$
+
+Separable equations (seperation of variables):
+
+$$
+\frac{dx}{dt} = g(x) h(t)
+$$
+
+$$
+\int \frac{dx}{g(x)} = \int h(t)\,dt + C
+$$
+
+$$
+\boxed{G(x) = H(t) + C}
+$$
+
+Express $x$ as a function of $t$
+
+$$
+x = x(t), \quad t = \text{time}
+$$
+<strong>[Ex]</strong>$$
+\left\{
+\begin{aligned}
+\frac{dx}{dt} &= ax \\
+x(0) &= x_0
+\end{aligned}
+\right.
+\quad a > 0
+$$
+
+$$
+x(t) = \text{population of a species at time } t
+$$
+
+$$
+\frac{dx}{dt} = \text{rate of change is proportional to the current population.}
+$$
+
+$$
+\frac{1}{x} \frac{dx}{dt} = a \Rightarrow \frac{dx}{x} = a\,dt
+$$
+$$
+\int \frac{dx}{x} = \int a \, dt
+$$
+
+Integrating both sides:
+
+$$
+\ln |x| = at + C
+$$
+
+Exponentiating both sides:
+
+$$
+x = e^{at + C} = e^C \cdot e^{at}
+$$
+
+Let $x_0 = e^C$, which is the initial value:
+
+$$
+x(0) = x_0
+$$
+
+$$
+\therefore \boxed{x(t) = x_0 e^{at}}
+$$
+
+<strong>[Q]</strong> Write
+
+$$
+\begin{aligned}
+    y'' + 3\sin(zy) + z' &= \cos t \\
+    z''' + z'' + 3y' + z'y &= t
+\end{aligned}
+$$
+
+as an equivalent first order system of differential equations.<br>
+
+<strong>[Sol]</strong> To write this as a first-order system, define new variables:
+
+$$
+\begin{aligned}
+x_1 &= y \\
+x_2 &= y' \\
+x_3 &= z \\
+x_4 &= z' \\
+x_5 &= z''
+\end{aligned}
+$$
+
+Now express the system as:
+
+$$
+\begin{aligned}
+x_1' &= x_2 \\
+x_2' &= \cos t - 3\sin(x_3 x_1) - x_4 \\
+x_3' &= x_4 \\
+x_4' &= x_5 \\
+x_5' &= t - x_5 - 3x_2 - x_4 x_1
+\end{aligned}
+$$
+
+This is the equivalent first-order system of differential equations.
+
 
 <h2>Euler Equations</h2>
 Differential Equation
@@ -819,7 +995,7 @@ $$
 \frac{1}{2} A_n e^{j\varphi_n} = |F_n| e^{j\varphi_n} = F_n
 $$
 
-be called the <u>complex Fourier coefficient</u>, or simply the <u>Fourier coefficient</u>.
+be called the <span class="doubleUnderline">complex Fourier coefficient</span>, or simply the <span class="doubleUnderline">Fourier coefficient</span>.
 
 $$
 F_n = \frac{1}{2} A_n e^{j\varphi_n} = \frac{1}{2} (A_n \cos\varphi_n + j A_n \sin\varphi_n) = \frac{1}{2} (a_n - j b_n)
@@ -876,7 +1052,7 @@ $$
   </tbody>
 </table>
 
-Note: Any periodic signal $f(t)$ can be decomposed into a sum of <u>complex exponential signals</u> with different frequencies.
+Note: Any periodic signal $f(t)$ can be decomposed into a sum of <span class="doubleUnderline">complex exponential signals</span> with different frequencies.
 $F_n$ is the coefficient of the component with frequency $n\Omega$, and $F_0 = A_0 / 2$ is the DC component.<br>
 
 <strong>Relationship Between Two Fourier Series Forms</strong>
