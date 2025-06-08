@@ -92,6 +92,62 @@
 
 
 <h2>Differentiation</h2>
+In the following we assume that $C$ and $a$ are constants.
+<ul>
+  <li>$\frac{d}{dx}(C) = 0$;</li>
+  <li>$\frac{d}{dx} x^n = nx^{n-1}$;</li>
+  <li>$\frac{d}{dx} \sin x = \cos x$;</li>
+  <li>$\frac{d}{dx} \cos x = -\sin x$;</li>
+  <li>$\frac{d}{dx} \log_a x = \frac{\log_a e}{x}$; where $a > 0, a \neq 1$;</li>
+  <li>$\frac{d}{dx} \ln x = \frac{1}{x}$;</li>
+  <li>$\frac{d}{dx} a^x = a^x \ln a$;</li>
+  <li>$\frac{d}{dx} e^x = e^x$.</li>
+</ul>
+<strong>Rules for Differentiation:</strong> Assume that $f$, $g$, and $h$ are differentiable functions.
+We have the following rules of differentiation:
+<ul>
+  <li>$\frac{d}{dx} \{ f(x) + g(x) \} = \frac{d}{dx} f(x) + \frac{d}{dx} g(x) = f'(x) + g'(x)$
+  (Addition Rule)</li>
+  <li>$\frac{d}{dx} \{ f(x) - g(x) \} = \frac{d}{dx} f(x) - \frac{d}{dx} g(x) = f'(x) - g'(x)$
+  (Subtraction Rule)</li>
+  <li>$\frac{d}{dx} \{ C f(x) \} = C \frac{d}{dx} f(x) = C f'(x)$
+  where $C$ is a constant</li>
+  <li>$\frac{d}{dx} \{ f(x) g(x) \} = f(x) \frac{d}{dx} g(x) + g(x) \frac{d}{dx} f(x) = f(x) g'(x) + g(x) f'(x)$
+  (Product Rule)</li>
+  <li>$
+\frac{d}{dx} \left\{ \frac{f(x)}{g(x)} \right\} = \frac{g(x) \frac{d}{dx} f(x) - f(x) \frac{d}{dx} g(x)}{[g(x)]^2}
+
+= \frac{g(x) f'(x) - f(x) g'(x)}{[g(x)]^2}
+$
+
+if $g(x) \neq 0$ everywhere.</li>
+</ul>
+
+
+<h2>Chain Rule</h2>
+<ul>
+  <li>If $y = f(u)$ where $u = g(x)$, then
+
+  $$
+  \frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx} = f'(u) \cdot \frac{du}{dx} = f'(g(x)) \cdot g'(x)
+  $$</li>
+  <li>Similarly, if $y = f(u)$ where $u = g(v)$ and $v = h(x)$, then
+  $$
+  \frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dv} \cdot \frac{dv}{dx}
+  $$</li>
+</ul>
+<strong>[Ex]</strong>$$
+u = f(x) = x^3,\quad y = g(u) = \sin u,
+$$
+
+$$
+y = F(x) = g(f(x)) = \sin x^3.
+$$
+
+$$
+\frac{dy}{dx} \equiv \frac{d}{dx} \sin x^3 = \cos x^3 \cdot 3x^2
+$$
+
 
 <h2>Integration</h2>
 <strong>Informally Explanation of Definite Integrals:</strong>
@@ -342,8 +398,6 @@ $$
 $$
 
 <h2>Partial Differential Equation</h2>
-
-<h2>Chain Rule</h2>
 
 <h2>Polar Coordinates</h2>
 
