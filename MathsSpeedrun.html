@@ -173,6 +173,23 @@ $$
 = \frac{1}{\cos y} = \frac{1}{\sqrt{1 - \sin^2 y}} = \frac{1}{\sqrt{1 - x^2}}
 $$
 
+<strong>[Q]</strong> Find
+$
+\frac{dy}{dx} = \boxed{?} \quad \text{where } y = \sin(t^2), \quad x = 1 + \sqrt{t}.
+$<br>
+<strong>[Sol]</strong>$$
+\frac{dy}{dx} = \frac{(\sin(t^2))'}{(1 + \sqrt{t})'}
+$$
+
+$$
+= \frac{2t \cos(t^2)}{\frac{1}{2\sqrt{t}}}
+$$
+
+$$
+= 4t^{\frac{3}{2}} \cos(t^2)
+$$
+
+
 <h2>Chain Rule</h2>
 <ul>
   <li>If $y = f(u)$ where $u = g(x)$, then
@@ -212,6 +229,32 @@ $$
 $$
 = \frac{1}{e^t} \cdot \cos z \cdot a = \frac{a \cos(at)}{e^t}
 $$
+
+Sometimes the function $y = y(x)$ can not be expressed as a function of $x$ explicitly. Instead, the relation between $y$ and $x$ is hidden in an equation. In such a case, we can not get the differentiation of $y$ directly. However, we could still use the chain rule to get $\frac{dy}{dx}$.<br>
+<strong>[Implicit Differentiation]</strong> Consider the equation $R(x, y) = 0$. Assume that $y$ can be solved as a function of $x$, then the differentiation of $y$ with respect to $x$ can be found by applying $\frac{d}{dx}$ to both sides of $R(x, y) = 0$, obtaining
+
+$$
+\frac{dR(x, y)}{dx} + \frac{dR(x, y)}{dy} \cdot \frac{dy}{dx} = 0.
+$$
+
+From this equation one can solve for $\frac{dy}{dx}$, as a function of $x$ and $y$.<br>
+This methods is known as <strong>implicit differentiation</strong>.<br>
+
+<strong>[Q]</strong> Consider $R(x, y) = x^2 + 4xy^5 + 7xy + 8 = 0$. Find $\frac{dy}{dx} = \boxed{?}$<br>
+<strong>[Sol]</strong> $$
+\frac{dR(x, y)}{dx} + \frac{dR(x, y)}{dy} \cdot \frac{dy}{dx}
+$$
+
+$$
+= 2x + 4(y^5 + 5xy^4 \cdot \frac{dy}{dx}) + 7(y + x \cdot \frac{dy}{dx})
+$$
+
+$$
+= 0
+$$
+
+
+
 
 
 <h2>Integration</h2>
