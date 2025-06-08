@@ -129,7 +129,7 @@ if $g(x) \neq 0$ everywhere.</li>
   \frac{dy}{dx} = \frac{1}{\frac{dx}{dy}}
   $$
 
-<strong>Derivatives of Parameterized Functions:</strong>If $x = f(t)$ and $y = g(t)$, and $y = y(x)$, then
+<strong>Derivatives of Parameterized Functions:</strong> If $x = f(t)$ and $y = g(t)$, and $y = y(x)$, then
 
   $$
   \frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{g'(t)}{f'(t)},
@@ -188,6 +188,53 @@ $$
 $$
 = 4t^{\frac{3}{2}} \cos(t^2)
 $$
+
+<strong>Derivatives of Commonly Used Functions:</strong> In the following we assume that u is a differentiable function of x. With the rules for differentiation and the derivatives of elementary functions mentioned before, we have the following derivatives of functions.
+<ul>
+<li>$
+\frac{d}{dx} \tan u = \sec^2 u \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \cot u = -\csc^2 u \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \sec u = \sec u \tan u \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \csc u = -\csc u \cot u \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \arcsin u = \frac{1}{\sqrt{1 - u^2}} \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \arccos u = -\frac{1}{\sqrt{1 - u^2}} \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \arctan u = \frac{1}{1 + u^2} \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \text{arccot}\, u = -\frac{1}{1 + u^2} \cdot \frac{du}{dx}
+$</li>
+<li>$
+\frac{d}{dx} \, \text{arcsec} \, u = \pm \frac{1}{u \sqrt{u^2 - 1}} \, \frac{du}{dx}; \quad
+\left\{
+\begin{aligned}
+&+ \text{ if } u > 1 \\
+&- \text{ if } u < -1
+\end{aligned}
+\right.
+$</li>
+<li>$
+\frac{d}{dx} \, \text{arccsc} \, u = \mp \frac{1}{u \sqrt{u^2 - 1}} \, \frac{du}{dx}; \quad
+\left\{
+\begin{aligned}
+&- \text{ if } u > 1 \\
+&+ \text{ if } u < -1
+\end{aligned}
+\right.
+$</li>
+</ul>
+
 
 
 <h2>Chain Rule</h2>
@@ -271,7 +318,6 @@ $$
 \therefore \text{We have }
 \boxed{\frac{dy}{dx} = \tan x \tan y}
 $$
-
 
 
 
