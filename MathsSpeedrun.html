@@ -739,7 +739,19 @@ x_5' &= t - x_5 - 3x_2 - x_4 x_1
 \end{aligned}
 $$
 
-This is the equivalent first-order system of differential equations.
+This is the equivalent first-order system of differential equations. <br>
+
+<strong>[Q]</strong> Show that the solutions $x_1(t), x_2(t)$ of the Lotka–Volterra two species competition model
+
+$$
+\begin{aligned}
+\frac{dx_1}{dt} &= r_1 x_1 \left(1 - \frac{x_1}{K_1} \right) - \alpha_1 x_1 x_2 \\
+\frac{dx_2}{dt} &= r_2 x_2 \left(1 - \frac{x_2}{K_2} \right) - \alpha_2 x_1 x_2 \\
+x_1(0) &> 0,\quad x_2(0) > 0
+\end{aligned}
+$$
+
+are positive and bounded for all $t \geq 0$.
 
 
 <h2>Euler Equations</h2>
@@ -800,6 +812,67 @@ $$
 $$
 
 <h2>Partial Differential Equation</h2>
+Let the function $z = f(x, y)$ be defined at and near the point $(a, b)$. Consider the function $z = f(x, b)$.
+
+The derivative at the point $x = a$ is:
+
+$$
+\lim_{\Delta x \to 0} \frac{f(a + \Delta x, b) - f(a, b)}{\Delta x}.
+$$
+
+If this limit exists, then it is called the partial derivative of the function $z = f(x, y)$ at the point $(a, b)$ with respect to $x$.
+
+It is denoted as:
+
+$$
+\frac{\partial f(a, b)}{\partial x}, \quad f_x(a, b), \quad \text{or} \quad \left. \frac{\partial z}{\partial x} \right|_{(a, b)}.
+$$
+
+$\frac{\partial f(a, b)}{\partial x}$ reflects how the function $f(x, y)$ changes at point $(a, b)$ along the straight line parallel to the $x$-axis.
+What it depicts is the property along that straight line, and in essence it is the derivative of a single-variable function
+$
+\frac{d}{dx}[f(x, b)]
+$. Unlike the derivative notation of a single-variable function $\frac{df(x)}{dx}$, the notation for partial derivatives $\frac{\partial f(a,b)}{\partial x}$ is merely a symbol and should not be interpreted as the quotient of two numbers.
+Unlike single-variable functions, whether the partial derivative of a two-variable function exists at a point has no relation to whether the function is continuous at that point (although there is necessarily a connection).<br>
+
+<strong>[Q]</strong> $z = \sin(xy)$<br>
+<strong>[Sol]</strong>
+$$
+\frac{\partial z}{\partial x} = \cos(xy) \cdot y,\quad \frac{\partial z}{\partial y} = \cos(xy) \cdot x
+$$
+
+$$
+\frac{\partial^2 z}{\partial x^2} = -\sin(xy) \cdot y^2
+$$
+
+$$
+\frac{\partial^2 z}{\partial y \partial x} = \cos(xy) - xy \cdot \sin(xy)
+$$
+
+$$
+\frac{\partial^2 z}{\partial x \partial y} = \cos(xy) - xy \cdot \sin(xy)
+$$
+
+$$
+\frac{\partial^2 z}{\partial y^2} = -x^2 \cdot \sin(xy)
+$$
+
+<strong>[Q]</strong> $
+u = \ln(x + y + \delta)
+$<br>
+<strong>[Sol]</strong> $$
+\frac{\partial u}{\partial x} = \frac{1}{x + y + \delta}, \quad \frac{\partial u}{\partial y} = \frac{1}{x + y + \delta}
+$$
+
+$$
+\frac{\partial^2 u}{\partial y \partial x} = -\frac{1}{(x + y + \delta)^2}, \quad \frac{\partial^2 u}{\partial x \partial y} = -\frac{1}{(x + y + \delta)^2}
+$$
+
+
+
+
+
+
 
 <h2>Polar Coordinates</h2>
 
@@ -814,8 +887,125 @@ $$
 
 <h2>Laplace Operator</h2>
 
+$$
+\nabla^2 f = \nabla \cdot \nabla f = \Delta f
+$$
 
+<ul>
+  <li>For a scalar function $f$:
+$$
+\nabla^2 f = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} + \frac{\partial^2 f}{\partial z^2}
+$$
 
+$$
+\nabla \cdot \nabla f = \nabla \cdot \left( \frac{\partial f}{\partial x} \mathbf{i} + \frac{\partial f}{\partial y} \mathbf{j} + \frac{\partial f}{\partial z} \mathbf{k} \right)
+$$
+
+$$
+= \frac{\partial}{\partial x} \left( \frac{\partial f}{\partial x} \right) + \frac{\partial}{\partial y} \left( \frac{\partial f}{\partial y} \right) + \frac{\partial}{\partial z} \left( \frac{\partial f}{\partial z} \right)
+$$
+
+$$
+= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} + \frac{\partial^2 f}{\partial z^2} = \nabla^2 f
+$$
+<strong>[Ex]</strong> The Laplacian of the scalar field $f(x, y, z) = xy^2 + z^3$ is
+
+$$
+\nabla^2 f(x, y, z) = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} + \frac{\partial^2 f}{\partial z^2}
+$$
+
+$$
+= \frac{\partial^2}{\partial x^2} (xy^2 + z^3) + \frac{\partial^2}{\partial y^2} (xy^2 + z^3) + \frac{\partial^2}{\partial z^2} (xy^2 + z^3)
+$$
+
+$$
+= \frac{\partial}{\partial x} (y^2 + 0) + \frac{\partial}{\partial y} (2xy + 0) + \frac{\partial}{\partial z} (0 + 3z^2)
+$$
+
+$$
+= 0 + 2x + 6z = 2x + 6z
+$$</li>
+<li>For a vector field $\vec{f}$, apply the Laplace operator to each component of the vector field individually. That is:
+
+$$
+\nabla^2 \vec{f} = \left( \nabla^2 f_x, \nabla^2 f_y, \nabla^2 f_z \right)
+$$
+
+In addition, there is a commonly used equation:
+
+$$
+\nabla^2 \vec{f} = \nabla (\nabla \cdot \vec{f}) - \nabla \times (\nabla \times \vec{f})
+$$
+<strong>[Ex]</strong> The Laplacian of
+
+$
+\mathbf{F}(x, y, z) = 3z^2\mathbf{i} + xyz\mathbf{j} + x^2z^2\mathbf{k}
+$
+
+is:
+
+$$
+\nabla^2 \mathbf{F}(x, y, z) = \nabla^2 (3z^2)\mathbf{i} + \nabla^2 (xyz)\mathbf{j} + \nabla^2 (x^2z^2)\mathbf{k}
+$$
+
+Calculating the components in turn we find:
+
+$$
+\nabla^2 (3z^2) = \frac{\partial^2}{\partial x^2}(3z^2) + \frac{\partial^2}{\partial y^2}(3z^2) + \frac{\partial^2}{\partial z^2}(3z^2) = 0 + 0 + 6 = 6
+$$
+
+$$
+\nabla^2 (xyz) = \frac{\partial^2}{\partial x^2}(xyz) + \frac{\partial^2}{\partial y^2}(xyz) + \frac{\partial^2}{\partial z^2}(xyz) = 0 + 0 + 0 = 0
+$$
+
+$$
+\nabla^2 (x^2z^2) = \frac{\partial^2}{\partial x^2}(x^2z^2) + \frac{\partial^2}{\partial y^2}(x^2z^2) + \frac{\partial^2}{\partial z^2}(x^2z^2) = 2z^2 + 0 + 2x^2
+$$
+
+\(\therefore\) The Laplacian of $\mathbf{F}$ is:
+
+$$
+\nabla^2 \mathbf{F} = 6\mathbf{i} + 0\mathbf{j} + (2z^2 + 2x^2)\mathbf{k} = 6\mathbf{i} + 2(x^2 + z^2)\mathbf{k}
+$$</li>
+</ul>
+
+The Laplacian operator is often written like this: $\nabla^2$. When applied to a scalar function $f$ in space, it's written as $\nabla^2 f$. This is a kind of shorthand notation, which can make it unclear what the physical meaning behind it is. To clarify the meaning of $\nabla^2 f$, let’s rewrite it in its original form: $\nabla \cdot (\nabla f)$.
+
+In Physics: the Laplacian operator is actually an “operation” on the gradient of a scalar field — that is <span class="doubleUnderline">the divergence of the gradient of a scalar field</span>. 
+In different coordinate systems (Cartesian, Spherical, Cylindrical, etc.), the form of the Laplacian operator is not the same (the most commonly seen form is in the Cartesian coordinate system:
+
+$$
+\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
+$$
+
+but the physical meaning is consistent, it represents the divergence of the gradient of a scalar field.<br>
+
+So why is the divergence of the gradient of a scalar field important?  My personal understanding is that
+
+because the divergence of the gradient of a scalar field represents the “driving force” (or potential “trend”) within the field, and this “driving force” can reveal how the system changes from the inside.
+
+The spatial temperature field $T(x, y, z)$ is a scalar field, and its gradient field $\nabla T$ determines the spatial heat flux (heat density flux) vector field $\vec{q}$. At any given point in space, the magnitude of the heat flux is proportional to the magnitude of the gradient (here we assume the material is isotropic).
+The heat flux vector points in the opposite direction of the temperature gradient. In mathematical terms, it is written as:
+
+$$
+\vec{q} = -k \nabla T
+$$
+
+where $k > 0$.
+
+Taking the divergence of the above heat flux field (essentially taking the divergence of the temperature gradient field) gives the heat source/sink at a point in space:
+If the divergence is positive, heat flows out — it’s a heat source;
+If the divergence is negative, heat flows in — it’s a heat sink.
+
+You may have seen the heat conduction equation:
+
+$$
+\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} + \frac{\partial^2 T}{\partial z^2} = 0
+$$
+
+(this is the standard Laplace equation described in Cartesian coordinates).
+
+Translated into plain language, this equation says: <span class="doubleUnderline">There is no heat source in the space!</span>
 
 
 
