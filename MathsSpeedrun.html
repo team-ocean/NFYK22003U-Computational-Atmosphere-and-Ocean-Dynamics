@@ -874,6 +874,31 @@ $$
 
 <h2>Cylindrical Coordinates</h2>
 
+<br>
+<strong>[Ex]</strong>The volume element $dV$ in curvilinear coordinates $t^1, t^2, t^3$, as we know, has the form
+
+$$
+dV = \sqrt{\det g_{ij}(t)} \, dt^1 \wedge dt^2 \wedge dt^3.
+$$
+
+For a triorthogonal system,
+
+$$
+dV = \sqrt{E_1 E_2 E_3(t)} \, dt^1 \wedge dt^2 \wedge dt^3.
+$$
+
+In particular, in Cartesian, cylindrical, and spherical coordinates, respectively, we obtain
+
+$$
+\begin{aligned}
+dV &= dx \wedge dy \wedge dz = \\
+   &= r \, dr \wedge d\varphi \wedge dz = \\
+   &= R^2 \cos \theta \, dR \wedge d\varphi \wedge d\theta.
+\end{aligned}
+$$
+
+What has just been said enables us to write the form $\omega^3_\rho = \rho \, dV$ in different curvilinear coordinate systems.
+Repeated equal signs represent a continuation of equalities across different coordinate systems, and show how the same geometric object (volume form $dV$) takes different analytic forms in different systems.<br>
 
 <strong>[Q]</strong> In cylindrical coordinates $(r, \varphi, z)$ the function $f$ has the form $\ln \frac{1}{r}$. Write the field $\mathbf{A} = \nabla f$ in
 <ul>
@@ -882,6 +907,7 @@ $$
   <li>Spherical coordinates</li>
   <li>Find curl $\mathbf{A}$ and div $\mathbf{A}$</li>
 </ul>
+
 
 
 
@@ -901,6 +927,7 @@ Where:
 $\tau_{ij} =$ Stress [${N/m}^2$];
 $f_i =$ Body Force [${N/m}^3$]
 <img src="Figures/MathsSpeedrun_BlackboardCylindricalCoordinates.png" alt="BlackboardCylindricalCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+
 
 
 <h2>Polar Coordinates</h2>
@@ -1177,7 +1204,38 @@ $. For computational purposes the explicit form $
   Q' = M^\mathrm{-1} (Q - P) = M^\mathrm{T} Q - M^\mathrm{T} P 
   $ is preferable.
 
+  <br>
+<strong>[Ex]</strong> In particular, for Cartesian, cylindrical, and spherical coordinates, we obtain respectively:
+$$
+\begin{aligned}
+\Delta f &= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} + \frac{\partial^2 f}{\partial z^2} = \\
+        &= \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial f}{\partial r} \right) + \frac{1}{r^2} \frac{\partial^2 f}{\partial \varphi^2} + \frac{\partial^2 f}{\partial z^2} = \\
+        &= \frac{1}{R^2} \frac{\partial}{\partial R} \left( R^2 \frac{\partial f}{\partial R} \right) + \frac{1}{R^2 \cos^2 \theta} \frac{\partial^2 f}{\partial \varphi^2} + \frac{1}{R^2 \cos \theta} \frac{\partial}{\partial \theta} \left( \cos \theta \frac{\partial f}{\partial \theta} \right)
+\end{aligned}
+$$
+
 <h2>The Gradient</h2>
+Almost any book with mathematical problems and even any textbook of mathematical analysis states something like the following. “Children, remember”:
+
+We call the <span class="doubleUnderline">gradient</span> of a function $U(u, x, z)$ the vector
+
+$$
+\text{grad } U := \left( \frac{\partial U}{\partial x}, \frac{\partial U}{\partial y}, \frac{\partial U}{\partial z} \right)
+$$
+
+The <span class="doubleUnderline">curl</span> of a vector field $\mathbf{A} = (P, Q, R)(x, y, z)$ is the vector
+
+$$
+\text{curl } \mathbf{A} := \left( \frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}, \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}, \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right)
+$$
+
+The <span class="doubleUnderline">divergence</span> of a vector field $\mathbf{B} = (P, Q, R)(x, y, z)$ is the function
+
+$$
+\text{div } \mathbf{B} := \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}
+$$
+
+The fact that this is true only in Cartesian coordinates is not usually discussed, as well as what should be done if the coordinate system is different. This is understandable, since the very formulation of this problem already requires some suitable definition of these objects.
 
 
 
