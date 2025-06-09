@@ -957,7 +957,7 @@ $$
 
 Note: the simple minded $\lambda = \arctan(y / x)$, which is valid only for $-90^\circ < \lambda < 90^\circ$, was replaced by the correct $\text{atan2}(y, x)$, which yields $-180^\circ < \lambda \leq 180^\circ$. <br>
 <img src="Figures/MathsSpeedrun_ENUEarthCoordinates.png" alt="ENUEarthCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
-An east-north-up (ENU) system uses the Cartesian coordinates (xEast,yNorth,zUp) to represent position relative to a local origin.
+An East-North-Up (ENU) system uses the Cartesian coordinates (xEast,yNorth,zUp) to represent position relative to a local origin.
 The ENU coordinate system is a local system specific to any point $P$ on the Earth. It is formed from a plane tangent to the Earth's surface at the point $P$. In this plane:
 <ul>
   <li>The unit vector $\mathbf{E}$ points to the East</li>
@@ -1032,7 +1032,101 @@ $$
 U_z = \sin(\varphi)
 $$
 
+Consider a point $Q$ that has the coordinates $(x, y, z)$ in the Earth-centered Earth-fixed (ECEF) system and coordinates $Q' = (e, n, u)$ in the East-North-Up (ENU) system located at $P = (P_x, P_y, P_z)$. The spherical coordinates of $P$ are $(\varphi, \lambda, R)$. Then the following equation transforms $(e, n, u)$ to $(x, y, z)$:
+$$
+\begin{bmatrix}
+x \\
+y \\
+z
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\sin(\lambda) & \cos(\lambda) & 0 \\
+-\sin(\varphi)\cos(\lambda) & -\sin(\varphi)\sin(\lambda) & \cos(\varphi) \\
+\cos(\varphi)\cos(\lambda) & \cos(\varphi)\sin(\lambda) & \sin(\varphi)
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+e \\
+n \\
+u
+\end{bmatrix}
++
+\begin{bmatrix}
+P_x \\
+P_y \\
+P_z
+\end{bmatrix}
+$$
 
+Notice that the columns of the transformation matrix $M$ are equal to the vectors $\mathbf{E}, \mathbf{N}, \mathbf{U}$ respectively. Hence, the matrix $M$ is orthonormal. It corresponds to the rotation of the XYZ-system around the origin into the ENU-System (centered at origin). 
+The transformation is built by first rotating the vectors $\mathbf{X}, \mathbf{Y}, \mathbf{Z}$ around the origin into $\mathbf{E}, \mathbf{N}, \mathbf{U}$, and then translating this system by the vector $P$ into its final position.
+
+The transformation can be written concisely using vector and matrix notation:
+
+$$
+Q = M Q' + P
+$$
+
+The transformation from ECEF to ENU is obtained by inverting the transformation $
+Q = M Q' + P
+$:
+
+$$
+Q' = M^\mathrm{-1} (Q - P) = M^\mathrm{T} (Q - P) 
+$$
+
+Here we used the fact that the inverse of an orthonormal matrix is equal to its transpose. This equation is in explicit terms as follows:
+
+$$
+\begin{bmatrix}
+e \\
+n \\
+u
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\sin(\lambda) & \cos(\lambda) & 0 \\
+-\sin(\varphi)\cos(\lambda) & -\sin(\varphi)\sin(\lambda) & \cos(\varphi) \\
+\cos(\varphi)\cos(\lambda) & \cos(\varphi)\sin(\lambda) & \sin(\varphi)
+\end{bmatrix}
+\begin{bmatrix}
+x - P_x \\
+y - P_y \\
+z - P_z
+\end{bmatrix}
+$$
+
+This equation transforms the XYZ-coordinates $(x, y, z)$ of an arbitrary point $Q$ into its ENU-coordinates $(e, n, u)$. The ENU system is located at the point $P$ with XYZ-coordinates $(P_x, P_y, P_z)$ and spherical coordinates $(\varphi, \lambda, R)$.
+To solve the asymmetry in the respective transformations, the equation $
+Q' = M^\mathrm{-1} (Q - P) = M^\mathrm{T} (Q - P) 
+$ can be written as:
+
+$$
+Q' = M^\mathrm{-1} Q - M^\mathrm{-1} P 
+$$
+
+
+The meaning is that the ENU system is first rotated around its origin at $P$ by the inverse rotation such that its axes are parallel to the XYZ-system. Afterwards it is translated by the vector $M^\mathrm{T} P$ such that its origin is moved to the origin $O$ of the XYZ-system. 
+The expression $M^\mathrm{T} P$ denotes the origin $O = (0, 0, 0)^T$ of the XYZ-system expressed in the ENU-system, as we can see by applying the equation $
+Q' = M^\mathrm{-1} Q - M^\mathrm{-1} P 
+$ to the point $O$:
+
+  $$
+  O' = M^{-1} O - M^{-1} P = -M^{-1} P 
+  $$
+
+Finally:
+
+  $$
+  Q' = M^{-1} Q + O' 
+  $$
+
+which is completely symmetric to the equation $
+\boxed{Q = M Q' + P}
+$. For computational purposes the explicit form $
+  Q' = M^\mathrm{-1} (Q - P) = M^\mathrm{T} Q - M^\mathrm{T} P 
+  $ is preferable.
 
 <h2>The Gradient</h2>
 
