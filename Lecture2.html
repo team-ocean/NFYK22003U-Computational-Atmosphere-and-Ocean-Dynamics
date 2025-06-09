@@ -127,7 +127,10 @@ where $f_o = 2\Omega \sin \theta_o$ and $\beta = \frac{2\Omega \cos \theta_o}{a}
 </ul>
     <h2>Hydrostatic Approximation</h2>
     \[0 = - \frac{1}{\rho} p_z + g\]
-    <p>The sum of the pressure gradient and the gravitational force per unit volume must be zero</p>
+    The sum of the pressure gradient and the gravitational force per unit volume must be zero.<br>
+    The hydrostatic balance is a balance between gravity
+and the pressure gradient
+force.
 
     <h2>Conservation of Mass</h2>
     A fundamental law of 
@@ -503,7 +506,7 @@ for month_index in range(len(ds['month'])):
     image_paths.append(frame_path)
     plt.close()
 
-# --- Create GIF with infinite loop ---
+# Create GIF with infinite loop
 with imageio.get_writer(gif_path, mode='I', duration=3, loop=0) as writer: # duration: x seconds per frame
     for path in image_paths:
         image = imageio.imread(path)
