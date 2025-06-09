@@ -883,9 +883,159 @@ $$
 
 <h2>Spherical Coordinates</h2>
 <img src="Figures/MathsSpeedrun_EarthCoordinates.png" alt="EarthCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+The usual cartesian coordinate system associated with the Earth is specified as follows:
+<ul>
+  <li>The origin is the center of the Earth.</li>
+  <li>The z-axis is the rotational axis. It pierces the Earth at the poles and its positive direction is towards the north pole. The Earth rotates in the positive direction around this z-axis: when you lay your right hand on the globe such that the thumb shows to the north pole, then the Earth rotates in the direction of the fingers ("the rule of the right hand").</li>
+  <li>Great circles passing through the poles are called meridians. The <span class="doubleUnderline">Prime Meridian</span> passes through Royal Observatory in Greenwich (London).</li>
+  <li>The plane that is orthogonal to the z-axis is the equatorial plane and the great circle that is located in this plane is the equator.</li>
+  <li>The x-axis points towards the intersection of the prime meridian with the equator.</li>
+  <li>The y-axis is in the equator plane, it is orthogonal to the x-axis and oriented such that the coordinates build a right-handed system. When the fingers of the right hand go from the x- to the y-axis then the thumb shows in the direction of the z-axis.</li>
+</ul>
+
+Each point on the Earth is uniquely defined by its cartesian coordinates (x, y, z). In fact, only 2 coordinates would suffice because each point is on the surface of a sphere:
+
+$$
+x^2 + y^2 + z^2 = R^2
+$$
+
+where $R$ is the Earth’s radius, $R = 6371.010$ km.
+
+Since this cartesian coordinate system is fixed with the Earth, it is call <span class="doubleUnderline">Earth-centered Earth-fixed</span> system.<br>
+Points on the Earth are usually specified in the spherical coordinate system.
+The spherical coordinates of an arbitrary cartesian point $P(x, y, z)$ are:
+<ul>
+<li>The latitude $\varphi$ which is the angle between $OP$ and the equator.</li>
+<li>The longitude $\lambda$ which is the angle between the prime meridian and the meridian passing through $OP$.</li>
+<li>The radius $r$ which is the distance of $P$ from the origin.</li>
+</ul>
+Since the radius is constant, the two angles ($\varphi$, $\lambda$) are already sufficient to specify a point on the Earth:
+
+$$
+-90^\circ \leq \varphi \leq 90^\circ \quad \text{(Latitude along meridian)}
+$$
+
+$$
+-180^\circ < \lambda \leq 180^\circ \quad \text{(Longitude along equator)}
+$$
+
+The longitude at the poles is arbitrary and is usually set to $0^\circ$ by convention.
+
+We can easily find the relation between the cartesian and spherical coordinates. Let $P(x, y, z)$ be a cartesian point, and $P'$ its projection on the x/y-plane. The length $OP'$ is:
+
+$$
+r' = r \cos \varphi
+$$
+
+We can now compute the cartesian coordinates from the spherical coordinates:
+
+$$
+x = r' \cos \lambda = r \cos \varphi \cos \lambda
+$$
+
+$$
+y = r' \sin \lambda = r \cos \varphi \sin \lambda
+$$
+
+$$
+z = r \sin \varphi
+$$
+
+Solving these equations for ($\varphi$, $\lambda$, $r$) yields the opposite relationship:
+
+$$
+r = \sqrt{x^2 + y^2 + z^2}
+$$
+
+$$
+\varphi = \arcsin(z / r)
+$$
+
+$$
+\lambda =  \text{atan2}(y, x)
+$$
+
+Note: the simple minded $\lambda = \arctan(y / x)$, which is valid only for $-90^\circ < \lambda < 90^\circ$, was replaced by the correct $\text{atan2}(y, x)$, which yields $-180^\circ < \lambda \leq 180^\circ$. <br>
+<img src="Figures/MathsSpeedrun_ENUEarthCoordinates.png" alt="ENUEarthCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+An east-north-up (ENU) system uses the Cartesian coordinates (xEast,yNorth,zUp) to represent position relative to a local origin.
+The ENU coordinate system is a local system specific to any point $P$ on the Earth. It is formed from a plane tangent to the Earth's surface at the point $P$. In this plane:
+<ul>
+  <li>The unit vector $\mathbf{E}$ points to the East</li>
+  <li>The unit vector $\mathbf{N}$ points to the North</li>
+  <li>The unit vector $\mathbf{U}$ points Up, i.e., is orthogonal to the tangent plane.</li>
+</ul>
+
+The vector $\mathbf{E} = (E_x, E_y, E_z)$ is tangent to the circle of constant latitude passing through $P$. This circle is also called a "parallel circle" because it is parallel to the equator. The tangent is obtained by taking partial derivatives of the 
+$\boxed{
+\left\{
+\begin{aligned}
+x &= r' \cos \lambda = r \cos \varphi \cos \lambda \\
+y &= r' \sin \lambda = r \cos \varphi \sin \lambda \\
+z &= r \sin \varphi
+\end{aligned}
+\right.}
+$ with respect to $\lambda$ and normalizing the resulting vector to the length 1:
+
+$$
+E_x = -\sin \lambda
+$$
+
+$$
+E_y = \cos \lambda
+$$
+
+$$
+E_z = 0
+$$
+
+The vector $\mathbf{N} = (N_x, N_y, N_z)$ is tangent to the meridian circle passing through $P$. By taking partial derivatives of the $\boxed{
+\left\{
+\begin{aligned}
+x &= r' \cos \lambda = r \cos \varphi \cos \lambda \\
+y &= r' \sin \lambda = r \cos \varphi \sin \lambda \\
+z &= r \sin \varphi
+\end{aligned}
+\right.}
+$ with respect to $\varphi$ and normalizing the resulting vector to the length 1 we get:
+
+$$
+N_x = -\sin(\varphi) \cos(\lambda)
+$$
+
+$$
+N_y = -\sin(\varphi) \sin(\lambda)
+$$
+
+$$
+N_z = \cos(\varphi)
+$$
+
+The unit vector $\mathbf{U} = (U_x, U_y, U_z)$ points in the direction of $P$. By setting $r = 1$ in the $\boxed{
+\left\{
+\begin{aligned}
+x &= r' \cos \lambda = r \cos \varphi \cos \lambda \\
+y &= r' \sin \lambda = r \cos \varphi \sin \lambda \\
+z &= r \sin \varphi
+\end{aligned}
+\right.}
+$ we get:
+
+$$
+U_x = \cos(\varphi) \cos(\lambda)
+$$
+
+$$
+U_y = \cos(\varphi) \sin(\lambda)
+$$
+
+$$
+U_z = \sin(\varphi)
+$$
+
 
 
 <h2>The Gradient</h2>
+
 
 
 <h2>Divergence and Curl</h2>
