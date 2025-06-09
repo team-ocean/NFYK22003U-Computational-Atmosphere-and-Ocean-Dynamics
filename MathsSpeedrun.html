@@ -884,10 +884,26 @@ z &= z
 }
 $$
 <img src="Figures/MathsSpeedrun_CylindricalCoordinates.png" alt="CylindricalCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+<strong>[Ex]</strong> Consider region $E$ inside cone
 
+$$
+z = \sqrt{x^2 + y^2}
+$$
 
-<br>
-<strong>[Ex]</strong>The volume element $dV$ in curvilinear coordinates $t^1, t^2, t^3$, as we know, has the form
+with $0 \leq z \leq 1$. Cone in cylindrical coordinates:
+
+$$
+z = \sqrt{x^2 + y^2} = \sqrt{r^2 \cos^2(\theta) + r^2 \sin^2(\theta)} = r.
+$$
+
+\(\therefore\) We find
+
+$$
+E = \{ (r, \theta, z) \mid 0 \leq r \leq z,\ 0 \leq \theta \leq 2\pi,\ 0 \leq z \leq 1 \}
+$$
+<img src="Figures/MathsSpeedrun_ConeCylindricalCoordinates.png" alt="ConeCylindricalCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+
+<strong>[Ex]</strong> The volume element $dV$ in curvilinear coordinates $t^1, t^2, t^3$, as we know, has the form
 
 $$
 dV = \sqrt{\det g_{ij}(t)} \, dt^1 \wedge dt^2 \wedge dt^3.
