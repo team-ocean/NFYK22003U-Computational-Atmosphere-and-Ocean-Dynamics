@@ -389,7 +389,23 @@ plt.tight_layout()
 plt.show()</code></pre>
 </div>
 
-<img src="Figures/Lecture2_NSFields.png" alt="NSFields" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+<img src="Figures/Lecture2_NSFields.png" alt="NSFields" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">  
+
+<h2>Bonus: Navier-Lamé Equation</h2>
+$$
+\overbrace{
+\underbrace{\rho}_{\text{Density}} \, 
+\underbrace{\frac{\partial^2 \mathbf{u}}{\partial t^2}}_{\text{Acceleration}}
+}^{\vec{ma}} 
+= 
+\overbrace{
+\underbrace{\mathbf{f}}_{\text{Body force}} + 
+\underbrace{(\lambda + \mu)}_{\substack{\text{Lamé parameters $\lambda, \mu$} \\ \text{(material constants governs compressibility effects)}}} \, 
+\underbrace{\nabla (\nabla \cdot \mathbf{u})}_{\substack{\text{gradient of} \\ \text{the divergence}}} + 
+\underbrace{\mu \nabla^2 \mathbf{u}}_{\text{shear (Laplacian) term}}
+}^{\text{Total force } \vec{F}_{\text{total}} \text{ (body + elastic)}}
+$$
+This equation is one of the most fundamental equations in Earthquake Seismology, and the vast majority of content in Earthquake Seismology derived from it.
 
 
 <h2>Bonus: How Do Airplanes Fly?</h2>
