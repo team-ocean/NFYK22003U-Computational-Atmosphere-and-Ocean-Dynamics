@@ -872,12 +872,61 @@ $$
 <img src="Figures/MathsSpeedrun_SketchPDE.png" alt="SketchPDE" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
 
 
+<h2>Cylindrical Coordinates</h2>
+
+
+<strong>[Q]</strong> In cylindrical coordinates $(r, \varphi, z)$ the function $f$ has the form $\ln \frac{1}{r}$. Write the field $\mathbf{A} = \nabla f$ in
+<ul>
+  <li>Cartesian coordinates</li>
+  <li>Cylindrical coordinates</li>
+  <li>Spherical coordinates</li>
+  <li>Find curl $\mathbf{A}$ and div $\mathbf{A}$</li>
+</ul>
+
+
+
+<strong>[Q]</strong> Prove that under cylindrical coordinates, the equations of force balance are:
+$$
+\frac{\partial \tau_{rr}}{\partial r} + \frac{1}{r} \frac{\partial \tau_{\theta r}}{\partial \theta} + \frac{\partial \tau_{zr}}{\partial z} + \frac{\tau_{rr} - \tau_{\theta\theta}}{r} + f_r = 0
+$$
+
+$$
+\frac{\partial \tau_{r\theta}}{\partial r} + \frac{1}{r} \frac{\partial \tau_{\theta\theta}}{\partial \theta} + \frac{\partial \tau_{z \theta}}{\partial z} + \frac{2\tau_{r\theta}}{r} + f_\theta = 0
+$$
+
+$$
+\frac{\partial \tau_{rz}}{\partial r} + \frac{1}{r} \frac{\partial \tau_{\theta z}}{\partial \theta} + \frac{\partial \tau_{zz}}{\partial z} + \frac{\tau_{rz}}{r} + f_z = 0
+$$
+Where:
+$\tau_{ij} =$ Stress [${N/m}^2$];
+$f_i =$ Body Force [${N/m}^3$]
+<img src="Figures/MathsSpeedrun_BlackboardCylindricalCoordinates.png" alt="BlackboardCylindricalCoordinates" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+
 
 <h2>Polar Coordinates</h2>
+Our new coordinate system is based on the cylindrical coordinate system. The $z$ axis of the cylindrical system is identical to that of the cartesian system. However, position in the $xy$ plane is described by distance $r$ from the $z$ axis and the angle $\theta$ that $r$ makes with the $x$ axis. These coordinates are shown in the sketch. We see that
+
+$$
+r = \sqrt{x^2 + y^2}
+$$
+
+$$
+\theta = \arctan\left(\frac{y}{x}\right)
+$$
+<img src="Figures/MathsSpeedrun_PolarCoordinate.png" alt="PolarCoordinate" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+
+Since we shall be concerned primarily with motion in a plane, we neglect the $z$ axis and restrict our discussion to two dimensions. The coordinates $r$ and $\theta$ are called <span class="doubleUnderline">plane polar</span> coordinates. 
+The contrast between cartesian and plane polar coordinates is readily seen by comparing drawings of constant coordinate lines for the two systems.
+The lines of constant $x$ and of constant $y$ are straight and perpendicular to each other.
+Lines of constant $\theta$ are also straight, directed radially outward from the origin.
+In contrast, lines of constant $r$ are circles concentric to the origin.<br>
+Note: the lines of constant $\theta$ and constant $r$ are perpendicular wherever they intersect.
+<img src="Figures/MathsSpeedrun_PlanePolar.png" alt="PlanePolar" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+  <div class="figure-caption">(Credit: <i>An Introduction to Mechanics</i> by Daniel Kleppner & Robert Kolenkow.)</div>
 
 
 
-<h2>Cylindrical Coordinates</h2>
+
 
 
 
@@ -1133,6 +1182,28 @@ $. For computational purposes the explicit form $
 
 
 <h2>Divergence and Curl</h2>
+
+
+<strong>[Q]</strong>The operators grad, curl, and div and the algebraic operations.
+Verify the following relations:
+<ul>for grad:
+<li>(a) $\nabla(f + g) = \nabla f + \nabla g$</li>
+<li>(b) $\nabla(f \cdot g) = f \nabla g + g \nabla f$</li>
+<li>(c) $\nabla(\mathbf{A} \cdot \mathbf{B}) = (\mathbf{B} \cdot \nabla)\mathbf{A} + (\mathbf{A} \cdot \nabla)\mathbf{B} + \mathbf{B} \times (\nabla \times \mathbf{A}) + \mathbf{A} \times (\nabla \times \mathbf{B})$</li>
+<li>(d) $\nabla\left( \frac{1}{2} A^2 \right) = (\mathbf{A} \cdot \nabla)\mathbf{A} + \mathbf{A} \times (\nabla \times \mathbf{A})$</li>
+</ul>
+<ul>for curl:
+<li>(e) $\nabla \times (f \mathbf{A}) = f \nabla \times \mathbf{A} + \nabla f \times \mathbf{A}$</li>
+<li>(f) $\nabla \times (\mathbf{A} \times \mathbf{B}) = (\mathbf{B} \cdot \nabla)\mathbf{A} - (\mathbf{A} \cdot \nabla)\mathbf{B} + (\nabla \cdot \mathbf{B})\mathbf{A} - (\nabla \cdot \mathbf{A})\mathbf{B}$</li>
+</ul>
+<ul>for div:
+  <li>(g) $\nabla \cdot (f \mathbf{A}) = \nabla f \cdot \mathbf{A} + f \nabla \cdot \mathbf{A}$</li>
+  <li>(h) $\nabla \cdot (\mathbf{A} \times \mathbf{B}) = \mathbf{B} \cdot (\nabla \times \mathbf{A}) - \mathbf{A} \cdot (\nabla \times \mathbf{B})$</li>
+</ul>
+and rewrite them in the symbols grad, curl, and div.
+(Hints: $\mathbf{A} \cdot \nabla = A^1 \frac{\partial}{\partial x^1} + A^2 \frac{\partial}{\partial x^2} + A^3 \frac{\partial}{\partial x^3}$;
+$\mathbf{B} \cdot \nabla \neq \nabla \cdot \mathbf{B}$;
+$\mathbf{A} \times (\mathbf{B} \times \mathbf{C}) = \mathbf{B}(\mathbf{A} \cdot \mathbf{C}) - \mathbf{C}(\mathbf{A} \cdot \mathbf{B})$.)
 
 
 <h2>Laplace Operator</h2>
