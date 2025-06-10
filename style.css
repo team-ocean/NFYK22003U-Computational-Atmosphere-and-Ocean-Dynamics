@@ -438,3 +438,12 @@ body::-webkit-scrollbar-thumb:hover {
     text-decoration:underline;
     border-bottom: 1px solid #aaccee;
 }
+
+hr.horizontal-rule {
+  border: none;
+  border-top: 1px solid rgba(102, 170, 255, 0.5);  /* Matches sub-menu border-left */
+  margin: 0.8em 0;
+  width: 100%;                     /* Optional: limits length to fit sidebar */
+  align-self: start;             /* If used inside flex layout */
+}
+
