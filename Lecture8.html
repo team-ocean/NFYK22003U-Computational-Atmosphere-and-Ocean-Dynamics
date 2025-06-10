@@ -544,8 +544,30 @@ Cold rings move southwest at speeds of 3 to 7 kilometers per day toward Cape Hat
 
 
 <h2>Storms</h2>
+In class we discussed that in the most simple way we can think of the Jetstream as a vertically sheared flow on a rotating disc. An analysis of the potential vorticity equation then showed that any perturbation on this background flow will have to obey:
 
+\[
+\phi_{zz} - \frac{N^2 k^2}{f^2} \phi = 0
+\]
 
+the boundary conditions being no normal flow at the bottom (i.e., the ground) and top of the atmosphere (with fixed height \( D \)).<br>
+
+    $\because \phi(x, z, t) = B \sinh\left( \alpha(z - D/2) \right) e^{i(kx + ly - \omega t)} \text{ with } \alpha = \frac{N k}{f}$<br>
+
+    $\because e^{-i\omega t} = e^{-i k c t}, \quad \text{where} \quad c = \frac{\omega}{k}$<br>
+
+    $\therefore \text{Let } c = c_r + i c_i\quad \text{(real part + imaginary part)}$<br>
+
+    $ e^{-i k c t} = e^{-i k c_r t} \cdot e^{k c_i t}$<br>
+
+    $\therefore 
+    \begin{cases}
+    c_i > 0 & \Rightarrow \text{Instability (perturbation grows)} \\
+    c_i < 0 & \Rightarrow \text{Stability (perturbation decays)} \\
+    c_i = 0 & \Rightarrow \text{Neutral (pure oscillation)}
+    \end{cases}
+    $<br>
+    
 
 
 <h2>Ocean Tides</h2>
