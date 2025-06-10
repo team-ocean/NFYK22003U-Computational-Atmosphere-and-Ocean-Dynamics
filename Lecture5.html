@@ -289,17 +289,66 @@ $$
     and
     $
     \text{HCO}_3^- \rightleftharpoons \text{CO}_3^{2-} + \text{H}^+ 
-    $ to the left, rapidly consuming the additional hydrogen ions again.
+    $ to the left, rapidly consuming the additional hydrogen ions again.<br>
+    <ul>
+      <li>At pH close to the modern surface ocean value of $\text{pH} \approx 8.1$, most of the dissolved inorganic carbon (DIC) is in the form of $\text{HCO}_3^-$.</li>
+      <li>At low pH, most of the DIC is instead held as $\text{CO}_2^*$, since the high concentration of hydrogen ions $[\text{H}^+]$ pushes reactions to the left, consuming carbonate ions $\text{CO}_3^{2-}$.</li>
+      <li>Conversely, at high pH, there is low $[\text{H}^+]$, leading to $\text{CO}_3^{2-}$ being more abundant.</li>
+    </ul>
+
     <img src="Figures/Lecture5_BufferEffect.png" alt="BufferEffect" style="margin-top: 1.5em; max-width: 100%; display: block;">      
 <div class="figure-caption">(The Bjerrum plot reveals the partitioning of carbonate species as a function of pH. Dissolved inorganic carbon, DIC, is partitioned between CO$_2^*$ (dashed line), HCO$_3^-$ (full line), and CO$_3^{2-}$ (dotted line). Lower pH indicates a higher $[\text{H}^+]$, 
   pushing reactions $\text{CO}_2^* + \text{H}_2\text{O} \rightleftharpoons \text{HCO}_3^- + \text{H}^+ $ and $\text{HCO}_3^- \rightleftharpoons \text{CO}_3^{2-} + \text{H}^+ $ to the left, consuming CO$_3^{2-}$ and favouring CO$_2^*$. For this plot, the carbonate system was solved at fixed $T$, $S$, $A_T$, and DIC, while varying pH.
   Credit: Williams RG, Follows MJ 2011. <i>Ocean Dynamics and the Carbon Cycle: Principles and Mechanisms</i>.)</div>
-  At pH close to the modern surface ocean value of $\text{pH} \approx 8.1$, most of the dissolved inorganic carbon (DIC) is in the form of $\text{HCO}_3^-$.
 
-  At low pH, most of the DIC is instead held as $\text{CO}_2^*$, since the high concentration of hydrogen ions $[\text{H}^+]$ pushes reactions to the left, consuming carbonate ions $\text{CO}_3^{2-}$.
+The figure above represents the typical acid-base dissociation equilibrium of carbonate and bicarbonate ions in aqueous solution. 
+Based on a simplified derivation, we can obtain an approximate expression for pH under this equilibrium condition.
+
+Carbonic acid (H₂CO₃) undergoes a second dissociation step:
+
+$$
+\mathrm{HCO_3^-} \rightleftharpoons \mathrm{H^+} + \mathrm{CO_3^{2-}}
+$$
+
+The expression for the second dissociation equilibrium constant $K_{a2}$ is:
+
+$$
+K_{a2} = \frac{c(\mathrm{H^+}) \cdot c(\mathrm{CO_3^{2-}})}{c(\mathrm{HCO_3^-})}
+$$
+
+Transform this expression for $K_{a2}$, taking the logarithm of both sides and using the logarithmic rule $\lg(ab) = \lg a + \lg b$:
+
+$$
+-\lg K_{a2} = -\lg \left( \frac{c(\mathrm{H^+}) \cdot c(\mathrm{CO_3^{2-}})}{c(\mathrm{HCO_3^-})} \right)
+$$
+
+$$
+= -\lg c(\mathrm{H^+}) - \lg c(\mathrm{CO_3^{2-}}) + \lg c(\mathrm{HCO_3^-})
+$$
+
+Rewriting with pH and $\mathrm{p}K_{a2} = -\lg K_{a2}$:
+
+$$
+\mathrm{p}K_{a2} = \mathrm{pH} - \lg \left( \frac{c(\mathrm{CO_3^{2-}})}{c(\mathrm{HCO_3^-})} \right)
+$$
+
+Solving for pH:
+
+$$
+\mathrm{pH} = \mathrm{p}K_{a2} + \lg \left( \frac{c(\mathrm{CO_3^{2-}})}{c(\mathrm{HCO_3^-})} \right)
+$$
+
+We can then use this simple formula to estimate the pH of an aqueous solution:
+
+$$
+\boxed{
+\mathrm{pH} = \mathrm{p}K_2 + \lg \left( \frac{\mathrm{CO_3^{2-}}}{\mathrm{HCO_3^-}} \right)
+}
+$$
+
+
   
-  Conversely, at high pH, there is low $[\text{H}^+]$, leading to $\text{CO}_3^{2-}$ being more abundant.
-    <h2>Alkalinity</h2>
+  <h2>Alkalinity</h2>
     <img src="Figures/Lecture5_SurfaceTotalAlkalinity.png" alt="SurfaceTotalAlkalinity" style="margin-top: 1.5em; max-width: 100%; display: block;">     
     <img src="Figures/Lecture5_SalinityAlkalinityDIC.png" alt="SalinityAlkalinityDIC" style="margin-top: 1.5em; max-width: 100%; display: block;"> 
     <div class="figure-caption">((a) Annual-mean surface map of total alkalinity (µmol kg$^{-1}$), together with
