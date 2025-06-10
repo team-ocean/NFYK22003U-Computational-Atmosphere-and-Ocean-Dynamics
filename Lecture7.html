@@ -97,10 +97,45 @@
 
 
 
-
-
 <img src="Figures/Lecture7_GasBubbleOceanSurface.png" alt="GasBubbleOceanSurface" style="margin-top: 1.5em; max-width: 100%; display: block;">    
 <div class="figure-caption">(Gas bubbles rise toward the ocean surface. Credit: MartinStr)</div>
+<h2>Connecting Layer Depths with Velocities</h2>
+Define reduced gravity:
+
+$$
+\gamma_1 = \frac{\rho_2 - \rho_1}{\rho_0} g, \quad \gamma_2 = \frac{\rho_3 - \rho_2}{\rho_0} g
+$$
+Geostrophic relation for layer 2:
+$$
+v_2 = -\frac{\gamma_2}{f} \frac{\partial z_3}{\partial x}
+$$
+Sverdrup balance in layer 2 from geostrophic relation and continuity:
+$$
+\beta \cdot \frac{\gamma_2}{f} z_3 = f w_e
+$$
+
+This uses the steady-state vorticity equation with $\beta v_2 = f w_e$, and substituting $v_2$ from the geostrophic relation.<br>
+Differentiate with respect to $x$:
+$$
+\frac{\partial}{\partial x} z_3^2 = \frac{2f}{\beta \gamma_2} w_e
+$$
+
+Integrate to get $z_3$:
+
+$$
+z_3^2 = H_2^2 - \frac{2f}{\beta \gamma_2} \int_x^{x_e} w_e \, dx
+$$
+
+We integrate from a boundary $x_e$, assuming a boundary condition where $z_3 = H_2$ at $x = x_e$, meaning flat interface (no flow) at the boundary.
+<br>
+Assumption:
+$$
+H_2 = \text{constant} \quad \because u_2 = \frac{\gamma_2}{f} \frac{\partial z_3}{\partial y} = 0 \quad \text{at the boundary}
+$$
+
+So there's no meridional geostrophic flow at the boundary.
+
+
 
 <h2>Ventilation</h2>
 Ventilation connects the atmosphere and ocean interior through the transfer of fluid from the surface mixed layer into the ocean
@@ -110,6 +145,53 @@ the atmosphere and only subsequently modify their properties by mixing in the oc
 to determine the relatively long memory of the ocean interior, compared with the surface mixed layer.
 
 <h2>Ocean Subduction</h2>
+Start with the vertically integrated Sverdrup balance:
+
+$$
+\beta (v_1 h_1 + v_2 h_2) = f w_E
+$$
+Using $h_2 = -z_3$ and geostrophic balance $v_2 = \frac{\gamma_2}{f} \partial_x z_3$, we obtain:
+
+$$
+\gamma_2 \frac{\partial}{\partial x}(z_3^2) + \gamma_1 \frac{\partial}{\partial x}(z_2^2) = \frac{-2 f^2}{\beta} w_E
+$$
+
+This represents the 2-layer Sverdrup balance expressed in terms of layer interface heights.
+Define the layer 2 potential vorticity:
+
+$$
+q_2 = \frac{f}{h_2} = \frac{f}{z_2 - z_3}
+$$
+
+Since $q_2 \sim$ constant along streamlines, and is set at the subduction point:
+
+$$
+q_2 = \frac{f_2}{-z_3}
+\quad \Rightarrow \quad z_2 = \left(1 - \frac{f}{f_2} \right) z_3
+$$
+
+Substitute $z_2$ into the Sverdrup balance and solve for $h = -z_3$:
+
+$$
+h(x,y) = \left( \frac{D^2(x) + H_2^2}{1 + \frac{\gamma_1}{\gamma_2} \left(1 - \frac{f(y)}{f_2} \right)^2} \right)^{1/2}
+$$
+
+where:
+
+$$
+D^2 = \frac{-2f^2}{\beta \gamma_2} \int_x^{x_E} w_E dx
+$$
+
+This integral accumulates wind forcing from east to $x$ that shapes.<br>
+At the wall (eastern boundary), flow must vanish. So streamline must bend southward, conserving potential vorticity:
+
+$$
+h = H_2 = \left( \frac{D^2 + H_2^2}{1 + \frac{\gamma_1}{\gamma_2} (1 - f/f_2)^2} \right)^{1/2}
+\Rightarrow D^2 = H_2^2 \frac{\gamma_1}{\gamma_2} \left(1 - \frac{f}{f_2} \right)^2
+$$
+We can compute the western extent of the shadow zone from this $D(x)$!<br>
+<br>
+
 Ocean subduction involves the transfer of fluid from the mixed layer into the stratified thermocline. The upper ocean is
 ventilated principally through the subduction process, while the deep ocean is ventilated through open-ocean convection and
 cascading down coastal boundaries. The term “ocean subduction” makes the geologicial analogy of a subduction zone where a rigid
