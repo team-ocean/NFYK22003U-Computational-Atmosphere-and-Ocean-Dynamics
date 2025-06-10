@@ -93,6 +93,99 @@
   </div>
   <div class="main-content">
 <h1>Lecture 8 – Waves</h1>
+<div style="font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee; padding: 16px; border: 1px solid #3c5c78;">
+  <em>The relative importance of the various processes affecting the evolution of waves in oceanic and coastal waters from Holthuijsen (2007)</em></h3>
+  <table style="width: 100%; border-collapse: collapse; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
+    <thead>
+  <tr>
+    <th rowspan="2" style="padding: 8px; border: 1px solid #3c5c78;">Process</th>
+    <th rowspan="2" style="padding: 8px; border: 1px solid #3c5c78;">Oceanic waters</th>
+    <th colspan="3" style="padding: 8px; border: 1px solid #3c5c78;">Coastal waters</th>
+  </tr>
+  <tr>
+    <th style="padding: 8px; border: 1px solid #3c5c78;">Shelf seas</th>
+    <th style="padding: 8px; border: 1px solid #3c5c78;">Nearshore</th>
+    <th style="padding: 8px; border: 1px solid #3c5c78;">Harbour</th>
+  </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Wind generation</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●</td>
+        <td style="padding: 8px;">○</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Quadruplet wave–wave interactions</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●</td>
+        <td style="padding: 8px;">○</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">White-capping</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●</td>
+        <td style="padding: 8px;">○</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Bottom friction</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">●●</td>
+        <td style="padding: 8px;">●●</td>
+        <td style="padding: 8px;">○</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Current refraction / energy bunching</td>
+        <td style="padding: 8px;">○ / ●</td>
+        <td style="padding: 8px;">●</td>
+        <td style="padding: 8px;">●●</td>
+        <td style="padding: 8px;">○</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Bottom refraction / shoaling</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">●●</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">●●</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Breaking (depth-induced; surf)</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">●</td>
+        <td style="padding: 8px;">●●●</td>
+        <td style="padding: 8px;">○</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Triad wave–wave interactions</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">●●</td>
+        <td style="padding: 8px;">●</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Reflection</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">● / ●●</td>
+        <td style="padding: 8px;">●●●</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-right: 1px solid #3c5c78;">Diffraction</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">○</td>
+        <td style="padding: 8px;">●</td>
+        <td style="padding: 8px;">●●●</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top: 16px; font-size: 14px; color: #aaccee;">
+    ●●● = dominant, ●● = significant but not dominant, ● = of minor importance, ○ = negligible.
+  </p>
+</div>
 
 <h2>Internal Gravity Waves</h2>
 Rotation effects will only be important for long waves with low frequencies – so we can
@@ -342,8 +435,90 @@ to give a geostrophic balance. This means Kelvin waves move with
 the coast on their right in the Northern Hemisphere and on their left
 in the Southern Hemisphere.
   Credit: Mortimer, 1977.)</div>
+We work in a rotating shallow-water system, assuming constant mean depth $H$, gravity $g$, and Coriolis parameter $f$. The variables are:
+<ul>
+  <li>$u(x, y, t)$: zonal velocity</li>
+  <li>$v(x, y, t)$: meridional velocity</li>
+  <li>$\eta(x, y, t)$: free surface displacement</li>
+</ul>
+
+Assume wave propagation along a boundary (e.g., coastline aligned with $x$-direction), 
+with the boundary at $y = 0$, and velocity normal to the boundary vanishing:
+
+$$
+v = 0 \quad \text{at all times}
+$$
+Here's the system of linearized shallow water equations:
+$$
+\left\{
+\begin{aligned}
+\frac{\partial u}{\partial t} &= -g \frac{\partial \eta}{\partial x} \quad &&\text{(Zonal momentum)} \\
+f u &= -g \frac{\partial \eta}{\partial y} \quad &&\text{(Meridional momentum with $v = 0$)} \\
+\frac{\partial \eta}{\partial t} + H \frac{\partial u}{\partial x} &= 0 \quad &&\text{(Continuity)}
+\end{aligned}
+\right.
+$$
+Differentiate continuity in time:
+
+$$
+\frac{\partial^2 \eta}{\partial t^2} + H \frac{\partial}{\partial t} \left( \frac{\partial u}{\partial x} \right) = 0
+$$
+
+Use Zonal momentum equation:
+
+$$
+\frac{\partial u}{\partial t} = -g \frac{\partial \eta}{\partial x} \quad \Rightarrow \quad \frac{\partial}{\partial t} \left( \frac{\partial u}{\partial x} \right) = -g \frac{\partial^2 \eta}{\partial x^2}
+$$
+
+Plug in:
+
+$$
+\boxed{ \frac{\partial^2 \eta}{\partial t^2} + g H \frac{\partial^2 \eta}{\partial x^2} = 0 }
+$$
+
+This is a wave equation with wave speed $c = \sqrt{g H}$.
+
+The dispersion relation is:
+
+$$
+\omega^2 = g H k^2 \quad \Rightarrow \quad \omega = \sqrt{g H} \, k
+$$
+
+So the phase speed and group speed are:
+<ul>
+  <li>Phase speed $c = \frac{\omega}{k} = \sqrt{g H}$</li>
+  <li>Group speed $c_g = \frac{d\omega}{dk} = \sqrt{g H}$</li>
+</ul>
+
+These are equal and constant, so Kelvin waves are non-dispersive. 
+All wave components travel at the same speed → wave shape is preserved over time.
 
 <h2>Rossby Waves</h2>
+Rossby waves are large-scale, 
+low-frequency waves influenced by the variation of the Coriolis force with latitude 
+(the β-effect). They are dispersive, westward-propagating, 
+and essential for explaining oceanic and atmospheric responses to slow, large-scale forcing like climate change.
+Since Rossby waves are very slow, we assume periods longer than weeks:
+$$
+\frac{1}{T} \ll f \quad \Rightarrow \quad \frac{\partial u}{\partial t} \approx 0, \quad \frac{\partial v}{\partial t} \approx 0 \quad \text{(drop them)}
+$$
+For Rossby waves, the local acceleration terms are negligible compared to the Coriolis and pressure gradient forces.<br>
+
+Define Rossby deformation radius: $L_D = \frac{\sqrt{gH}}{f_0}$
+Then:
+
+$$
+\omega = -\beta \frac{gk}{H f_0^2} = -\beta \frac{k}{f_0^2} \frac{g}{H} = -\beta L_D^2 k
+$$
+
+So final dispersion relation is:
+
+$$
+\boxed{\omega = -\beta L_D^2 k}
+\quad \text{or} \quad
+\boxed{c = \frac{\omega}{k} = -\beta L_D^2}
+$$
+This <span class="doubleUnderline">negative phase speed</span> shows Rossby waves <span class="doubleUnderline">propagate westward (always)</span>.
 
 <h2>Baroclinic Instability and the Eady Model</h2>
 Baroclinic instability generates eddies/waves from a geostrophically balanced, vertically sheared flow. Because of the thermal wind relationship, 
@@ -352,21 +527,48 @@ Thus potential energy is stored in the field and can be released by allowing the
 We shall analyze this using the Boussinesq, quasi-geostrophic equations.
 
 <h2>Eddies</h2>
+Large rotating masses of water called <i>vortexes</i> (<i>vortexes</i> = to turn), 
+which are more commonly known as <span class="doubleUnderline">eddies</span> or rings. <br>
+For example, <i>Meanders</i> (<i>Menderes</i> = a river in Turkey that has a very sinuous course, snakelike bends) 
+along the north boundary of the Gulf Stream pinch off and trap warm Sargasso Sea water in eddies that rotate clockwise, creating warm-core rings surrounded by cooler water.<br>
+Cold nearshore water spins off to the south of the Gulf Stream as 
+counter-clockwise-rotating cold-core rings surrounded by warmer water. 
+<img src="Figures/Lecture8_EddiesGulfStream.png" alt="EddiesGulfStream" style="margin-top: 1.5em; max-width: 100%; display: block;"> 
+<div class="figure-caption">(A schematic diagram of the Gulf Stream and sea surface temperatures.
+  As the Gulf Stream meanders northward, some of its meanders pinch off and form either warm-core or cold-core rings.
+  Credit: <i>Essentials of Oceanography</i>, Trujillo and Thurman.)</div>  
+
+The cold rings consist of spinning cone-shaped masses of cold water that extend over 3.5 kilometers deep. These rings may exceed 500 kilometers in diameter at the surface. The diameter of the cone increases with depth and sometimes reaches all the way to the sea floor, where cones have a tremendous impact on sea floor sediment. 
+Cold rings move southwest at speeds of 3 to 7 kilometers per day toward Cape Hatteras, where they often rejoin the Gulf Stream.
+
+
+
+<h2>Storms</h2>
 
 
 
 
 <h2>Ocean Tides</h2>
 <i>(The atmosphere and solid Earth also experience tides — just dig a hole here and take a note for later.)</i><br>
-<img src="Figures/Lecture8_BlackboardLunarOceanTide.png" alt="BlackboardLunarOceanTide" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
-
 In a nutshell, ocean tides refer to the periodic motion of seawater caused by tidal forces exerted by astronomical object (mainly the Sun and the Moon). By convention, the vertical rise and fall of sea level is called the tide, while the horizontal motion is referred to as the tidal current.<br>
-
 
 In 1687, the physicist Isaac Newton proposed the law of universal gravitation. 
 Following this, the <span class="doubleUnderline">equilibrium theory of the tide</span> (also known as static tide theory) was developed. This theory assumes that the Earth's surface is entirely covered by a layer of ocean with uniform depth, and that the seawater has no inertia.<br>
 
-Regarding tidal force, it is often confused with gravitational force. In fact, the tidal force is the resultant of the gravitational force from a astronomical object and the inertial centrifugal force associated with the Earth's orbital motion around that body.
+Regarding tidal force, it is often confused with gravitational force. In fact, the tidal force is the resultant of the gravitational force from a astronomical object and the inertial centrifugal force associated with the Earth's orbital motion around that body.<br>
+<img src="Figures/Lecture8_BlackboardLunarOceanTide.png" alt="BlackboardLunarOceanTide" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">       
+
+For the whole year, the sun is in the middle and the earth revolves around the sun. One circle is one year. 
+The moon revolves around the earth once and returns to roughly the same relative position, 
+which takes about one month. 
+The earth's equatorial plane has an angle of intersection with the white plane 
+of the moon orbiting the earth, 
+and the ecliptic plane of the earth orbiting the sun also has an angle. 
+Therefore, in addition to the equator, tides in other places on the earth also occur. 
+The phenomenon varies from day to day. This is the equilibrium tide theory, which was mainly proposed by Newton.
+
+
+
 
 <img src="Figures/Lecture8_LunarM2TidalPattern.png" alt="LunarM2TidalPattern" style="margin-top: 1.5em; max-width: 100%; display: block;"> 
 <div class="figure-caption">(The M 2 (semidiurnal) barotropic tidal constituent in the oceans of the world, based on Topex-Poseidon satellite altimeter data. The amplitude of the surface elevation in centimeters is indicated by the color bar scale. Note the high-amplitude locations (red-yellow) in certain parts of the continental margins of the world. The white lines, which are cotidal differing by 1 hr, represent lines of constant phase. Amphidromic points are spots where amplitude is zero and where phase lines merge. 
@@ -379,7 +581,21 @@ Regarding tidal force, it is often confused with gravitational force. In fact, t
 
 
 <h2>Pacific Decadal Oscillation (PDO)</h2>
+Pacific decadal oscillation (PDO) is one of the dominant modes of sea surface temperature (SST) variability in the North Pacific,
+and it shifts phases on an inter-decadal time scale usually covering more than 10 years.
+When the PDO index is positive (negative), SSTs in the central part of the North Pacific are likely to be lower (higher) than their normals (i.e., typical SST anomalies in the positive phase of the PDO). 
+In addition, when the index is positive (negative), sea level pressures (SLPs) values in the high latitudes of the North Pacific are likely to be lower (higher) than their normals. 
+This indicates that the Aleutian Low is stronger (weaker) than its normal in winter and spring (typical SLP anomalies in the positive phase of the PDO).
+<img src="Figures/Lecture8_PDOGrids.png" alt="PDOGrids" style="margin-top: 1.5em; max-width: 100%; display: block;"> 
+<div class="figure-caption">(The grids of SST and SLP data. Ten degree by five degree SLP averages are centered at grid intersections and SST averages are centered at crosses.
+  Credit: Davis, R.E. (1976) Predictability of sea surface temperature and sea level pressure anomalies over the North Pacific Ocean. <i>J. Phys. Oceanogr.</i>)</div>  
 
+The PDO has positive and negative phases.
+<ul>
+  <li>Positive phases of the PDO tend to be associated with periods of more rapid global warming whilst cold PDO events have been linked to severe droughts spanning many years in south western USA, as well as increased rainfall over eastern Australia.</li>
+  <li>It is thought that negative phases could be linked to times of slower warming. This is because cold phases of the PDO tend to increase mixing of colder, deep ocean waters with warmer surface waters.  This temporarily reduces the rate of global warming caused by increasing greenhouse gas emissions. Positive phases have the opposite effect.</li>
+</ul>
+The cause of changes in the PDO has yet to be identified and it may even be due to a combination of factors including long-lasting fingerprints of El Nino and La Nina events in the tropical Pacific Ocean; changes in atmospheric pressure the northern Pacific; the impact of industrial pollution; and natural variability.
 
 
 
