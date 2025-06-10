@@ -418,6 +418,25 @@ This equation is one of the most fundamental equations in Earthquake Seismology,
 
 
 
+<h2>Hydrostatic Ocean on a Rotating Sphere</h2>
+Zonal (East–West) Momentum Equation:
+$$
+\frac{\partial u}{\partial t} + \vec{u} \cdot \nabla u - fv = -\frac{1}{\rho_0} \frac{\partial p}{\partial x} + \nu \nabla^2 u + \underbrace{F^x}_{{\substack{\text{External forcing} \\ \text{in the x-direction} \\ \text{(typically wind stress } \tau^x\text{)}}}}
+
+$$
+Meridional (North–South) Momentum Equation:
+$$
+\frac{\partial v}{\partial t} + \vec{u} \cdot \nabla v + fu = -\frac{1}{\rho_0} \frac{\partial p}{\partial y} + \nu \nabla^2 v + \underbrace{F^y}_{{\substack{\text{External forcing} \\ \text{in the y-direction} \\ \text{(typically wind stress } \tau^y\text{)}}}}
+$$
+Hydrostatic Balance (Vertical):
+$$
+\frac{\partial p}{\partial z} = -\rho g
+$$
+Continuity (Incompressibility):
+$$
+\nabla \cdot \vec{u} = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0
+$$
+
 
 <h2>Ekman Transport</h2>
 In the Northern Hemisphere, the net volume transport direction of seawater is 90° to the right (northeastward) of the wind direction. This transport of water masses is known as <span class="doubleUnderline">Ekman Transport</span>, and the spiral pattern of current vectors changing with increasing depth is called the <span class="doubleUnderline">Ekman Spiral</span>.
