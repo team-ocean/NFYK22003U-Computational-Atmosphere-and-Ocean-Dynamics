@@ -403,7 +403,7 @@ $$
 \cancel{
 \underbrace{J(\psi, \nabla^2 \psi)}_{\text{Nonlinear advection of vorticity}}}
 }^{\text{Material derivative } \frac{D\zeta}{Dt}} + 
-\underbrace{\beta \psi_x}_{\text{Meridional advection of planetary vorticity}} = 
+\underbrace{\beta \frac{\partial \psi}{\partial x}}_{\text{Meridional advection of planetary vorticity}} = 
 \underbrace{\frac{f_0}{D} w_E}_{\text{Ekman pumping (stretching/compression)}} - 
 \underbrace{r \nabla^2 \psi}_{\text{Linear bottom friction}} + 
 \cancel{
@@ -528,6 +528,7 @@ plt.show()</code></pre>
 <img src="Figures/Lecture4_StommelGyre.png" alt="StommelGyre" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
+
 <h2>Munk's Solution</h2>
 $$
 \Psi_{xx} \gg \Psi_{yy} \Longrightarrow \beta \Psi_x = \frac{f_0}{D} w_E + k_H \Psi_{xxxx}
@@ -562,6 +563,34 @@ $$
 $$
 <img src="Figures/Lecture4_MunkSolution.png" alt="MunkSolution" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 <div class="figure-caption">(Illustration by Munk, M.M. (1950) The Reversal Theorem of Linearized Supersonic Airfoil Theory. Journal of Applied Physics, 21, 159-161.)</div>
+
+Munk’s extension:
+<ul>
+  <li>Adds horizontal friction using biharmonic term $+k_H \nabla^4 \psi$</li>
+  <li>Important for resolving realistic boundary layers</li>
+</ul>
+$$
+\overbrace{
+\cancel{
+\underbrace{\frac{\partial}{\partial t} (\nabla^2 \psi)}_{\text{Local change of relative vorticity } \zeta}} + 
+\cancel{
+\underbrace{J(\psi, \nabla^2 \psi)}_{\text{Nonlinear advection of vorticity}}}
+}^{\text{Material derivative } \frac{D\zeta}{Dt}} + 
+\underbrace{\beta \frac{\partial \psi}{\partial x}}_{\text{Meridional advection of planetary vorticity}} = 
+\underbrace{\frac{f_0}{D} w_E}_{\text{Column Stretching/compression by Ekman pumping}} - 
+\underbrace{\cancel{r \nabla^2 \psi}}_{\text{Linear bottom friction}} + 
+\underbrace{k_H \nabla^4 \psi}_{\text{Horizontal friction}}
+$$
+Applying the western boundary layer assumption:
+
+$$
+\nabla^4 \psi \approx \frac{\partial^4 \psi}{\partial x^4}
+\quad \Rightarrow \quad
+\boxed{
+\beta \frac{\partial \psi}{\partial x} = \frac{f_0}{D} w_E + k_H \frac{\partial^4 \psi}{\partial x^4}
+}
+$$
+
 
 <div class="code-block">
   <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
