@@ -391,6 +391,50 @@ $$
 \Rightarrow \quad v = \Psi_x = v_s + \frac{1}{\delta_S} e^{-x/\delta_S}
 $$
 
+Stommel’s assumption:
+<ul>
+  <li>Include only linear bottom drag: keep $-r \nabla^2 \psi$</li>
+  <li>Ignore $\nabla^4 \psi$ and nonlinear terms</li>
+</ul>
+$$
+\overbrace{
+\cancel{
+\underbrace{\frac{\partial}{\partial t} (\nabla^2 \psi)}_{\text{Local change of relative vorticity } \zeta}} + 
+\cancel{
+\underbrace{J(\psi, \nabla^2 \psi)}_{\text{Nonlinear advection of vorticity}}}
+}^{\text{Material derivative } \frac{D\zeta}{Dt}} + 
+\underbrace{\beta \psi_x}_{\text{Meridional advection of planetary vorticity}} = 
+\underbrace{\frac{f_0}{D} w_E}_{\text{Ekman pumping (stretching/compression)}} - 
+\underbrace{r \nabla^2 \psi}_{\text{Linear bottom friction}} + 
+\cancel{
+\underbrace{k_H \nabla^4 \psi}_{\text{Horizontal friction}}}
+$$
+Resulting vorticity equation:
+$$
+\beta \frac{\partial \psi}{\partial x}
+= \frac{f_0}{D} w_E
+- r \nabla^2 \psi
+$$
+In the <span class="doubleUnderline">western boundary layer</span> , we assume variation in $x$ is much stronger than in $y$:
+
+$$
+\psi_{xx} \gg \psi_{yy}
+\Rightarrow \beta \psi_x = \frac{f_0}{D} w_E - r \psi_{xx}
+$$
+
+Using full derivatives notation:
+$$
+\frac{\partial^2 \psi}{\partial x^2} \gg \frac{\partial^2 \psi}{\partial y^2}
+\quad \Rightarrow \quad
+\boxed{
+\beta \frac{\partial \psi}{\partial x}
+=
+\frac{f_0}{D} w_E
+-
+r \frac{\partial^2 \psi}{\partial x^2}
+}
+$$
+
 <div class="code-block">
   <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
   <pre><code class="language-python">import numpy as np
