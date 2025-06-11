@@ -411,7 +411,7 @@ $$
 $$
 For Rossby waves, the local acceleration terms are negligible compared to the Coriolis and pressure gradient forces.<br>
 
-Define Rossby deformation radius: $L_D = \frac{\sqrt{gH}}{f_0}$
+Define Rossby deformation radius: $$L_D = \frac{\sqrt{gH}}{f_0}$$
 Then:
 
 $$
@@ -431,6 +431,57 @@ phase speeds increase
 rapidly with increasing
 wavelength.
 This <span class="doubleUnderline">negative phase speed</span> shows Rossby waves <span class="doubleUnderline">propagate westward (always)</span>.
+
+<h2>β Effect</h2>
+Consider a closed chain of fluid parcels initially aligned along a circle of latitude at time $t_0$, with no initial relative vorticity:
+
+$$
+\zeta_{t_0} = 0
+$$
+
+Then, the entire chain is displaced meridionally by a small amount $\delta y$ at time $t_1$.
+
+We assume the absolute vorticity is conserved for each fluid parcel:
+
+$$
+(\zeta + f)_{t_1} = f_{t_0}
+$$
+
+Substituting $\zeta_{t_0} = 0$:
+
+$$
+\zeta_{t_1} = f_{t_0} - f_{t_1}
+$$
+
+Using Taylor expansion of the Coriolis parameter, the $\delta y$ is the meridional displacement (northward is positive):
+
+$$
+f_{t_1} = f_{t_0} + \frac{df}{dy} \, \delta y = f_{t_0} + \beta \, \delta y
+$$
+
+So the relative vorticity at $t_1$ becomes:
+
+$$
+\boxed{\zeta_{t_1} = -\beta \, \delta y}
+$$
+
+The $\beta$ effect induces vorticity
+\[
+\left\{
+\begin{aligned}
+&\zeta_{t_1} = -\beta \, \delta y < 0 && \text{(northward displacement: } \delta y > 0\text{)} \\
+&\zeta_{t_1} = -\beta \, \delta y > 0 && \text{(southward displacement: } \delta y < 0\text{)}
+\end{aligned}
+\right.
+\]
+
+<ul>
+  <li>This perturbation vorticity field will induce a meridional velocity field, which advects the chain of fluid parcels southward west of the vorticity maximum and northward west of the vorticity minimum.</li>
+  <li>The fluid parcels oscillate back and forth about their equilibrium latitude, and the pattern of vorticity maxima and minima propagates to the west.</li>
+</ul>
+
+
+
 
 <h2>Baroclinic Instability and the Eady Model</h2>
 Baroclinic instability generates eddies/waves from a geostrophically balanced, vertically sheared flow. Because of the thermal wind relationship, 
