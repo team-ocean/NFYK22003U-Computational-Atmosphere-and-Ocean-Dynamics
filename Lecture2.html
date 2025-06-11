@@ -840,8 +840,35 @@ Let’s assume $\tau^y = 0$ and $\tau^x_x = 0$, so:
 $$
 U = \frac{1}{\beta \rho_0} \tau^x_{yy} \, \Delta x
 $$
-    <p>The flow is proportional to the curvature of the zonal wind stress, not the wind itself.</p>
-    
+    <p>The flow is proportional to the curvature of the zonal wind stress, not the wind itself.</p><br>
+<span class="doubleUnderline">Key Equation:</span>
+  $$
+\boxed{
+\beta V = f w_E
+}
+$$
+
+Where:
+<ul>
+  <li>$\beta = \frac{\partial f}{\partial y}$</li>
+  <li>$V$: vertically integrated meridional velocity $\int v \, dz$</li>
+  <li>$w_E$: vertical velocity at base of Ekman layer (Ekman pumping/suction)</li>
+</ul>
+Using the Ekman pumping velocity from wind stress:
+
+$$
+w_E = \frac{1}{\rho_0 f} \, \nabla \cdot \boldsymbol{\tau}
+= \frac{1}{\rho_0 f} \, \text{curl}_z(\boldsymbol{\tau})
+$$
+Final Sverdrup Transport (Depth-Integrated Form):
+
+$$
+\boxed{
+V_s = \frac{1}{\beta \rho_0} \, \text{curl}_z(\boldsymbol{\tau})
+}
+$$
+
+This is the classic Sverdrup balance, showing how the wind stress curl determines large-scale meridional transport in the ocean interior.
 
 <h2>The Oceanic Mixed Layer and Thermocline</h2>
 The stratification of the ocean is decidedly nonuniform in the vertical. The density is almost uniform in a layer at the top of the ocean about 50–100 m deep
