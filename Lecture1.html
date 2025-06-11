@@ -337,9 +337,26 @@ print("Saved as transparent tracer_evolution.gif!")</code></pre>
     \frac{1}{(t_N - \tau) - t_1}
     \) factor, so we have to make some adjustments to convert to autocorrelation.
 
-    </p>
 
-    <strong>Autocorrelation</strong>
+    <h2>Bonus: Rubber Ducks Used as Tracers</h2>
+    <img src="Figures/Lecture1_RubberDuckCurrents.png" alt="RubberDuckCurrents" style="margin-top: 1.5em; max-width: 100%; display: block;">        
+    We can model the ducks as ‘tracer particles’ in the ocean. 
+    The term ‘tracer particles’ refers to small objects that move with a fluid without really changing how it behaves. 
+    They are very common: examples include leaves on the surface of a river and, fortunately, rubber ducks in the ocean. 
+    We can do simulations that try to track the amount of these particles in different parts of the ocean.<br>
+    Reference: <a href="https://visualpde.com/visual-stories/ducks.html">Ocean spills</a><br>
+    Any floating object can serve as a makeshift drift meter, as long as it is known where the object entered the ocean and where it was retrieved. 
+    The path of the object can then be inferred, providing information about the movement of surface currents. 
+    If the time of release and retrieval are known, the speed of currents can also be determined. 
+    Oceanographers have long used drift bottles 
+    (a floating “message in a bottle” or a radio-transmitting device set adrift in the ocean) 
+    to track the movement of currents.
+
+    Many objects have inadvertently become drift meters when ships lose cargo at sea.
+    In January 1992, a shipping mishap turned into an unexpected scientific breakthrough when the cargo ship Ever Laurel lost a container carrying 29,000 plastic toys—mostly rubber ducks—into the Pacific Ocean. 
+
+
+    <h2>Autocorrelation</h2>
     <p>The autocorrelation \(\rho(\tau)\) is defined as the normalized autocovariance:\[ \rho(\tau) = \frac{\gamma(\tau)}{\gamma(0)} \]This gives the autocovariance at lag \(\tau\) divided by the variance of the time series, yielding a value between \(-1\) and \(1\).</p>
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
