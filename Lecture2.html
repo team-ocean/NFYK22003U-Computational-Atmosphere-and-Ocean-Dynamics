@@ -255,8 +255,18 @@ $$
 
     <h2>Incompressible Navier-Stokes Equations</h2>
     $$
-\underbrace{\frac{\partial \vec{u}}{\partial t}}_{\text{Local acceleration}} + \underbrace{(\vec{u} \cdot \nabla) \vec{u}}_{\text{Advection}} = \underbrace{-\frac{1}{\rho} \nabla P}_{\text{Pressure force}} + \underbrace{g \vec{k}}_{\text{Gravity}} + \underbrace{\nu \nabla^2 \vec{u}}_{\text{Viscous diffusion}}
+\overbrace{
+\underbrace{\frac{\partial \vec{u}}{\partial t}}_{\text{Local acceleration}} + 
+\underbrace{(\vec{u} \cdot \nabla) \vec{u}}_{\text{Advection}}
+}^{\text{Material derivative} \frac{D \vec{u}}{D t}} 
+=
+\underbrace{-\frac{1}{\rho} \nabla P}_{\text{Pressure force}} + 
+\underbrace{g \vec{k}}_{\text{Gravity}} + 
+\underbrace{\nu \nabla^2 \vec{u}}_{\text{Viscous diffusion}}
 $$
+
+
+
 $g \vec{k}$ with typically $
 \vec{k} =
 \begin{pmatrix}
@@ -266,6 +276,19 @@ $g \vec{k}$ with typically $
 \end{pmatrix}
 $ defines gravity as a vector field acting downward (if you use $-g \vec{k}$, then $\vec{k}$ points upward)
 
+The Navier–Stokes equation includes this term:
+
+$$
+\frac{\partial \vec{u}}{\partial t} + (\vec{u} \cdot \nabla)\vec{u}
+$$
+
+This expression is the total derivative (also called the <span class="doubleUnderline">material derivative</span>) of velocity $\vec{u}$:
+
+$$
+\frac{D \vec{u}}{D t} = \frac{\partial \vec{u}}{\partial t} + (\vec{u} \cdot \nabla)\vec{u}
+$$
+
+Simplification:
     \[\left(\frac{\partial}{\partial t} + \mathbf{u}\cdot \nabla - \nu \nabla^2\right) \mathbf{u} = - \frac{1}{\rho} \nabla p + f \]
     <div class="code-block">
         <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
