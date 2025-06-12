@@ -127,7 +127,16 @@
     <img src="Figures/Lecture1_TurbulenceJet.png" alt="TurbulenceJet" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">       
     <div class="figure-caption">(The flow field in turbulent round free jets from birth to death. Credit: Ball et al. (2012))</div>
 
+
     <h2>Reynolds-Averaged Navier-Stokes (RANS)</h2>
+    Reynolds averaging is quite easy to understand. It means decomposing a statistically observable quantity into an average part and a fluctuation part:
+
+$$
+f = \overline{f} + f'
+$$
+
+Since the flow is already unsteady at this point, we cannot guarantee that the value of the fluctuation is much smaller than the average part. 
+    
     The Navier–Stokes equation for incompressible flow can be written as:
         $$
 \underbrace{\frac{\partial \vec{u}}{\partial t}}_{\text{Local acceleration}} + \underbrace{(\vec{u} \cdot \nabla) \vec{u}}_{\text{Advection}} = \underbrace{-\frac{1}{\rho} \nabla P}_{\text{Pressure force}} + \underbrace{g \vec{k}}_{\text{Gravity}} + \underbrace{\nu \nabla^2 \vec{u}}_{\text{Viscous diffusion}}
@@ -366,6 +375,17 @@ os.rmdir('frames')
 print("Saved as transparent tracer_evolution.gif!")</code></pre>
     </div>
     <img src="Figures/Lecture1_TracerFieldEvolution.gif" alt="TracerFieldEvolution" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+    It should be noted that we can’t solve $\overline{\vec{u}' T'}$ directly — this is the turbulence closure problem.
+
+So we use an <span class="doubleUnderline">eddy diffusivity model (Prandtl 1926)</span>:
+
+$$
+\overline{u'_i T'} \approx -k_t \frac{\partial \bar{T}}{\partial x_i}
+$$
+
+This is like <span class="doubleUnderline">Fick’s Law</span>, where turbulent transport is down the gradient.
+
 
     <h2>Dissolved Inorganic carbonate</h2>
     The total concentration of carbon in dissolved inorganic form in seawater, referred to as dissolved inorganic carbon (DIC), is defined as the sum of the concentrations of the three carbonate species:
