@@ -194,6 +194,32 @@ It can be seen that the learning process in deep learning becomes a problem of f
 
 
     <h2>Neural Ordinary Differential Equations</h2>
+    In a typical neural network the hidden state is represented as a series of discrete transformations:
+\[
+h(t+1) = f(h(t), \theta(t), t)
+\]
+where \(\theta\) is a parameterized hidden layer neural network:
+\[
+h(t+1) = \sigma (\mathbf{W}_t h(t) + b_t),
+\]
+but \(t\) can also be interpreted as continuous time. In this case, transitioning the input \(x\) at \(t=0\) to the output at \(t=N\) involves a sequence of transformations.<br>
+
+However, one issue with this view is that it assumes the variable transitions are discrete, whereas many real-world systems, such as physical simulations, evolve continuously rather than through discrete updates. Thus a more reasonable choice is to model this problem as an Ordinary Differential Equation (ODE):
+\[
+\frac{d h(t)}{d t} = f(h(t), \theta(t), t)
+\]
+From another perspective, instead of directly modeling \(h(t)\), we might attempt to model its change rate \(\frac{d h(t)}{d t}\).<br>
+
+Differential equations have been studied for centuries, and many numerical solvers exist to approximate their solutions. Instead of treating \(h(t)\) as a function to be optimized, we can view it as a process to be solved. Given an ODE and an initial state \(h(t_0)\), we can solve for the continuous-time function \(h(t)\) over any time interval \(t \in \mathbb{R}\).<br>
+
+Assume that the final output state is \(h(t_1) = y\), the loss function can be defined in terms of the ODE solver:
+\[
+\mathcal{L} (h(t_1)) = \mathcal{L} (\text{ODESolve}(h(t_0), f, t_0, t_1, \theta))
+\]
+which can be rewritten as:
+\[
+\mathcal{L} \left(h(t_0) + \int_{t_0}^{t_1} f(h(t), t) dt \right)
+\]
 
 
 
