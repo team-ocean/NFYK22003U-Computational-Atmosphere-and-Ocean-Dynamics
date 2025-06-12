@@ -185,6 +185,69 @@ It can be seen that the learning process in deep learning becomes a problem of f
 
     <h2>Data-Driven Dynamical Systems</h2>
 
+
+    <div class="code-block">
+  <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+  <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+# Parameters for Lorenz system
+rho = 28.0
+sigma = 10.0
+beta = 8.0 / 3.0
+dt = 0.01
+
+# Define the Lorenz system
+def f(state, t):
+    x, y, z = state
+    return sigma * (y - x), x * (rho - z) - y, x * y - beta * z
+
+# Initial state and time steps
+state0 = [1.0, 1.0, 1.0]
+time_steps = np.arange(0.0, 40.0, dt)
+
+# Solve the system
+x_train = odeint(f, state0, time_steps)
+
+# Plot x vs z
+plt.figure(figsize=(6, 4), facecolor='none', dpi=300)
+plt.plot(x_train[:, 0], x_train[:, 2], color='#d6ebff')
+plt.plot(x_train[0, 0], x_train[0, 2], "o", color="#d6ebff", markersize=8)
+plt.gca().set_facecolor('none')
+plt.gca().spines['top'].set_color('#d6ebff')
+plt.gca().spines['right'].set_color('#d6ebff')
+plt.gca().spines['bottom'].set_color('#d6ebff')
+plt.gca().spines['left'].set_color('#d6ebff')
+plt.tick_params(colors='#d6ebff')
+plt.xlabel("x", color='#d6ebff')
+plt.ylabel("z", color='#d6ebff')
+plt.grid(False)
+plt.show()
+
+# Plot each dimension over time
+def plot_dimension(dim, name):
+    fig = plt.figure(figsize=(9, 2), facecolor='none')
+    ax = fig.gca()
+    ax.set_facecolor('none')
+    ax.plot(time_steps, x_train[:, dim], color='#d6ebff')
+    ax.spines['top'].set_color('#d6ebff')
+    ax.spines['right'].set_color('#d6ebff')
+    ax.spines['bottom'].set_color('#d6ebff')
+    ax.spines['left'].set_color('#d6ebff')
+    ax.tick_params(colors='#d6ebff')
+    ax.set_xlabel("time", color='#d6ebff')
+    ax.set_ylabel(name, color='#d6ebff')
+    plt.grid(False)
+    plt.show()
+
+plot_dimension(0, 'x')
+plot_dimension(1, 'y')
+plot_dimension(2, 'z')</code></pre></div>
+
+<img src="Figures/Lecture13_LorenzDynamics.png" alt="LorenzDynamics" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+
+
     But more is different.
 
       <img src="Figures/Lecture13_SnowFlakesFractal.png" alt="SnowFlakesFractal" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">     

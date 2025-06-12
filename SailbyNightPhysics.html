@@ -98,6 +98,36 @@
     <h1>Sail by Night Physics</h1>
 
     Is it too difficult? ? ?
+<div style="font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee; padding: 16px; border: 1px solid #3c5c78;">
+  <em>Reproducing results in ML-for-PDE-solving research using stronger baselines, by Nick McGreivy in 
+    "I got fooled by AI-for-science hype — here's what it taught me"
+  </em>
+  <table style="width: 100%; border-collapse: collapse; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
+    <thead>
+      <tr>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">Article</th>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">Number of citations</th>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">Partial Differential Equation</th>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">Weaker baseline</th>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">Stronger baseline</th>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">Old outcome</th>
+        <th style="padding: 8px; border: 1px solid #3c5c78;">New outcome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 8px;">Li et al.</td><td>941</td><td>2D incompressible Navier-Stokes</td><td>Pseudo-spectral 64x64</td><td>Discontinuous Galerkin Order 2 7x7</td><td>1,000-times faster</td><td>7-times faster</td></tr>
+      <tr><td>Lu et al.</td><td>911</td><td>1D Advection</td><td>Finite-difference nx=100</td><td>Discontinuous Galerkin Order 2 nx=13</td><td>24-times faster</td><td>10-times slower</td></tr>
+      <tr><td>Kochkov et al.</td><td>429</td><td>2D incompressible Navier-Stokes</td><td>Finite Volume</td><td>Pseudo-spectral</td><td>80-times faster</td><td>Slightly slower</td></tr>
+      <tr><td>Bar-Sinai et al.</td><td>382</td><td>1D Burgers’ equation</td><td>Weighted Essentially Non-Oscillatory</td><td>Discontinuous Galerkin Order 2/3</td><td>4–8-fold fewer degrees of freedom</td><td>2–4-fold fewer degrees of freedom</td></tr>
+      <tr><td>Wang et al.</td><td>230</td><td>1D Burgers’ equation</td><td>Spectral nx=100</td><td>Finite Volume nx=100</td><td>1,000-times faster</td><td>10-times slower</td></tr>
+      <tr><td>Li et al.</td><td>124</td><td>2D incompressible Navier-Stokes</td><td>Pseudo-spectral 64x64</td><td>Discontinuous Galerkin Order 2 3x3</td><td>1,000-times faster</td><td>7-times faster</td></tr>
+      <tr><td>Hsieh et al.</td><td>101</td><td>2D Poisson</td><td>Multigrid</td><td>Lower–Upper decomposition</td><td>Faster</td><td>1,000-times slower</td></tr>
+      <tr><td>Brandstetter et al.</td><td>87</td><td>1D Burgers’ equation, 1D Wave</td><td>Weighted Essentially Non-Oscillatory, Pseudo-spectral</td><td>Weighted Essentially Non-Oscillatory, Finite Volume</td><td>Much faster</td><td>1,000-times slower</td></tr>
+      <tr><td>de Lara and Ferrer</td><td>12</td><td>2D Poisson</td><td>Discontinuous Galerkin Order 28 nx=1</td><td>Discontinuous Galerkin Order 9 nx=1</td><td>22–75-times faster</td><td>4–10-times slower</td></tr>
+      <tr><td>Tang et al.</td><td>2</td><td>2D Poisson</td><td>Conjugate Gradient and Multigrid</td><td>Lower–Upper decomposition</td><td>12-times faster</td><td>35–500-times slower</td></tr>
+    </tbody>
+  </table>
+</div>
 
     <h2>Initiation and Guessing</h2>
 
