@@ -152,6 +152,31 @@ until it recognizes the complex visual world. Their experiments showed that neur
         <li>the continued growth of computational power</li>
         <li>exceptionally large labeled datasets</li>
       </ul> 
+       NNs specifically optimize over a compositional function
+$$
+\overbrace{
+\underbrace{\arg\min_{A_j}}_{\text{optimization over network weights}} 
+\left[
+f_M(A_M, \dots, f_2(A_2, f_1(A_1, x)) \dots ) 
++ 
+\underbrace{\lambda g(A_j)}_{\text{regularization term}}
+\right]
+}^{\text{overall neural network training objective}}
+$$
+
+For deep learning models, instead of optimizing individual weight matrices $A_1, A_2, \dots, A_M$ at each layer, deep learning frameworks bundle all parameters into a single vector or set $\theta$:
+
+$$
+\arg\min_\theta f_\theta(x)
+$$
+
+where $\theta$ are the neural network weights and $f(\cdot)$ characterizes the network (number of layers, structure, regularizers).<br>
+
+It can be seen that the learning process in deep learning becomes a problem of finding the parameters $\theta$ that minimize a loss function over data:
+
+  $$
+  \arg\min_\theta \mathbb{E}_{x \sim \mathcal{D}} \left[ \mathcal{L}(f_\theta(x), y) \right]
+  $$
  
 
     <h2>Machine Learning in Computational Fluid Dynamics</h2>
@@ -161,6 +186,8 @@ until it recognizes the complex visual world. Their experiments showed that neur
     <h2>Data-Driven Dynamical Systems</h2>
 
     But more is different.
+
+      <img src="Figures/Lecture13_SnowFlakesFractal.png" alt="SnowFlakesFractal" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">     
 
     <h2>Neural Networks for Dynamical Systems</h2>
 
