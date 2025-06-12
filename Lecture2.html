@@ -257,7 +257,14 @@ $$
     $$
 \underbrace{\frac{\partial \vec{u}}{\partial t}}_{\text{Local acceleration}} + \underbrace{(\vec{u} \cdot \nabla) \vec{u}}_{\text{Advection}} = \underbrace{-\frac{1}{\rho} \nabla P}_{\text{Pressure force}} + \underbrace{g \vec{k}}_{\text{Gravity}} + \underbrace{\nu \nabla^2 \vec{u}}_{\text{Viscous diffusion}}
 $$
-$g \vec{k}$ with typically $\vec{k} = (0, 0, 1)$ defines gravity as a vector field acting downward (if you use $-g \vec{k}$, then $\vec{k}$ points upward)
+$g \vec{k}$ with typically $
+\vec{k} =
+\begin{pmatrix}
+0 \\
+0 \\
+1
+\end{pmatrix}
+$ defines gravity as a vector field acting downward (if you use $-g \vec{k}$, then $\vec{k}$ points upward)
 
     \[\left(\frac{\partial}{\partial t} + \mathbf{u}\cdot \nabla - \nu \nabla^2\right) \mathbf{u} = - \frac{1}{\rho} \nabla p + f \]
     <div class="code-block">
