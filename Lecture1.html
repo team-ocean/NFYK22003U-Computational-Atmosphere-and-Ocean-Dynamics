@@ -141,12 +141,98 @@ $g \vec{k}$ with typically $
 \end{pmatrix}
 $ defines gravity as a vector field acting downward (if you use $-g \vec{k}$, then $\vec{k}$ points upward)
  
+For any field variable (velocity $\vec{u}$, pressure $P$, or scalar tracer $T$), we decompose it into a mean and a fluctuating part:
+
+$$
+\vec{u} = \bar{\vec{u}} + \vec{u}' \quad \text{and} \quad P = \bar{P} + P' \quad \text{and} \quad T = \bar{T} + T'
+$$
+
+Where:
+<ul>
+    <li>$\bar{\vec{u}}$: time-averaged (mean) velocity</li>
+    <li>$\vec{u}'$: turbulent fluctuation (zero mean: $\overline{\vec{u}'} = 0$)</li>
+    <li>Similarly for $P$ and $T$</li>
+</ul>
+
+Apply thetime-average operator to the NS equation.
+
+The nonlinear advection term becomes:
+
+$$
+\overline{(\vec{u} \cdot \nabla)\vec{u}} = (\bar{\vec{u}} \cdot \nabla)\bar{\vec{u}} + \nabla \cdot \overline{\vec{u}' \vec{u}'}
+$$
+
+This introduces a <span class="doubleUnderline">Reynolds stress tensor</span>:
+
+$$
+\overline{u_i' u_j'} \quad \Rightarrow \quad \text{new unknowns!}
+$$
+
+So the <span class="doubleUnderline">Reynolds-averaged Navier–Stokes (RANS)</span> equation becomes:
+
+$$
+\frac{\partial \bar{\vec{u}}}{\partial t} + (\bar{\vec{u}} \cdot \nabla)\bar{\vec{u}} = -\frac{1}{\rho} \nabla \bar{P} + g\vec{k} + \nu \nabla^2 \bar{\vec{u}} - \nabla \cdot \overline{\vec{u}' \vec{u}'}
+$$
+
+The term $-\nabla \cdot \overline{\vec{u}' \vec{u}'}$ is the turbulent momentum transport, and it leads directly to the turbulence closure problem. In 
+
 
 
 
     <h2>The Tracer Equation</h2>
-    <p>\(T_t = - \mathbf{u} \cdot \nabla T + k \cdot \nabla^2 T + S(\text{source})\)</p>
-    Tracer-Equation after Reynolds averaging: \(T_t = - \mathbf{u} \cdot \nabla T + k_{turb} \cdot \nabla^2 T + S(\text{source})\)<br>
+    
+Take a scalar quantity like temperature $T$, salinity, or concentration $C$, governed by the advection-diffusion equation:
+
+$$
+\frac{\partial T}{\partial t} + \vec{u} \cdot \nabla T = k \nabla^2 T + S
+$$
+
+The $S$ in the equation above means source, it can be tracer such as heating H, DIC, etc.<br>
+
+Apply Reynolds decomposition: $T = \bar{T} + T'$, $\vec{u} = \bar{\vec{u}} + \vec{u}'$, and average the equation:
+
+$$
+\overline{\frac{\partial T}{\partial t}} + \overline{(\vec{u} \cdot \nabla T)} = k \nabla^2 \bar{T} + \bar{S}
+$$
+
+That gives:
+
+$$
+\frac{\partial \bar{T}}{\partial t} + \bar{\vec{u}} \cdot \nabla \bar{T} + \nabla \cdot \overline{\vec{u}' T'} = k \nabla^2 \bar{T} + \bar{S}
+$$
+Substituting turbulent closure:
+
+$$
+\frac{\partial \bar{T}}{\partial t} + \bar{\vec{u}} \cdot \nabla \bar{T} = \left( k + k_{\text{turb}} \right) \nabla^2 \bar{T} + \bar{S}
+$$
+
+Or compactly:
+
+$$
+T_t = -\vec{u} \cdot \nabla T + (k + k_{\text{turb}}) \nabla^2 T + S
+$$
+
+Which is exactly your final boxed form:
+
+$$
+T_t = -\vec{u} \cdot \nabla T + k_{\text{turb}} \nabla^2 T + S
+$$
+
+In 3D Cartesian coordinates:
+<ul>
+    <li>$T(x, y, z, t)$: scalar field (e.g. temperature)</li>
+    <li>$\vec{u} = (u, v, w)$: velocity components in $x, y, z$</li>
+    <li>$\nabla T = \left( \frac{\partial T}{\partial x}, \frac{\partial T}{\partial y}, \frac{\partial T}{\partial z} \right)$</li>
+    <li> $\nabla^2 T = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} + \frac{\partial^2 T}{\partial z^2}$</li>
+</ul>
+
+$$
+\frac{\partial T}{\partial t} + u \frac{\partial T}{\partial x} + v \frac{\partial T}{\partial y} + w \frac{\partial T}{\partial z} = k_{\text{turb}} \left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} + \frac{\partial^2 T}{\partial z^2} \right) + S
+$$
+
+\(\therefore\)
+    \(\boxed{T_t = - \mathbf{u} \cdot \nabla T + k \cdot \nabla^2 T + S(\text{source})}\) <br>
+    Tracer-Equation after Reynolds averaging: \(\boxed{T_t = - \mathbf{u} \cdot \nabla T + k_{turb} \cdot \nabla^2 T + S(\text{source})}\)<br>
     \(k_{turb}\) = turbulent diffusivity (depends on size and strength of waves or eddies) 
     <img src="Figures/Lecture1_NablaTerms.png" alt="NablaTerms" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
 
