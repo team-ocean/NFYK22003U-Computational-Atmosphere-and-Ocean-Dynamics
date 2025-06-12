@@ -126,6 +126,19 @@
     <h2>Turbulence</h2>
     <img src="Figures/Lecture1_TurbulenceJet.png" alt="TurbulenceJet" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">       
     <div class="figure-caption">(The flow field in turbulent round free jets from birth to death. Credit: Ball et al. (2012))</div>
+
+    <h2>Reynolds-Averaged Navier-Stokes (RANS)</h2>
+        $$
+\underbrace{\frac{\partial \vec{u}}{\partial t}}_{\text{Local acceleration}} + \underbrace{(\vec{u} \cdot \nabla) \vec{u}}_{\text{Advection}} = \underbrace{-\frac{1}{\rho} \nabla P}_{\text{Pressure force}} + \underbrace{g \vec{k}}_{\text{Gravity}} + \underbrace{\nu \nabla^2 \vec{u}}_{\text{Viscous diffusion}}
+$$
+$g \vec{k}$ with typically $
+\vec{k} =
+\begin{pmatrix}
+0 \\
+0 \\
+1
+\end{pmatrix}
+$ defines gravity as a vector field acting downward (if you use $-g \vec{k}$, then $\vec{k}$ points upward)
  
 
 
@@ -277,6 +290,7 @@ print("Saved as transparent tracer_evolution.gif!")</code></pre>
     The patterns of DIC and its carbon components are not identical over the globe: there is a general increase in DIC, $[\text{HCO}_3^-]$ and $[\text{CO}_2^*]$ with latitude, but an opposing decrease in $[\text{CO}_3^{2-}]$.
 
 
+
     <h2>Autocorrelation</h2>
     <p>Many climate data contain autocorrelation, we often can’t avoid it.</p>
 
@@ -386,7 +400,7 @@ print("Saved as transparent tracer_evolution.gif!")</code></pre>
 <img src="Figures/Lecture1_DWTest.png" alt="DWTest.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
 
 
-<strong>Anomaly Calculation</strong>
+<h2>Anomaly Calculation</h2>
 <p>An anomaly is the difference between an actual value and some long-term average value.
     Anomalies can be computed by removing the mean
     \[
