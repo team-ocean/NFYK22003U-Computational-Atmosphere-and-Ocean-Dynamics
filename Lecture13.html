@@ -184,6 +184,34 @@ It can be seen that the learning process in deep learning becomes a problem of f
     <h2>Machine Learning in Geophysical Fluid Dynamics</h2>
 
     <h2>Data-Driven Dynamical Systems</h2>
+ Consider dynamical systems of the form
+$$
+\frac{d}{dt} \mathbf{x}(t) = \mathbf{f}(\mathbf{x}(t), t, \boldsymbol{\beta})
+$$
+
+where $x$ is the state of the system and $f$ is a vector field that possibly depends on the state $x$, time $t$, and a set of parameters $β$.
+
+For example, consider the Lorenz equation:
+$$
+\begin{aligned}
+\dot{x} &= \sigma (y - x), \\
+\dot{y} &= x(\rho - z) - y, \\
+\dot{z} &= xy - \beta z
+\end{aligned}
+$$
+
+In this case, the state vector is
+
+$$
+\mathbf{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T
+$$
+
+and the parameter vector is
+
+$$
+\boldsymbol{\beta} = \begin{bmatrix} \sigma & \rho & \beta \end{bmatrix}^T
+$$
+
 
 
     <div class="code-block">
@@ -250,7 +278,11 @@ plot_dimension(2, 'z')</code></pre></div>
 <img src="Figures/Lecture13_Lorenzxtime.png" alt="Lorenzxtime.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
 <img src="Figures/Lecture13_Lorenzytime.png" alt="Lorenzytime.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
 <img src="Figures/Lecture13_Lorenzztime.png" alt="Lorenzztime.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+The Lorenz system is among the simplest and most well-studied dynamical systems that exhibit chaos, which is characterized as a sensitive dependence on initial conditions. 
+Two trajectories with nearby initial conditions will rapidly diverge in behavior, and, after long times, only statistical statements can be made.
 
+It is simple to simulate these dynamical systems, such as the Lorenz system. <br>
+<br>
     But more is different.
 
       <img src="Figures/Lecture13_SnowFlakesFractal.png" alt="SnowFlakesFractal" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">     
