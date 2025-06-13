@@ -148,7 +148,7 @@ until it recognizes the complex visual world. Their experiments showed that neur
     <div class="figure-caption">(An experiment where a cat sees different images or stimuli.
       Credit: Ho Jin Lee.)</div>    
       Based on the original judgment, more criteria are added to distinguish between different details, in order to arrive at the most reasonable conclusion, this is deep learning. <br>
-      
+
       The recent success of NNs has been enabled by two critical components:
       <ul>
         <li>the continued growth of computational power</li>
@@ -332,6 +332,16 @@ which can be rewritten as:
 \[
 \mathcal{L} \left(h(t_0) + \int_{t_0}^{t_1} f(h(t), t) dt \right)
 \]
+
+So Neural ODEs are treating the entire timeseries as a continuously (non-discretely) varying dynamical system.
+
+But:
+<ul>
+  <li>The data can be noisy</li>
+  <li>It may be irregularly sampled</li>
+  <li>May not even have a clear starting point that fully represents the system.</li>
+</ul>
+
 
 
 
