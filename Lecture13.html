@@ -188,6 +188,38 @@ It can be seen that the learning process in deep learning becomes a problem of f
  
 
     <h2>Machine Learning in Computational Fluid Dynamics</h2>
+<ul>
+  <li>The heavy computational load and long runtimes of numerical simulations:</li>
+  <ul>
+    <li>time-series-based prediction (machine learning can be a solution)</li>
+    <ul>
+      <li>Risk: prediction errors accumulate over time, eventually causing the model to break down. The number of time steps it can sustain varies from a few dozen to a few hundred, depending on the type of flow condition and the initial/boundary settings.</li>
+    </ul>
+    <li>Predicting certain features at specific time points or under steady-state conditions directly from the input boundary/initial conditions</li>
+    <ul>
+      <li>Risk: the biggest challenge lies in obtaining a high-quality training dataset</li>
+    </ul>
+  </ul>
+  <li>Fluid motion is extremely complex and difficult to predict accurately (machine learning is not an easy fix)</li>
+  <ul>
+    <li>Unless your training set comes from high-quality experimental measurements. But such data is expensive to obtain and often subject to noise and random error.</li>
+  </ul>
+</ul>
+
+Flow phenomena include both open and closed systems, with various shapes.
+ The system boundaries include moving/stationary walls as well as velocity/pressure inlets and outlets. 
+These flows include vertical motion under gravity and planar flows in zero gravity. Their flow characteristics encompass the formation of viscous boundary layers, vortex formation and shedding, and jet development. They include both single-phase and two-phase flows, as well as laminar and turbulent regimes.<br>
+
+<strong>[Ex]</strong> Four representative classic CFD problems: (1) Cavity Flow,
+(2) Tube Flow,
+(3) Dam Flow, and
+(4) Cylinder Flow <br>
+  <img src="Figures/Lecture13_CFDBenchSketch.png" alt="CFDBenchSketch" style="margin-top: 1.5em; border-radius: 6px; max-width: 250%; display: block;">     
+
+  <img src="Figures/Lecture13_CFDBenchGradient.png" alt="CFDBenchGradient" style="margin-top: 1.5em; border-radius: 6px; max-width: 100%; display: block;">     
+
+
+
 
     <h2>Machine Learning in Geophysical Fluid Dynamics</h2>
 
