@@ -806,6 +806,22 @@ plt.show()</code></pre></div>
         Sverdrup balance is a remarkable simplification of the ocean circulation. It tells us that, just given knowledge of the wind stress field, we can estimate the full-depth integrated meridional transport.
     </ul>
 
+    <h2>Thermal Wind</h2>
+
+
+In the presence of a <span class="doubleUnderline">horizontal</span> gradient of density, the geostrophic velocity develops a <span class="doubleUnderline">vertical</span> shear. 
+This can be shown from the geostrophic and hydrostatic balances by differentiating both parts of geostrophic balance with respect to $z$ and then using $
+\frac{dp}{dz} = -\rho g
+$ to eliminate $p$ from both equations:
+
+$$
+\frac{\partial v}{\partial z} = -\frac{g}{\rho_0 f} \frac{\partial \rho}{\partial x} \quad \text{and} \quad \frac{\partial u}{\partial z} = \frac{g}{\rho_0 f} \frac{\partial \rho}{\partial y}
+$$
+
+
+Meteorologists call these the <span class="doubleUnderline">thermal wind</span> equations because they give the vertical variation of wind from measurements of horizontal temperature (and pressure) gradients.
+
+
     <h2>Wind Driven Gyres</h2>
     The near-surface circulation and density structure are dominated by the wind-driven circulation. The vertically integrated wind-driven gyres are qualitatively described by the Sverdrup relation.
     \[
