@@ -431,6 +431,18 @@ $$
 \omega = -\beta \frac{gk}{H f_0^2} = -\beta \frac{k}{f_0^2} \frac{g}{H} = -\beta L_D^2 k
 $$
 
+It should be mentioned that for <i>long Rossby waves</i> (i.e., large wavelength, small $k$), we approximate: 
+$$
+\omega = -\frac{\beta k}{k^2 + \frac{1}{L_D^2}}
+\quad \Rightarrow \quad
+c = \frac{\omega}{k} = -\frac{\beta}{k^2 + \frac{1}{L_D^2}}
+$$
+
+$$
+k^2 \ll \frac{1}{L_D^2} \quad \Rightarrow \quad \omega \approx -\beta L_D^2 k
+$$
+The final expression only appears independent of $k$ because it is the limit for very small $k$.
+
 So final dispersion relation is:
 
 $$
@@ -444,6 +456,10 @@ phase speeds increase
 rapidly with increasing
 wavelength.
 This <span class="doubleUnderline">negative phase speed</span> shows Rossby waves <span class="doubleUnderline">propagate westward (always)</span>.
+<br>
+Below shows a special case of barotropic flow	with no internal stratification (1-layer fluid):
+<img src="Figures/Lecture8_RossbyWaveSketch.png" alt="RossbyWaveSketch" style="margin-top: 1.5em; max-width: 100%; display: block;"> 
+
 
 <h2>β Effect</h2>
 Consider a closed chain of fluid parcels initially aligned along a circle of latitude at time $t_0$, with no initial relative vorticity:
