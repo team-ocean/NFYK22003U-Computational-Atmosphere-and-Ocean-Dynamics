@@ -852,6 +852,12 @@ plt.show()</code></pre>
 
 
     <h2>Noise</h2>
+    This is how the spectrum is supposed to look like in paleoclimate studies :-)
+    <img src="Figures/Lecture1_Spectrum.png" alt="Spectrum" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+    <div class="figure-caption">(Patch-work spectral estimate using instrumental and proxy records of surface temperature variability, and insolation at \(65^\circ\,N\).
+  Credit: Huybers, P., Curry, W. Links between annual, Milankovitch and continuum temperature variability. <i>Nature 441</i>, 329–332 (2006).)</div>
+  The figure uses the log-log scale that allows us to see detail at both large and small values.<br>
+
 
     <strong>Red Noise Model</strong>
     <p>A red noise time series is defined as an autoregressive process where each value depends on the previous value and a white noise term:</p> <p>\[x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = a * x[t - dt] + b * epsilon[t]</code></pre> </div>
@@ -1142,7 +1148,7 @@ comprehensive weather and climate prediction models as well as reduced order cli
 No model lasts forever. Even if the data quality is good, the model itself will begin to degrade.
       <img src="Figures/Lecture1_ModelDegradeConcept.png" alt="ModelDegradeConcept" style="margin-top: 1.5em; max-width: 100%; display: block;">
 
-<div class="figure-caption">(Past performance is no guarantee of future results.)</div>
+<div class="figure-caption">(Past performance is no guarantee of future results. Credit: Evidently AI)</div>
 </ul>
 
 
