@@ -859,7 +859,102 @@ plt.show()</code></pre>
   Credit: Huybers, P., Curry, W. Links between annual, Milankovitch and continuum temperature variability. <i>Nature 441</i>, 329–332 (2006).)</div>
   The figure uses the log-log scale that allows us to see detail at both large and small values.<br>
 
-  
+        <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">series1_amoc = df1['AMOC_40N'].dropna()
+series2_amoc = df2['AMOC_40N'].dropna()
+
+# FFT-based spectrum function (frequency domain)
+def compute_manual_spectrum(series, n=None):
+    if n is None:
+        n = len(series)
+    series = series[:n]
+    I = np.abs(np.fft.fft(series))**2 / n
+    P = (4 / n) * I[:n // 2]
+    f = np.arange(n // 2) / n
+    return f[1:], P[1:]  # skip zero frequency
+
+# Compute FFT spectra using full series
+f1_amoc, p1_amoc = compute_manual_spectrum(series1_amoc)
+f2_amoc, p2_amoc = compute_manual_spectrum(series2_amoc)
+
+plt.figure(figsize=(8, 6), dpi = 300)
+plt.loglog(f1_amoc, p1_amoc, label='CESM AMOC')
+plt.loglog(f2_amoc, p2_amoc, label='Guido AMOC', color='red')
+plt.xlabel("Frequency (log scale)")
+plt.ylabel("Power (log scale)")
+plt.title("Comparison of AMOC Spectra")
+plt.legend()
+plt.grid(True, which='both', linestyle='--', color = '#d6ebff')
+plt.tight_layout()
+plt.show()</code></pre>
+      </div>
+<img src="Figures/Lecture1_RedBlueSpectrum.png" alt="RedBlueSpectrum.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
+
+There are several other methods to chose from depending on the characteristics of your data.
+<div style="font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee; padding: 16px; ">
+
+  <table style="width: 100%; border-collapse: collapse; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
+    <thead>
+      <tr style="border-bottom: 2px solid #3c5c78;">
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Method</th>
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Math Operation</th>
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Good for</th>
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Bad for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;"><strong>Log</strong></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">ln(x)<br>log<sub>10</sub>(x)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">
+          Right skewed data<br>
+          log<sub>10</sub>(x) is especially good at handling higher order powers of 10 (e.g., 1000, 100000)
+        </td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">
+          Zero values<br>
+          Negative values
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;"><strong>Square root</strong></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">x<sup>1/2</sup></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Right skewed data</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Negative values</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;"><strong>Square</strong></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">x²</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Left skewed data</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Negative values</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;"><strong>Cube root</strong></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">x<sup>1/3</sup></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">
+          Right skewed data<br>
+          Negative values
+        </td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">
+          Not as effective at normalizing as log transform
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;"><strong>Reciprocal</strong></td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">1/x</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">
+          Making small values bigger and big values smaller
+        </td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">
+          Zero values<br>
+          Negative values
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 <br>
     <strong>Red Noise Model</strong>
     <p>A red noise time series is defined as an autoregressive process where each value depends on the previous value and a white noise term:</p> <p>\[x(t) = a \cdot x(t - \Delta t) + b \cdot \epsilon(t)\]</p> <div class="code-block"> <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button> <pre><code class="language-python">x[t] = a * x[t - dt] + b * epsilon[t]</code></pre> </div>
@@ -1136,7 +1231,6 @@ Nino 3 SST                 r1 = 0.390  Te = 1.06 seasons
 PNA                        r1 = 0.170  Te = 0.56 seasons
 Nino 1+2 SST               r1 = 0.157  Te = 0.54 seasons</pre>      
       <img src="Figures/Lecture1_ENSORedNoiseWhiteNoise.png" alt="ENSORedNoiseWhiteNoise.png" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
-
 
 
 
