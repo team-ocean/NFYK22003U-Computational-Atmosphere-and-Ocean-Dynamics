@@ -450,13 +450,13 @@ hr.horizontal-rule {
 /* ===== Table of Contents Sidebar ===== */
 .toc-sidebar {
   float: right;
-  margin-left: 2em;
-  width: 290px;
+  margin-left: 1em;
+  width: 190px;
   background-color: transparent;
   border-left: 2px solid rgba(102, 170, 255, 0.3); /* semi-transparent #66aaff */
   padding-left: 1em;
-  padding-right: 1em;
-  font-size: 0.85em;
+  padding-right: 0em;
+  font-size: 0.75em;
   color: #aaccee;
   max-height: none;       /* Let it grow naturally */
   overflow-y: visible;    /* No internal scroll */
