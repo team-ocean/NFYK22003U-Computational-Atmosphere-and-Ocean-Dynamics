@@ -447,3 +447,38 @@ hr.horizontal-rule {
   align-self: start;             /* If used inside flex layout */
 }
 
+/* ===== Table of Contents Sidebar ===== */
+.toc-sidebar {
+  float: right;
+  margin-left: 2em;
+  width: 250px;
+  background-color: transparent;
+  border-left: 2px solid rgba(102, 170, 255, 0.3); /* semi-transparent #66aaff */
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 0.95em;
+  color: #aaccee;
+  max-height: none;       /* Let it grow naturally */
+  overflow-y: visible;    /* No internal scroll */
+}
+
+.toc-sidebar .toc-title {
+  font-weight: bold;
+  color: #aaccee;
+  margin-bottom: 0.5em;
+}
+
+.toc-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.toc-sidebar li {
+  margin-bottom: 0.4em;
+}
+
+.toc-sidebar li::before {
+  content: none !important;
+}
+

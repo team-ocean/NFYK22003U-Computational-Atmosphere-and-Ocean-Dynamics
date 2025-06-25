@@ -94,9 +94,14 @@
       </ul>
     </nav>
   </div>
-
   
-  <div class="main-content">
+<div class="main-content">
+  <!-- TOC goes here -->
+  <div class="toc-sidebar" id="toc">
+    <div class="toc-title">☰ Contents</div>
+    <ul id="toc-list"></ul>
+  </div>
+
     <h1>Lecture 1 – Introduction and Transport Processes</h1>
     <h2>Biological Carbon Pump</h2>
     <ul>
@@ -857,6 +862,17 @@ plt.show()</code></pre>
     <img src="Figures/Lecture1_Spectrum.png" alt="Spectrum" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">
     <div class="figure-caption">(Patch-work spectral estimate using instrumental and proxy records of surface temperature variability, and insolation at \(65^\circ\,N\).
   Credit: Huybers, P., Curry, W. Links between annual, Milankovitch and continuum temperature variability. <i>Nature 441</i>, 329–332 (2006).)</div>
+
+The term <strong><span class="doubleUnderline">Fast Fourier Transform (FFT)</span></strong>, used for plotting this kind of spectrum, describes a general class of computationally efficient algorithms for calculating the Discrete Fourier Transform (DFT) and its inverse (IDFT) for sequences of any length.<br>
+<ul>
+    <li>A direct computation of the DFT requires $O(N^2)$ operations for a sequence of length $N$.
+  For example, if $N = 1024$, then $N^2 \approx 10^6$.</li>
+  <li>FFT reduces this cost dramatically to $O(N \log N)$.
+  For $N = 1024$, $N \log N \approx 3000$</li>
+</ul>
+The main idea behind any FFT algorithm is to look for repetitive patterns in the calculation of DFT/IDFT and store results of calculations that can be repeatedly reused later to reduce the total amount of calculations needed. In this sense, FFT trades computational (or time) complexity against storage complexity.
+FFT is a widely available numerical routine and takes advantage of redundancies in the calculation and speed up the process.<br> <br>
+
   The figure uses the log-log scale that allows us to see detail at both large and small values.<br>
 
         <div class="code-block">
@@ -1279,5 +1295,34 @@ No model lasts forever. Even if the data quality is good, the model itself will 
       });
     }
   </script>
+
+<div class="toc-sidebar" id="toc">
+  <div class="toc-title">📋 Contents</div>
+  <ul id="toc-list"></ul>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const tocList = document.getElementById("toc-list");
+  const headings = document.querySelectorAll("h2, h3");
+  
+  headings.forEach((heading, index) => {
+    if (!heading.id) heading.id = `heading-${index}`;
+    
+    const link = document.createElement("a");
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+
+    const li = document.createElement("li");
+    li.classList.add(`toc-level-${heading.tagName.toLowerCase()}`);
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+});
+</script>
+
+
 </body>
 </html>
+
+
