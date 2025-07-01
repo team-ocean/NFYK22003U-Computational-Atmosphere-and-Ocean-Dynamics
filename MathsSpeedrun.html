@@ -1830,6 +1830,75 @@ $$</li>
 
 <h2>Time-Domain and Frequency-Domain</h2>
 <img src="Figures/MathsSpeedrun_TimeDomainFrequencyDomainFourier.png" alt="TimeDomainFrequencyDomainFourier" style="margin-top: 1.5em; max-width: 100%; display: block;">
+<div style="font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee;">
+
+  <table style="width: 100%; border-collapse: collapse; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
+    <thead>
+      <tr style="border-bottom: 2px solid #3c5c78;">
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Signal Type</th>
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Time Domain \( f(t) \)</th>
+        <th style="padding: 10px; border: 1px solid #3c5c78;">Frequency Domain \( F(\omega) \)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Unit Impulse</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \delta(t) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( 1 \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Unit Step</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( u(t) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \pi \delta(\omega) + \frac{1}{j\omega} \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Constant Signal</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( 1 \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( 2\pi \delta(\omega) \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Rectangular Pulse</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \mathrm{rect}\left(\frac{t}{T}\right) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( T\,\mathrm{sinc}\left(\frac{\omega T}{2}\right) \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Triangular Pulse</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \mathrm{tri}\left(\frac{t}{T}\right) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \frac{T^2}{2}\,\mathrm{sinc}^2\left(\frac{\omega T}{4}\right) \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Sine Wave</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \sin(\omega_0 t) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( j\pi[\delta(\omega + \omega_0) - \delta(\omega - \omega_0)] \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Cosine Wave</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \cos(\omega_0 t) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \pi[\delta(\omega + \omega_0) + \delta(\omega - \omega_0)] \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Gaussian Signal</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( e^{-t^2/2\sigma^2} \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \sigma \sqrt{2\pi} e^{-\sigma^2\omega^2/2} \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">One-sided Decaying</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( e^{-a t} u(t) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \frac{1}{1 + j\omega} \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Two-sided Decaying</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( e^{-a|t|} \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \frac{2a}{a^2 + \omega^2} \)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">Unit Impulse Train</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \sum_{n=-\infty}^{\infty} \delta(t - nT) \)</td>
+        <td style="padding: 8px; border: 1px solid #3c5c78;">\( \frac{2\pi}{T} \sum_{k=-\infty}^{\infty} \delta\left(\omega - \frac{2\pi k}{T}\right) \)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <img src="Figures/MathsSpeedrun_FourierTimeAndFrequencyDomains.gif" alt="FourierTimeAndFrequencyDomains" style="margin-top: 1.5em; max-width: 100%; display: block;">
           <div class="figure-caption">(The Fourier transform links a function's time domain (in red) with its frequency domain (in blue). The red waveform is composed of several blue sine waves of different frequencies. The red represents the time domain (showing how the amplitude changes over time), while the resulting blue represents the frequency domain (independent of time, showing the distribution of frequencies).
