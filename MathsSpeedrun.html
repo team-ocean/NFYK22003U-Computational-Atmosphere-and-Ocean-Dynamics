@@ -1565,6 +1565,52 @@ $$
 + \underbrace{\frac{4}{n\pi} \sin(n\Omega t)}_{\text{n-th harmonic}}, \quad n = 1, 3, 5, \dots
 $$
 
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+        <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+T = 2
+A = 1
+t = np.linspace(0, 2, 1000)
+
+# Function to compute partial sum
+def square_wave_sum(t, max_n):
+    result = np.zeros_like(t)
+    for n in range(1, max_n+1, 2):
+        result += (4*A)/(np.pi*n) * np.sin(2*np.pi*n*t/T)
+    return result
+
+# Harmonics for each subplot
+harmonic_limits = [1, 3, 5, 7, 99, 999]
+titles = [
+    "(a) Fundamental (1st harmonic)",
+    "(b) 1st & 3rd harmonics",
+    "(c) 1st, 3rd & 5th harmonics",
+    "(d) 1st, 3rd, 5th & 7th harmonics",
+    "(e) 1st, 3rd, ... up to 99th harmonics",
+    "(f) 1st, 3rd, ... up to 999th harmonics (Gibbs phenomenon)"
+]
+
+fig, axs = plt.subplots(2, 3, figsize=(16, 9), dpi=300)
+axs = axs.flatten()
+
+for i, (ax, N, title) in enumerate(zip(axs, harmonic_limits, titles)):
+    y = square_wave_sum(t, N)
+    ax.plot(t, y, color='#7DCDF4')
+    ax.set_title(title, fontsize=12)
+    ax.set_xlim(0, 2)
+    ax.set_ylim(-1.5, 1.5)
+    ax.grid(True)
+    ax.set_xlabel('t [s]')
+    ax.set_ylabel('Amplitude')
+
+plt.tight_layout()
+plt.show()</code></pre>
+</div>
+<img src="Figures/MathsSpeedrun_HarmonicFourier.png" alt="HarmonicFourier" style="margin-top: 1.5em; border: 1px solid #3c5c78; border-radius: 6px; max-width: 100%; display: block;">        
+<br>
+
 <strong>Exponential Form of Fourier Series</strong><br>
 The trigonometric form of the Fourier series is conceptually clear but computationally inconvenient, so we often use the exponential form of the Fourier series.
 
@@ -1783,6 +1829,8 @@ $$</li>
 
 
 <h2>Time-Domain and Frequency-Domain</h2>
+<img src="Figures/MathsSpeedrun_TimeDomainFrequencyDomainFourier.png" alt="TimeDomainFrequencyDomainFourier" style="margin-top: 1.5em; max-width: 100%; display: block;">
+
 <img src="Figures/MathsSpeedrun_FourierTimeAndFrequencyDomains.gif" alt="FourierTimeAndFrequencyDomains" style="margin-top: 1.5em; max-width: 100%; display: block;">
           <div class="figure-caption">(The Fourier transform links a function's time domain (in red) with its frequency domain (in blue). The red waveform is composed of several blue sine waves of different frequencies. The red represents the time domain (showing how the amplitude changes over time), while the resulting blue represents the frequency domain (independent of time, showing the distribution of frequencies).
   Credit: Lucas V. Barbosa)</div> 
