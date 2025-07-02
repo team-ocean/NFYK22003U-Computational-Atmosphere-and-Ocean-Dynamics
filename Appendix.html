@@ -104,6 +104,66 @@
   <div class="main-content">
     <h1>Appendix</h1>
 
+
+<div style="display: flex; justify-content: center; gap: 2em; margin-top: 1.5em;">
+
+  <!-- LEFT: IMAGE with border -->
+  <div style="flex: 1; max-width: 45%; border: 2px solid #3c5c78; padding: 1em; box-sizing: border-box; text-align: center;">
+    <img src="Figures/Appendix_TemplateCover.png" 
+         alt="Appendix_TemplateCover" 
+         style="max-width: 100%; height: auto; display: block;">
+  </div>
+
+  <!-- RIGHT: CODE block with border -->
+  <div style="flex: 1; max-width: 45%; border: 2px solid #3c5c78; padding: 1em; box-sizing: border-box; background-color: #001a33; color: #aaccee; font-family: 'Courier New', Courier, monospace; overflow-x: auto;">
+<pre style="white-space: pre-wrap;">
+\documentclass[a4paper,oneside]{memoir}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{wallpaper}
+\usepackage{palatino}
+\usepackage{multirow}
+\usepackage{array}
+
+\begin{document}
+
+\thispagestyle{empty}
+\ULCornerWallPaper{1}{nat-farve.pdf}
+\ULCornerWallPaper{1}{nat-en.pdf}
+\begin{adjustwidth}{-3cm}{-1.5cm}
+\vspace*{-1cm}
+\vspace*{3.5cm} 
+\textbf{\Huge NFYK22003U Computational Atmosphere and Ocean Dynamics} \\
+\vspace*{.1cm} \\
+{\huge Assignment X} \\
+
+\begin{tabbing}
+\\[12cm]
+\begin{center}
+\renewcommand{\arraystretch}{2}
+\setlength{\tabcolsep}{11pt}
+\begin{tabular}{|m{2.2cm}|m{1.5cm}m{1.5cm}|m{1.5cm}m{1.5cm}|}
+\hline
+\multirow{2}{*}{Month - Date} & \multicolumn{4}{c|}{Time Spent:\quad from\quad\quad--\quad\quad to \quad\quad} \\ \cline{2-5}
+ & Hr & Min & Hr & Min \\ \hline
+Name & \multicolumn{4}{m{6.5cm}|}{\hspace{6cm}} \\ \hline
+\end{tabular}
+\end{center}
+\end{tabbing}
+
+\end{adjustwidth}
+\newpage
+\ClearWallPaper
+
+\end{document}
+</pre>
+  </div>
+  
+</div>
+<br><br>
+
+
   <div style="font-family: 'Courier New', Courier, monospace; background-color: #001a33; color: #aaccee; padding: 16px; border: 2px solid #3c5c78;">
   <em>Upright Greek Letters</em>
   <table style="width: 100%; border-collapse: collapse; background-color: #001a33; color: #aaccee; border: 1px solid #3c5c78;">
