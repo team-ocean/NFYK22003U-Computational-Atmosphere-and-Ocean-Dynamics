@@ -92,12 +92,40 @@
     color: #66aaff;
   }
 
-  .footer {
-    padding: 2em 0em;
-    font-size: 0.6em;
-    color: #aaccee;
-    background-color: #001a33;
-  }
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8em 1.2em;   /* less padding */
+  font-size: 0.6em;
+  color: #aaccee;
+  background-color: #001a33;
+  flex-wrap: nowrap;      /* keep text and map in same row */
+}
+
+.footer-text {
+  flex: 1;
+  line-height: 1.3em;
+}
+
+.footer a {
+  color: #7dcdf4;
+  text-decoration: underline;
+}
+
+.footer-map {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.mini-map-wrapper {
+  width: 200px;     /* mini map width */
+  height: 50;    /* mini map height */
+  overflow: hidden; /* keeps it compact */
+}
+
   
 
   .code-block {
