@@ -844,7 +844,15 @@ The PDO has positive and negative phases.
 The cause of changes in the PDO has yet to be identified and it may even be due to a combination of factors including long-lasting fingerprints of El Nino and La Nina events in the tropical Pacific Ocean; changes in atmospheric pressure the northern Pacific; the impact of industrial pollution; and natural variability.
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 

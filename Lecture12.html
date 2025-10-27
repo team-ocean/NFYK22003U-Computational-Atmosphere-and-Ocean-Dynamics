@@ -130,7 +130,15 @@ Stommel and Arons solved the above simplified model directly once $Q$ is given.<
 Food for thought: <a href="https://courses.seas.harvard.edu/climate/eli/Courses/misc/Eilat/Sources/Abyssal-circulation/3-Stommel-Arons-from-Pedlosky-circulation-book.pdf">Stommel-Arons Theory: Abyssal Flow on the Sphere</a>
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 

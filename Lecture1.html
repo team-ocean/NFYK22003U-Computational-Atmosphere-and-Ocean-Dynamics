@@ -1277,7 +1277,15 @@ No model lasts forever. Even if the data quality is good, the model itself will 
 
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
     <p><strong>Next</strong>: <a href="Project1.html">Project 1 – Oxygen Budget</a></p>

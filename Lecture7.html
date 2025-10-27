@@ -238,7 +238,15 @@ Reference: <a href="https://www.liverpool.ac.uk/~ric/lfs/pdf/encyc_2019_wm.pdf">
   Credit: Williams and Follows (2011).)</div>
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 

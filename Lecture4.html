@@ -450,7 +450,7 @@ $$
 \Rightarrow \quad v = \Psi_x = v_s + \frac{1}{\delta_S} e^{-x/\delta_S}
 $$
 
-Stommel’s assumption:
+Stommel's assumption:
 <ul>
   <li>Include only linear bottom drag: keep $-r \nabla^2 \psi$</li>
   <li>Ignore $\nabla^4 \psi$ and nonlinear terms</li>
@@ -814,7 +814,15 @@ Below are some important eastern boundary currents:
 
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 

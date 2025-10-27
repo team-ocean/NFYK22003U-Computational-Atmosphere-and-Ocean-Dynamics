@@ -195,6 +195,17 @@ for i in range(10):
 print("Saved 10 frames in ./frames")
 </code></pre>
     </div>
+
+
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
   
   <div class="footer">
     Qi-fan based on the course material by Markus Jochum<br>

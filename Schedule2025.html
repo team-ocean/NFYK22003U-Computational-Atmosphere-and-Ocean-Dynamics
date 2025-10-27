@@ -147,7 +147,15 @@
       Text: Atmospheric and Oceanic Fluid Dynamic, Vallis
     </p>
   
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
   
   <div class="footer">
     Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>

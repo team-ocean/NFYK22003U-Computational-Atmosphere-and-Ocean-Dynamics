@@ -198,6 +198,15 @@
       <li>Saved on: 20-02-2024</li>
     </ul>
  
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
   <div class="footer">
     Qi-fan based on the course material by Markus Jochum <br>

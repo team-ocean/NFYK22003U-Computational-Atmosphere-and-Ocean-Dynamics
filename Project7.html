@@ -114,7 +114,15 @@
     Hint: doubling taux south of 12°S is done by: <code>vs.surface_taux[:, vs.yt < -12] *= 2</code>
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 

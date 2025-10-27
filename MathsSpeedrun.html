@@ -1976,6 +1976,18 @@ Euler’s formula expressing exponential functions in terms of trigonometric fun
 \Rightarrow \boxed{1 = \cos^2\theta + \sin^2\theta}\)
 
 
+
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
+
+
   <p><strong>Next</strong>: <a href="Lecture1.html">Lecture 1 – Introduction and Transport Processes</a></p>
 
 <div class="footer">

@@ -137,7 +137,15 @@ Abyssal, huge fish surrounding a shark on the hook.
 
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
     <p><strong>Next</strong>: <a href="Lecture12.html">Lecture 12 – Stability of the Atlantic Meridional Overturning Circulation</a></p>
 

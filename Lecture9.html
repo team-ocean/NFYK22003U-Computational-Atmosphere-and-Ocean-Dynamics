@@ -429,7 +429,15 @@ Food for thought: <a href="https://arxiv.org/pdf/1306.2418">Atmospheric Circulat
 
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 

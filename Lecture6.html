@@ -222,7 +222,7 @@ $$
 O(\epsilon) \quad O(\epsilon) \quad O(1) \quad O(\epsilon) \quad O(1)
 $$
 
-Let’s set $u = u_g + \epsilon u_{ag}$, with $O(u_{ag}/u_g) = 1 \gg \epsilon$,
+Let's set $u = u_g + \epsilon u_{ag}$, with $O(u_{ag}/u_g) = 1 \gg \epsilon$,
 
 and collect terms of $O(1)$:
 
@@ -234,7 +234,7 @@ $$
 \Longrightarrow \Psi = \frac{p}{f_0 \rho_0} \quad \text{and} \quad (u_g)_x + (v_g)_y = -(w_g)_z = 0
 $$
 
-<ul><li>IVa $\Longrightarrow (u_g)_x + (v_g)_y + (w_g)_z = 0$</li></ul>
+<ul><li>IVa $\Longrightarrow (u_g)_x + (v_g)_y + (w_g)_z = 0$</li></ul>
 
 Now collect terms of $O(\epsilon)$:
 
@@ -354,7 +354,7 @@ $$
 \frac{v_2 - v_1}{\Delta z_2} = \frac{g}{f_0 \rho_0} \frac{\rho_2 - \rho_1}{\Delta x}
 $$
 
-For simplicity’s sake, assume $v_2 = 0$. Then there is no pressure gradient in the second layer, and the pressure gradient induced by the surface elevation is balanced by the sloping isopycnal. It also means:
+For simplicity's sake, assume $v_2 = 0$. Then there is no pressure gradient in the second layer, and the pressure gradient induced by the surface elevation is balanced by the sloping isopycnal. It also means:
 
 $$
 \Longrightarrow \quad v_1 = \frac{-g}{f_0 \rho_0} \Delta \rho \frac{\Delta z_2}{\Delta x}
@@ -959,7 +959,15 @@ print("Animation saved as qg_2layer_simulation.mp4")</code></pre>
 
 
 
-
+<script>
+  function copyToClipboard(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  }
+</script>
 
 
 
