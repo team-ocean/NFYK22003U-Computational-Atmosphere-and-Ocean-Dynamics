@@ -103,32 +103,16 @@
   </div>
 
   <div class="main-content">
-    <h1>Lecture 12 – Stability of the Atlantic Meridional Overturning Circulation</h1>
+    <h1>Introduction to Python Programming</h1>
 
-    <h2>Stommel-Arons Model</h2>
-    Given a mass source (divergence) at the North Atlantic and Antarctic, and assuming everywhere else is uniform upwelling or mass sink (convergence), the horizontal abyssal circulation can be quantitatively reproduced. This is called Stommel-Arons model.
-For a homogeneous quasi-horizontal ocean, the starting point should be the shallow-water equations:
+<p></p>
 
-$$
-\frac{\partial \mathbf{u}}{\partial t} = - (\mathbf{u} \cdot \nabla) \mathbf{u} - g \nabla h - f \hat{\mathbf{u}}
-$$
 
-$$
-\frac{\partial h}{\partial t} = - \nabla \cdot (h \mathbf{u}) 
-$$
 
-Assuming that the ocean flow is in steady state with flat bottom, ignoring the nonlinear terms, and add a mass source/sink forcing, one gets:
 
-$$
-g \nabla h = - f \hat{\mathbf{u}}
-$$
 
-$$
-\nabla \cdot \mathbf{u} = Q 
-$$
 
-Stommel and Arons solved the above simplified model directly once $Q$ is given.<br>
-Food for thought: <a href="https://courses.seas.harvard.edu/climate/eli/Courses/misc/Eilat/Sources/Abyssal-circulation/3-Stommel-Arons-from-Pedlosky-circulation-book.pdf">Stommel-Arons Theory: Abyssal Flow on the Sphere</a>
+
 
 
 <script>
@@ -141,26 +125,32 @@ Food for thought: <a href="https://courses.seas.harvard.edu/climate/eli/Courses/
   }
 </script>
 
+    <p><strong>Next</strong>: <a href="MathsSpeedrun.html">Maths Speedrun</a></p>
 
-
-    <p><strong>Next</strong>: <a href="Project7.html">Project 7 – Oscillations</a></p>
-
-<div class="footer">
-  Qi-fan based on the course material by Markus Jochum<br>
-  It is very much a work in progress! Have you spotted a mistake or an error on this page? 
-  Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
-  &copy; 2025 TeamOcean | NBI/KU
-</div>
+  <div class="footer">
+    Qi-fan based on the course material by Markus Jochum & Marta Mrozowska <br>
+    It is very much a work in progress! Have you spotted a mistake or an error on this page? 
+    Click <a href="mailto:qifan.wu@nbi.ku.dk">here</a> to tell me!<br>
+    &copy; 2025 TeamOcean | NBI/KU
+  </div>
 </div>
 
-<script>
-  function copyToClipboard(btn) {
-    const code = btn.nextElementSibling.innerText;
-    navigator.clipboard.writeText(code).then(() => {
-      btn.classList.add('copied');
-      setTimeout(() => btn.classList.remove('copied'), 2000);
-    });
-  }
-</script>
+
+  <script>
+    function copyToClipboard(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      });
+    }
+  </script>
+
+<div style="display: none;">
+  <!-- Invisible ClustrMaps visitor counter -->
+  <script type='text/javascript' id='clustrmaps'
+    src='//cdn.clustrmaps.com/map_v2.js?cl=3c5c78&w=a&t=n&d=pQGqu-KyFJel89Hr1PvWbRuiOpNSIEbJWYVI-orrPMc&co=001a33&cmn=d6ebff&cmo=7dcdf4&ct=3c5c78'>
+  </script>
+</div>
 </body>
 </html>
