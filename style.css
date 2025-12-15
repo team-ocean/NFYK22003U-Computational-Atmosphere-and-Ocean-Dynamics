@@ -487,3 +487,117 @@ hr.horizontal-rule {
   content: none !important;
 }
 
+/* ===== Course Tree Styling ===== */
+
+.tree {
+  border: 2px solid #3c5c78;
+  padding: 1em 1.2em;
+  margin: 1.5em 0;
+  background-color: #001a33;
+}
+
+/* Controls */
+.tree-controls {
+  margin-bottom: 0.6em;
+}
+
+.tree-btn {
+  background: transparent;
+  color: #7DCDF4;
+  border: 1px solid #7DCDF4;
+  padding: 0.3em 0.8em;
+  font-size: 0.7em;
+  margin-right: 0.5em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tree-btn:hover {
+  background: #7DCDF4;
+  color: #001a33;
+}
+
+/* details / summary */
+.tree details {
+  margin-bottom: 0.6em;
+}
+
+.tree summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #66aaff;
+  list-style: none;
+}
+
+.tree summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron */
+.tree summary::before {
+  content: "▸";
+  color: #7DCDF4;
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.3em;
+}
+
+.tree details[open] > summary::before {
+  content: "▾";
+}
+
+/* Tree list */
+.tree ul {
+  margin-top: 0.4em;
+  margin-left: 1.2em;
+  padding-left: 0.6em;
+  border-left: 1px solid rgba(125, 205, 244, 0.4);
+}
+
+.tree li {
+  font-size: 0.85em;
+  line-height: 1.4;
+  margin: 0.3em 0;
+}
+
+/* Override global square bullets */
+.tree li::before {
+  content: "■";
+  color: #7DCDF4;
+  font-size: 0.6em;
+  margin-right: 0.4em;
+}
+
+/* Tip text */
+.tree .note {
+  font-size: 0.7em;
+  color: #aaccee;
+  margin-top: 0.8em;
+}
+/* ===== Tree navigation links ===== */
+.tree a.tree-link {
+  color: #66aaff;
+  text-decoration: none;
+  display: inline-block;
+  padding-bottom: 2px;
+  position: relative;
+}
+
+/* Hover underline – same behavior as sidebar */
+.tree a.tree-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 3px;
+  background-color: #7DCDF4;
+  opacity: 0.5;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  transition: width 0.3s ease-in-out;
+}
+
+.tree a.tree-link:hover::after {
+  width: 100%;
+}

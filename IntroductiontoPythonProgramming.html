@@ -38,6 +38,28 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
+<script>
+  function expandAll() {
+    document.querySelectorAll('.tree details').forEach(d => d.open = true);
+  }
+
+  function collapseAll() {
+    document.querySelectorAll('.tree details').forEach(d => d.open = false);
+  }
+</script>
+
+<script>
+  document.querySelectorAll('.tree summary a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.stopPropagation(); // prevent <summary> toggle from stealing click
+      const target = link.getAttribute('href');
+      if (target && target.startsWith('#')) {
+        document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+        history.pushState(null, '', target);
+      }
+    });
+  });
+</script>
 
 <body>
   <div class="sidebar">
@@ -107,116 +129,281 @@
 
 <p></p>
 
-<h2>1.  Numerical Computation</h2>
+<div class="tree-controls">
+  <button class="tree-btn" onclick="expandAll()">Expand all</button>
+  <button class="tree-btn" onclick="collapseAll()">Collapse all</button>
+</div>
 
-<h3>Simple Arithmetic Calculations</h3>
-<h3>Integers and Real Numbers</h3>
-<h3>Arithmetic Operators</h3>
-<h3>Whitespace</h3>
-<h3>Errors</h3>
-<h3>Mathematical Functions (Importing Modules)</h3>
-<h3>Practice</h3>
+<div class="tree" role="tree">
 
-<h2>2.  Basics of Variables and Functions</h2>
+  <details open>
+    <summary>
+      <a href="#sec1" class="tree-link">1. Numerical Computation</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec1-1" class="tree-link">Simple Arithmetic Calculations</a></li>
+      <li class="leaf"><a href="#sec1-2" class="tree-link">Integers and Real Numbers</a></li>
+      <li class="leaf"><a href="#sec1-3" class="tree-link">Arithmetic Operators</a></li>
+      <li class="leaf"><a href="#sec1-4" class="tree-link">Whitespace</a></li>
+      <li class="leaf"><a href="#sec1-5" class="tree-link">Errors</a></li>
+      <li class="leaf"><a href="#sec1-6" class="tree-link">Mathematical Functions (Importing Modules)</a></li>
+      <li class="leaf"><a href="#sec1-7" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h3>Variables</h3>
-<h3>Function Definitions and Return Values</h3>
-<h3>Local Variables</h3>
-<h3>Global Variables</h3>
-<h3><code>print</code> and <code>return</code></h3>
-<h3>Comments and Blank Lines</h3>
-<h3>How to Call Functions</h3>
-<h3>Practice</h3>
+  <details>
+    <summary>
+      <a href="#sec2" class="tree-link">2. Basics of Variables and Functions</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec2-1" class="tree-link">Variables</a></li>
+      <li class="leaf"><a href="#sec2-2" class="tree-link">Function Definitions and Return Values</a></li>
+      <li class="leaf"><a href="#sec2-3" class="tree-link">Local Variables</a></li>
+      <li class="leaf"><a href="#sec2-4" class="tree-link">Global Variables</a></li>
+      <li class="leaf"><a href="#sec2-5" class="tree-link"><code>print</code> and <code>return</code></a></li>
+      <li class="leaf"><a href="#sec2-6" class="tree-link">Comments and Blank Lines</a></li>
+      <li class="leaf"><a href="#sec2-7" class="tree-link">How to Call Functions</a></li>
+      <li class="leaf"><a href="#sec2-8" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h2>3.  Logic and Conditionals</h2>
+  <details>
+    <summary>
+      <a href="#sec3" class="tree-link">3. Logic and Conditionals</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec3-1" class="tree-link">Conditional Branching with the <code>if</code> Statement</a></li>
+      <li class="leaf"><a href="#sec3-2" class="tree-link">Various Conditions</a></li>
+      <li class="leaf"><a href="#sec3-3" class="tree-link">Functions That Return Boolean Values</a></li>
+      <li class="leaf"><a href="#sec3-4" class="tree-link">Objects</a></li>
+      <li class="leaf"><a href="#sec3-5" class="tree-link"><code>None</code></a></li>
+      <li class="leaf"><a href="#sec3-6" class="tree-link">Recursion</a></li>
+      <li class="leaf"><a href="#sec3-7" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h3>Conditional Branching with the <code>if</code> Statement</h3>
-<h3>Various Conditions</h3>
-<h3>Functions That Return Boolean Values</h3>
-<h3>Objects</h3>
-<h3><code>None</code></h3>
-<h3>Recursion</h3>
-<h3>Practice</h3>
+  <details>
+    <summary>
+      <a href="#sec4" class="tree-link">4. Tests</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec4-1" class="tree-link">Specifications, Testing, and Debugging</a></li>
+      <li class="leaf"><a href="#sec4-2" class="tree-link">The <code>assert</code> Statement</a></li>
+      <li class="leaf"><a href="#sec4-3" class="tree-link">Classification of Errors</a></li>
+      <li class="leaf"><a href="#sec4-4" class="tree-link">Concrete Examples of Debugging</a></li>
+      <li class="leaf"><a href="#sec4-5" class="tree-link">Coding Style</a></li>
+      <li class="leaf"><a href="#sec4-6" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h2>4.  Tests</h2>
+  <details>
+    <summary>
+      <a href="#sec5" class="tree-link">5. Strings</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec5-1" class="tree-link">Strings and Indexing</a></li>
+      <li class="leaf"><a href="#sec5-2" class="tree-link">Strings and Slicing</a></li>
+      <li class="leaf"><a href="#sec5-3" class="tree-link">Empty Strings</a></li>
+      <li class="leaf"><a href="#sec5-4" class="tree-link">Searching Strings</a></li>
+      <li class="leaf"><a href="#sec5-5" class="tree-link">Escape Sequences</a></li>
+      <li class="leaf"><a href="#sec5-6" class="tree-link">Displaying and Entering Backslashes</a></li>
+      <li class="leaf"><a href="#sec5-7" class="tree-link">String Concatenation</a></li>
+      <li class="leaf"><a href="#sec5-8" class="tree-link">Strings and Methods</a></li>
+      <li class="leaf"><a href="#sec5-9" class="tree-link">Comparison Operations on Strings</a></li>
+      <li class="leaf"><a href="#sec5-10" class="tree-link">Variables and Strings</a></li>
+      <li class="leaf"><a href="#sec5-11" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h3>Specifications, Testing, and Debugging</h3>
-<h3>The <code>assert</code> Statement</h3>
-<h3>Classification of Errors</h3>
-<h3>Concrete Examples of Debugging</h3>
-<h3>Coding Style</h3>
-<h3>Practice</h3>
+  <details>
+    <summary>
+      <a href="#sec6" class="tree-link">6. Lists</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec6-1" class="tree-link">Lists and Indexing</a></li>
+      <li class="leaf"><a href="#sec6-2" class="tree-link">Nested Lists</a></li>
+      <li class="leaf"><a href="#sec6-3" class="tree-link">Functions, Operators, and Methods for Lists</a></li>
+      <li class="leaf"><a href="#sec6-4" class="tree-link">Destructive Operations and Non-Destructive Creation</a></li>
+      <li class="leaf"><a href="#sec6-5" class="tree-link">Manipulating Lists</a></li>
+      <li class="leaf"><a href="#sec6-6" class="tree-link">Converting Between Lists and Strings</a></li>
+      <li class="leaf"><a href="#sec6-7" class="tree-link">Tuples</a></li>
+      <li class="leaf"><a href="#sec6-8" class="tree-link">Multiple Assignment</a></li>
+      <li class="leaf"><a href="#sec6-9" class="tree-link">Comparison Operations for Lists and Tuples</a></li>
+      <li class="leaf"><a href="#sec6-10" class="tree-link">Iteration with <code>for</code> Statements and Lists / Tuples</a></li>
+      <li class="leaf"><a href="#sec6-11" class="tree-link">Iteration with <code>for</code> Statements and Strings</a></li>
+      <li class="leaf"><a href="#sec6-12" class="tree-link">List Initialization Using <code>for</code></a></li>
+      <li class="leaf"><a href="#sec6-13" class="tree-link">Object Equality and Identity</a></li>
+      <li class="leaf"><a href="#sec6-14" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h2>5.  Strings</h2>
+  <details>
+    <summary>
+      <a href="#sec7" class="tree-link">7. Conditional Branching</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec7-1" class="tree-link">Syntax Based on Indentation</a></li>
+      <li class="leaf"><a href="#sec7-2" class="tree-link">Conditional Branching with <code>if … else</code></a></li>
+      <li class="leaf"><a href="#sec7-3" class="tree-link">Conditional Branching with <code>if … elif … else</code></a></li>
+      <li class="leaf"><a href="#sec7-4" class="tree-link">Multi-Line Conditional Expressions</a></li>
+      <li class="leaf"><a href="#sec7-5" class="tree-link">Evaluation of Conditions in <code>if … elif … else</code></a></li>
+      <li class="leaf"><a href="#sec7-6" class="tree-link">Evaluation of Conditions Combined with <code>or</code> and <code>and</code></a></li>
+      <li class="leaf"><a href="#sec7-7" class="tree-link">Ternary Operator</a></li>
+      <li class="leaf"><a href="#sec7-8" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h3>Strings and Indexing</h3>
-<h3>Strings and Slicing</h3>
-<h3>Empty Strings</h3>
-<h3>Searching Strings</h3>
-<h3>Escape Sequences</h3>
-<h3>Displaying and Entering Backslashes</h3>
-<h3>String Concatenation</h3>
-<h3>Strings and Methods</h3>
-<h3>Comparison Operations on Strings</h3>
-<h3>Variables and Strings</h3>
-<h3>Practice</h3>
+  <details>
+    <summary>
+      <a href="#sec8" class="tree-link">8. Dictionary</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec8-1" class="tree-link">Dictionary Methods</a></li>
+      <li class="leaf"><a href="#sec8-2" class="tree-link">Dictionaries and Lists</a></li>
+    </ul>
+  </details>
 
-<h2>6.  Lists</h2>
+  <details>
+    <summary>
+      <a href="#sec9" class="tree-link">9. Loops (Iteration)</a>
+    </summary>
+    <ul>
+      <li class="leaf"><a href="#sec9-1" class="tree-link">Iteration with the <code>for</code> Statement</a></li>
+      <li class="leaf"><a href="#sec9-2" class="tree-link">Iteration with the <code>for</code> Statement and Dictionaries</a></li>
+      <li class="leaf"><a href="#sec9-3" class="tree-link"><code>range</code></a></li>
+      <li class="leaf"><a href="#sec9-4" class="tree-link"><code>range</code> and Lists</a></li>
+      <li class="leaf"><a href="#sec9-5" class="tree-link">Nested <code>for</code> Statements</a></li>
+      <li class="leaf"><a href="#sec9-6" class="tree-link">Computational Complexity of <code>for</code> Loops</a></li>
+      <li class="leaf"><a href="#sec9-7" class="tree-link"><code>enumerate</code></a></li>
+      <li class="leaf"><a href="#sec9-8" class="tree-link"><code>in</code></a></li>
+      <li class="leaf"><a href="#sec9-9" class="tree-link">Iteration with the <code>while</code> Statement</a></li>
+      <li class="leaf"><a href="#sec9-10" class="tree-link">Control Flow and the <code>return</code> Statement</a></li>
+      <li class="leaf"><a href="#sec9-11" class="tree-link">The <code>break</code> Statement</a></li>
+      <li class="leaf"><a href="#sec9-12" class="tree-link">The <code>continue</code> Statement</a></li>
+      <li class="leaf"><a href="#sec9-13" class="tree-link"><code>else</code> in <code>for</code> and <code>while</code> Statements</a></li>
+      <li class="leaf"><a href="#sec9-14" class="tree-link">The <code>pass</code> Statement</a></li>
+      <li class="leaf"><a href="#sec9-15" class="tree-link">Practice</a></li>
+    </ul>
+  </details>
 
-<h3>Lists and Indexing</h3>
-<h3>Nested Lists</h3>
-<h3>Functions, Operators, and Methods for Lists</h3>
-<h3>Destructive Operations and Non-Destructive Creation</h3>
-<h3>Manipulating Lists</h3>
-<h3>Converting Between Lists and Strings</h3>
-<h3>Tuples</h3>
-<h3>Multiple Assignment</h3>
-<h3>Comparison Operations for Lists and Tuples</h3>
-<h3>Iteration with <code>for</code> Statements and Lists / Tuples</h3>
-<h3>Iteration with <code>for</code> Statements and Strings</h3>
-<h3>List Initialization Using <code>for</code></h3>
-<h3>Object Equality and Identity</h3>
-<h3>Practice</h3>
-
-<h2>7.  Conditional Branching</h2>
-
-<h3>Syntax Based on Indentation</h3>
-<h3>Conditional Branching with <code>if … else</code></h3>
-<h3>Conditional Branching with <code>if … elif … else</code></h3>
-<h3>Multi-Line Conditional Expressions</h3>
-<h3>Evaluation of Conditions in <code>if … elif … else</code></h3>
-<h3>Evaluation of Conditions Combined with <code>or</code> and <code>and</code></h3>
-<h3>Ternary Operator</h3>
-<h3>Practice</h3>
-
-<h2>8.  Dictionary</h2>
-
-<h3>Dictionary Methods</h3>
-<h3>Dictionaries and Lists</h3>
-
-<h2>9.  Loops (Iteration)</h2>
-
-<h3>Iteration with the <code>for</code> Statement</h3>
-<h3>Iteration with the <code>for</code> Statement and Dictionaries</h3>
-<h3><code>range</code></h3>
-<h3><code>range</code> and Lists</h3>
-<h3>Nested <code>for</code> Statements</h3>
-<h3>Computational Complexity of <code>for</code> Loops</h3>
-<h3><code>enumerate</code></h3>
-<h3><code>in</code></h3>
-<h3>Iteration with the <code>while</code> Statement</h3>
-<h3>Control Flow and the <code>return</code> Statement</h3>
-<h3>The <code>break</code> Statement</h3>
-<h3>The <code>continue</code> Statement</h3>
-<h3><code>else</code> in <code>for</code> and <code>while</code> Statements</h3>
-<h3>The <code>pass Statement</code></h3>
-<h3>Practice</h3>
-
-
-
-
+  <p class="note">Tip: use “Expand all” to see the full tree at once.</p>
+</div>
 
 
+
+
+<h2 id="sec1">1.  Numerical Computation</h2>
+
+<h3 id="sec1-1">Simple Arithmetic Calculations</h3>
+<h3 id="sec1-2">Integers and Real Numbers</h3>
+<h3 id="sec1-3">Arithmetic Operators</h3>
+<h3 id="sec1-4">Whitespace</h3>
+<h3 id="sec1-5">Errors</h3>
+<h3 id="sec1-6">Mathematical Functions (Importing Modules)</h3>
+<h3 id="sec1-7">Practice</h3>
+
+
+<h2 id="sec2">2.  Basics of Variables and Functions</h2>
+
+<h3 id="sec2-1">Variables</h3>
+<h3 id="sec2-2">Function Definitions and Return Values</h3>
+<h3 id="sec2-3">Local Variables</h3>
+<h3 id="sec2-4">Global Variables</h3>
+<h3 id="sec2-5"><code>print</code> and <code>return</code></h3>
+<h3 id="sec2-6">Comments and Blank Lines</h3>
+<h3 id="sec2-7">How to Call Functions</h3>
+<h3 id="sec2-8">Practice</h3>
+
+
+<h2 id="sec3">3.  Logic and Conditionals</h2>
+
+<h3 id="sec3-1">Conditional Branching with the <code>if</code> Statement</h3>
+<h3 id="sec3-2">Various Conditions</h3>
+<h3 id="sec3-3">Functions That Return Boolean Values</h3>
+<h3 id="sec3-4">Objects</h3>
+<h3 id="sec3-5"><code>None</code></h3>
+<h3 id="sec3-6">Recursion</h3>
+<h3 id="sec3-7">Practice</h3>
+
+
+<h2 id="sec4">4.  Tests</h2>
+
+<h3 id="sec4-1">Specifications, Testing, and Debugging</h3>
+<h3 id="sec4-2">The <code>assert</code> Statement</h3>
+<h3 id="sec4-3">Classification of Errors</h3>
+<h3 id="sec4-4">Concrete Examples of Debugging</h3>
+<h3 id="sec4-5">Coding Style</h3>
+<h3 id="sec4-6">Practice</h3>
+
+
+<h2 id="sec5">5.  Strings</h2>
+
+<h3 id="sec5-1">Strings and Indexing</h3>
+<h3 id="sec5-2">Strings and Slicing</h3>
+<h3 id="sec5-3">Empty Strings</h3>
+<h3 id="sec5-4">Searching Strings</h3>
+<h3 id="sec5-5">Escape Sequences</h3>
+<h3 id="sec5-6">Displaying and Entering Backslashes</h3>
+<h3 id="sec5-7">String Concatenation</h3>
+<h3 id="sec5-8">Strings and Methods</h3>
+<h3 id="sec5-9">Comparison Operations on Strings</h3>
+<h3 id="sec5-10">Variables and Strings</h3>
+<h3 id="sec5-11">Practice</h3>
+
+
+<h2 id="sec6">6.  Lists</h2>
+
+<h3 id="sec6-1">Lists and Indexing</h3>
+<h3 id="sec6-2">Nested Lists</h3>
+<h3 id="sec6-3">Functions, Operators, and Methods for Lists</h3>
+<h3 id="sec6-4">Destructive Operations and Non-Destructive Creation</h3>
+<h3 id="sec6-5">Manipulating Lists</h3>
+<h3 id="sec6-6">Converting Between Lists and Strings</h3>
+<h3 id="sec6-7">Tuples</h3>
+<h3 id="sec6-8">Multiple Assignment</h3>
+<h3 id="sec6-9">Comparison Operations for Lists and Tuples</h3>
+<h3 id="sec6-10">Iteration with <code>for</code> Statements and Lists / Tuples</h3>
+<h3 id="sec6-11">Iteration with <code>for</code> Statements and Strings</h3>
+<h3 id="sec6-12">List Initialization Using <code>for</code></h3>
+<h3 id="sec6-13">Object Equality and Identity</h3>
+<h3 id="sec6-14">Practice</h3>
+
+
+<h2 id="sec7">7.  Conditional Branching</h2>
+
+<h3 id="sec7-1">Syntax Based on Indentation</h3>
+<h3 id="sec7-2">Conditional Branching with <code>if … else</code></h3>
+<h3 id="sec7-3">Conditional Branching with <code>if … elif … else</code></h3>
+<h3 id="sec7-4">Multi-Line Conditional Expressions</h3>
+<h3 id="sec7-5">Evaluation of Conditions in <code>if … elif … else</code></h3>
+<h3 id="sec7-6">Evaluation of Conditions Combined with <code>or</code> and <code>and</code></h3>
+<h3 id="sec7-7">Ternary Operator</h3>
+<h3 id="sec7-8">Practice</h3>
+
+
+<h2 id="sec8">8.  Dictionary</h2>
+
+<h3 id="sec8-1">Dictionary Methods</h3>
+<h3 id="sec8-2">Dictionaries and Lists</h3>
+
+
+<h2 id="sec9">9.  Loops (Iteration)</h2>
+
+<h3 id="sec9-1">Iteration with the <code>for</code> Statement</h3>
+<h3 id="sec9-2">Iteration with the <code>for</code> Statement and Dictionaries</h3>
+<h3 id="sec9-3"><code>range</code></h3>
+<h3 id="sec9-4"><code>range</code> and Lists</h3>
+<h3 id="sec9-5">Nested <code>for</code> Statements</h3>
+<h3 id="sec9-6">Computational Complexity of <code>for</code> Loops</h3>
+<h3 id="sec9-7"><code>enumerate</code></h3>
+<h3 id="sec9-8"><code>in</code></h3>
+<h3 id="sec9-9">Iteration with the <code>while</code> Statement</h3>
+<h3 id="sec9-10">Control Flow and the <code>return</code> Statement</h3>
+<h3 id="sec9-11">The <code>break</code> Statement</h3>
+<h3 id="sec9-12">The <code>continue</code> Statement</h3>
+<h3 id="sec9-13"><code>else</code> in <code>for</code> and <code>while</code> Statements</h3>
+<h3 id="sec9-14">The <code>pass Statement</code></h3>
+<h3 id="sec9-15">Practice</h3>
 
 
 
